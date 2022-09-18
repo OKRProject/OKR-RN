@@ -10,6 +10,10 @@ target 'okr' do
   # Flags change depending on the env values.
   flags = get_default_flags()
 
+
+  # Pods for test_google_signin
+
+
   use_react_native!(
     :path => config[:reactNativePath],
     # Hermes is now enabled by default. Disable by setting this flag to false.
@@ -26,6 +30,10 @@ target 'okr' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'GoogleSignIn', '~> 6.2.2' 
+
+
+
   target 'okrTests' do
     inherit! :complete
     # Pods for testing
@@ -40,4 +48,7 @@ target 'okr' do
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
   end
+
+
+
 end

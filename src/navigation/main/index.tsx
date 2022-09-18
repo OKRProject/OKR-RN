@@ -18,11 +18,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Main = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="SignIn"
       screenOptions={{
         headerShown: false,
       }}>
       <Stack.Screen name="Home" component={Screens.Home} />
+      <Stack.Screen name="SignIn" component={Screens.SignIn} />
     </Stack.Navigator>
   );
 };
