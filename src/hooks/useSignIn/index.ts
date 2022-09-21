@@ -24,7 +24,8 @@ export type SessionType = {
 export type SignInResType = SessionType | TokenType;
 
 GoogleSignin.configure({
-  webClientId: Config.GOOGLE_WEB_CLIENT_ID,
+  // webClientId: Config.GOOGLE_WEB_CLIENT_ID,
+  iosClientId: Config.GOOGLE_WEB_CLIENT_ID,
 });
 
 console.log(Config.GOOGLE_WEB_CLIENT_ID);
