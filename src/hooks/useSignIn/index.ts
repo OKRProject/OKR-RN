@@ -17,10 +17,10 @@ GoogleSignin.configure({
 });
 
 type CallbacksType = {
-  signUpCallback: () => void;
+  signUpCallback: (data: SessionType) => void;
 };
 function isLogin(res: SessionType | TokenType): res is TokenType {
-  return (res as TokenType).isLogin === true;
+  return (res as TokenType).accessToken !== null;
 }
 
 const useSignIn = () => {
@@ -37,6 +37,9 @@ const useSignIn = () => {
       }
 
       const {data} = await api.user.loginByGoogle(idToken);
+      if (isLogin(data)) {
+      }
+      return;
     } catch (error: any) {
       console.log(error, 'error');
       if (error.code !== '-5') {

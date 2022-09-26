@@ -1,16 +1,19 @@
 import instance from './instance';
 
-export type TokenType = {
-  isLogin: true;
+type userAuthType = {
+  email: string;
+  name: string;
+  providerType: 'GOOGLE';
+  profileImage: string;
+};
+
+export type TokenType = userAuthType & {
   accessToken: string;
   refreshToken: string;
 };
 
-export type SessionType = {
-  isLogin: false;
-  session: string;
-  email: string;
-  username: string;
+export type SessionType = userAuthType & {
+  tempUserId: string;
 };
 
 export type SingUpReqType = {
