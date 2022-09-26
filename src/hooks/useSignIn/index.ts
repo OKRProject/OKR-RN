@@ -1,34 +1,20 @@
 import {useCallback} from 'react';
-import {Platform} from 'react-native';
+import {Platform, Alert} from 'react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'react-native-get-random-values';
+
 // import {
 //   appleAuth,
 //   appleAuthAndroid,
 // } from '@invertase/react-native-apple-authentication';
 import Config from 'react-native-config';
-
-export type TokenType = {
-  isLogin: true;
-  accessToken: string;
-  refreshToken: string;
-};
-
-export type SessionType = {
-  isLogin: false;
-  session: string;
-  email: string;
-  username: string;
-};
-
-export type SignInResType = SessionType | TokenType;
+import api from '../../api';
+import {SessionType, TokenType} from '../../api/user';
 
 GoogleSignin.configure({
   // webClientId: Config.GOOGLE_WEB_CLIENT_ID,
-  iosClientId: Config.GOOGLE_WEB_CLIENT_ID,
+  iosClientId: Config.GOOGLE_IOS_CLIENT_ID,
 });
-
-console.log(Config.GOOGLE_WEB_CLIENT_ID);
 
 type CallbacksType = {
   signUpCallback: () => void;
@@ -43,10 +29,14 @@ const useSignIn = () => {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       let idToken = userInfo.idToken;
+      console.log(idToken);
+
       if (!idToken) {
         const token = await GoogleSignin.getTokens();
         idToken = token.idToken;
       }
+
+      const {data} = await api.user.loginByGoogle(idToken);
     } catch (error: any) {
       console.log(error, 'error');
       if (error.code !== '-5') {
