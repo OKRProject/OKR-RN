@@ -46,7 +46,7 @@ export type SignUpResType = TokenType & UserProfileType;
 export type SignInResType = SessionType | TokenType;
 
 const loginByGoogle = async (idToken: string) =>
-  await instance.get<SessionType>(`auth/login/google/${idToken}`);
+  await instance.get<SessionType>(`auth/login/GOOGLE/${idToken}`);
 
 const signUp = async (body: SingUpReqType) =>
   await instance.post<SignUpResType>('user/mobile/sign-up', body);

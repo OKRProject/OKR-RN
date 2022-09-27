@@ -38,8 +38,9 @@ const useSignIn = () => {
 
       const {data} = await api.user.loginByGoogle(idToken);
       if (isLogin(data)) {
+        //로그인
       }
-      return;
+      return; //회원가입
     } catch (error: any) {
       console.log(error, 'error');
       if (error.code !== '-5') {
