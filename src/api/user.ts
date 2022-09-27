@@ -1,19 +1,21 @@
 import instance from './instance';
 
-type userAuthType = {
+export type UserProfileType = {
   email: string;
   name: string;
-  providerType: 'GOOGLE';
   profileImage: string;
 };
 
-export type TokenType = userAuthType & {
+export type TokenType = UserProfileType & {
   accessToken: string;
   refreshToken: string;
 };
 
-export type SessionType = userAuthType & {
+export type SessionType = {
   tempUserId: string;
+  email: string;
+  name: string;
+  profileImage: string;
 };
 
 export type SingUpReqType = {
@@ -30,23 +32,12 @@ export type SingUpReqType = {
   device: string;
 };
 
-export type UserProfileType = {
-  email: string;
-  username: string;
-  gender: string;
-  age: string;
-  language: string;
-  walletAddress: string;
-  nation: string;
-  interests: string[];
-};
-
 export type SignUpResType = TokenType & UserProfileType;
 
 export type SignInResType = SessionType | TokenType;
 
 const loginByGoogle = async (idToken: string) =>
-  await instance.get<SessionType>(`auth/login/GOOGLE/${idToken}`);
+  await instance.get<SignInResType>(`auth/login/GOOGLE/${idToken}`);
 
 const signUp = async (body: SingUpReqType) =>
   await instance.post<SignUpResType>('user/mobile/sign-up', body);

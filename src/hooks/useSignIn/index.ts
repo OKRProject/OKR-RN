@@ -2,28 +2,24 @@ import {useCallback} from 'react';
 import {Platform, Alert} from 'react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'react-native-get-random-values';
-
-// import {
-//   appleAuth,
-//   appleAuthAndroid,
-// } from '@invertase/react-native-apple-authentication';
 import Config from 'react-native-config';
 import api from '../../api';
-import {SessionType, TokenType} from '../../api/user';
+import {SessionType, SignInResType, TokenType} from '../../api/user';
+import userStore from '../../store/userStore';
 
 GoogleSignin.configure({
-  // webClientId: Config.GOOGLE_WEB_CLIENT_ID,
   iosClientId: Config.GOOGLE_IOS_CLIENT_ID,
 });
 
 type CallbacksType = {
   signUpCallback: (data: SessionType) => void;
 };
-function isLogin(res: SessionType | TokenType): res is TokenType {
+function isLogin(res: SignInResType): res is TokenType {
   return (res as TokenType).accessToken !== null;
 }
 
 const useSignIn = () => {
+  const {setAuthSession, setUserProfile} = userStore();
   const googleSignIn = useCallback(async ({signUpCallback}: CallbacksType) => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -39,8 +35,15 @@ const useSignIn = () => {
       const {data} = await api.user.loginByGoogle(idToken);
       if (isLogin(data)) {
         //로그인
+        const {refreshToken, accessToken, ...rest} = data;
+        setUserProfile({...rest});
+        //todo token 저장/header 로직
+      } else {
+        //회원가입
+        setAuthSession(data);
       }
-      return; //회원가입
+
+      return;
     } catch (error: any) {
       console.log(error, 'error');
       if (error.code !== '-5') {
