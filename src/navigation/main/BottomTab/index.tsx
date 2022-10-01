@@ -1,6 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import screens from '../../../screens';
+import TabBar from './TabBar';
 
 export type BottomStackParamList = {
   Calendar: undefined;
@@ -16,6 +17,7 @@ const BottomTabNavigator = () => {
       screenOptions={{
         headerShown: false,
       }}
+      tabBar={props => <TabBar {...props} />}
       initialRouteName="Project">
       <BottomTab.Screen name="MyPage" component={screens.MyPage} />
       <BottomTab.Screen name="Project" component={screens.Project} />
