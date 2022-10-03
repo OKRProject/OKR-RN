@@ -2,7 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Screens from '../../screens';
 import userStore from '../../store/userStore';
-import BottomTabNavigator from './bottomTab';
+import BottomTabNavigator from './BottomTab';
 
 export type RootStackParamList = {
   Home: undefined;
