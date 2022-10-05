@@ -1,4 +1,4 @@
-import React, {ReactNode, useMemo} from 'react';
+import React, {ReactNode} from 'react';
 import {View} from 'react-native';
 import {css, ReactNativeStyle} from '@emotion/native';
 
