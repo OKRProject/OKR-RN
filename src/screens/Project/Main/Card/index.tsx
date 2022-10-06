@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {View} from 'react-native';
 import {css} from '@emotion/native';
 import {ProjectType} from '..';
-import {Icons, RoundCard, DefaultText as Text} from '../../../components';
+import {Icons, RoundCard, DefaultText as Text} from '../../../../components';
 import LinearGradient from 'react-native-linear-gradient';
 
 type Props = {

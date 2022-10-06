@@ -1,12 +1,12 @@
 import {View, SafeAreaView, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {Icons, DefaultText as Text, RoundAddButton} from '../../components';
+import {Icons, DefaultText as Text, RoundAddButton} from '../../../components';
 import {css} from '@emotion/native';
 import {ScrollView} from 'react-native-gesture-handler';
-import Card from './Card';
-import userStore from '../../store/userStore';
+import userStore from '../../../store/userStore';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../navigation/main';
+import {RootStackParamList} from '../../../navigation/main';
+import Card from './Card';
 
 export type ProjectType = {
   type: 'team' | 'private';
@@ -28,7 +28,7 @@ const tabList = {
 };
 interface Props extends NativeStackScreenProps<RootStackParamList, 'Project'> {}
 
-const Project = ({navigation}: Props) => {
+const Main = ({navigation}: Props) => {
   const {name} = userStore(({user}) => ({name: user?.name}));
   const [originProjectList, setOriginProjectList] = useState<ProjectType[]>([]);
   const [filteredProjectList, setFilteredProjectList] = useState<ProjectType[]>(
@@ -106,8 +106,6 @@ const Project = ({navigation}: Props) => {
   );
 };
 
-export default Project;
-
 const container = css`
   flex: 1;
   background-color: #18181b;
@@ -182,6 +180,8 @@ const filterButton = css`
 const projectWrapper = css`
   flex: 1;
 `;
+
+export default Main;
 
 const projectData: ProjectType[] = [
   {

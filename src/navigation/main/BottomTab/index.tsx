@@ -20,7 +20,7 @@ const BottomTabNavigator = () => {
       tabBar={props => <TabBar {...props} />}
       initialRouteName="Project">
       <BottomTab.Screen name="MyPage" component={screens.MyPage} />
-      <BottomTab.Screen name="Project" component={screens.Project} />
+      <BottomTab.Screen name="Project" component={screens.Project.Main} />
       <BottomTab.Screen name="Calendar" component={screens.Calendar} />
       <BottomTab.Screen name="Feedback" component={screens.Feedback} />
     </BottomTab.Navigator>
