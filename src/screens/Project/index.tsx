@@ -1,9 +1,12 @@
 import {View, SafeAreaView, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {Icons, DefaultText as Text} from '../../components';
+import {Icons, DefaultText as Text, RoundAddButton} from '../../components';
 import {css} from '@emotion/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import Card from './Card';
+import userStore from '../../store/userStore';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../navigation/main';
 
 export type ProjectType = {
   type: 'team' | 'private';
@@ -23,8 +26,10 @@ const tabList = {
   private: '개인',
   team: '팀',
 };
+interface Props extends NativeStackScreenProps<RootStackParamList, 'Project'> {}
 
-const Project = () => {
+const Project = ({navigation}: Props) => {
+  const {name} = userStore(({user}) => ({name: user?.name}));
   const [originProjectList, setOriginProjectList] = useState<ProjectType[]>([]);
   const [filteredProjectList, setFilteredProjectList] = useState<ProjectType[]>(
     [],
@@ -34,7 +39,6 @@ const Project = () => {
   useEffect(() => {
     //todo api
     setOriginProjectList(projectData);
-    // setFilteredProjectList(projectData);
   }, []);
 
   useEffect(() => {
@@ -46,6 +50,13 @@ const Project = () => {
   }, [selectedTab, originProjectList]);
 
   const handleClickTab = (tab: keyof typeof tabList) => setSelectedTab(tab);
+  const handleClickProject = (id: string) => {
+    //todo navigate project detail with id
+  };
+  const handleClickAddProject = () => {
+    //todo navigate new project
+    // navigation.navigate('');
+  };
 
   return (
     <SafeAreaView style={container}>
@@ -57,52 +68,74 @@ const Project = () => {
       </View>
       <View style={bodyContainer}>
         <View style={wrapper}>
-          <Text style={user}>권용환님의 프로젝트</Text>
+          <Text style={user}>{name}님의 프로젝트</Text>
           <View style={menu}>
             <View style={tabs}>
               {(Object.keys(tabList) as [keyof typeof tabList]).map(tabKey => (
                 <TouchableOpacity
+                  style={selectedTab === tabKey && highlightBorder}
                   key={`project_tab_${tabKey}`}
                   onPress={() => handleClickTab(tabKey)}>
-                  <Text style={[tab]}>{tabList[tabKey]}</Text>
+                  <Text
+                    style={[tab, selectedTab === tabKey ? highlight : css``]}>
+                    {tabList[tabKey]}
+                  </Text>
                 </TouchableOpacity>
               ))}
             </View>
-            <TouchableOpacity style={filterButton}></TouchableOpacity>
+            <TouchableOpacity style={filterButton}>
+              <Icons.Filter />
+            </TouchableOpacity>
           </View>
           <ScrollView style={projectWrapper}>
             {filteredProjectList.map(project => (
-              <Card key={`project_card_${project.id}`} project={project} />
+              <Card
+                key={`project_card_${project.id}`}
+                project={project}
+                onPress={() => handleClickProject(project.id)}
+              />
             ))}
           </ScrollView>
         </View>
       </View>
+      <RoundAddButton
+        style={floatingAddButton}
+        onPress={handleClickAddProject}
+      />
     </SafeAreaView>
   );
 };
 
 export default Project;
+
 const container = css`
   flex: 1;
   background-color: #18181b;
+  position: relative;
 `;
+
+const floatingAddButton = css`
+  position: absolute;
+  right: 17px;
+  bottom: 19px;
+  z-index: 999;
+`;
+
 const header = css`
   width: 100%;
   padding: 0 20px;
   height: 52px;
-
   flex-direction: row;
   justify-content: space-between;
 `;
 
 const bodyContainer = css`
   flex: 1;
-  padding: 39px 19px;
+  padding: 39px 19px 0 19px;
 `;
 
 const wrapper = css`
-  border: 1px solid red;
-  height: 100%;
+  flex: 1;
 `;
 
 const user = css`
@@ -112,7 +145,6 @@ const user = css`
 `;
 
 const menu = css`
-  border: 1px solid blue;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 19px;
@@ -129,15 +161,25 @@ const tab = css`
   color: #ffffff;
   font-weight: 500;
   font-size: 16px;
+  padding-bottom: 6px;
 `;
+
+const highlightBorder = css`
+  border-bottom-width: 2px;
+  border-color: #1f92f2;
+`;
+
+const highlight = css`
+  color: #1f92f2;
+  font-weight: 700;
+`;
+
 const filterButton = css`
   width: 24px;
   height: 24px;
-  border: 1px solid red;
 `;
 
 const projectWrapper = css`
-  border: 1px solid green;
   flex: 1;
 `;
 

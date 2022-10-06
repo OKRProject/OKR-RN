@@ -7,9 +7,10 @@ import LinearGradient from 'react-native-linear-gradient';
 
 type Props = {
   project: ProjectType;
+  onPress: () => void;
 };
 
-const Card = ({project}: Props) => {
+const Card = ({project, ...rest}: Props) => {
   const {
     id,
     title,
@@ -43,7 +44,7 @@ const Card = ({project}: Props) => {
   );
 
   return (
-    <RoundCard style={container}>
+    <RoundCard style={container} {...rest}>
       <View style={titleWrap}>
         <Text style={projectTitle}>{title}</Text>
         {isNew && <Text style={newHighlight}>NEW</Text>}

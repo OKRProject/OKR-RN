@@ -5,5 +5,17 @@ import MyPage from './MyPage';
 import Logo from './Logo';
 import Alarm from './Alarm';
 import People from './People';
+import Filter from './Filter';
+import Plus from './Plus';
 
-export default {Project, Feedback, Calendar, MyPage, Logo, Alarm, People};
+export default {
+  Project,
+  Feedback,
+  Calendar,
+  MyPage,
+  Logo,
+  Alarm,
+  People,
+  Filter,
+  Plus,
+};

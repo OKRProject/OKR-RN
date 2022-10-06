@@ -1,5 +1,6 @@
 import Icons from './Icons';
 import RoundCard from './RoundCard';
 import DefaultText from './DefaultText';
+import RoundAddButton from './RoundAddButton';
 
-export {Icons, RoundCard, DefaultText};
+export {Icons, RoundCard, DefaultText, RoundAddButton};
