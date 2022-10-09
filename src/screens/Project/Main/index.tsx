@@ -1,12 +1,20 @@
-import {View, SafeAreaView, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {Icons, DefaultText as Text, RoundAddButton} from '../../../components';
+import {
+  Icons,
+  DefaultText as Text,
+  RoundAddButton,
+  Background,
+} from '../../../components';
 import {css} from '@emotion/native';
 import {ScrollView} from 'react-native-gesture-handler';
 import userStore from '../../../store/userStore';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../../navigation/main';
 import Card from './Card';
+import {BottomStackParamList} from '../../../navigation/main/BottomTab';
+import {CompositeNavigationProp} from '@react-navigation/native';
+import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {RootStackParamList} from '../../../navigation/main';
 
 export type ProjectType = {
   type: 'team' | 'private';
@@ -26,6 +34,7 @@ const tabList = {
   private: '개인',
   team: '팀',
 };
+
 interface Props extends NativeStackScreenProps<RootStackParamList, 'Project'> {}
 
 const Main = ({navigation}: Props) => {
@@ -53,13 +62,11 @@ const Main = ({navigation}: Props) => {
   const handleClickProject = (id: string) => {
     //todo navigate project detail with id
   };
-  const handleClickAddProject = () => {
-    //todo navigate new project
-    // navigation.navigate('');
-  };
+  const handleClickAddProject = () =>
+    navigation.navigate('Project', {type: 'new'});
 
   return (
-    <SafeAreaView style={container}>
+    <Background style={container}>
       <View style={header}>
         <Icons.Logo />
         <TouchableOpacity>
@@ -102,13 +109,11 @@ const Main = ({navigation}: Props) => {
         style={floatingAddButton}
         onPress={handleClickAddProject}
       />
-    </SafeAreaView>
+    </Background>
   );
 };
 
 const container = css`
-  flex: 1;
-  background-color: #18181b;
   position: relative;
 `;
 

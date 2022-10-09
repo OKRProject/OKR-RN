@@ -2,11 +2,12 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import screens from '../../../screens';
 import TabBar from './TabBar';
+import {ProjectParam} from '..';
 
 export type BottomStackParamList = {
   Calendar: undefined;
   MyPage: undefined;
-  Project: undefined;
+  Project: ProjectParam;
   Feedback: undefined;
 };
 
@@ -20,7 +21,11 @@ const BottomTabNavigator = () => {
       tabBar={props => <TabBar {...props} />}
       initialRouteName="Project">
       <BottomTab.Screen name="MyPage" component={screens.MyPage} />
-      <BottomTab.Screen name="Project" component={screens.Project.Main} />
+      <BottomTab.Screen
+        name="Project"
+        component={screens.Project}
+        initialParams={{type: 'main'}}
+      />
       <BottomTab.Screen name="Calendar" component={screens.Calendar} />
       <BottomTab.Screen name="Feedback" component={screens.Feedback} />
     </BottomTab.Navigator>

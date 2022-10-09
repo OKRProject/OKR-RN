@@ -14,6 +14,7 @@ import React from 'react';
 import {css} from '@emotion/native';
 import Tab from './Tab';
 import {BottomStackParamList} from '..';
+import {useRoute} from '@react-navigation/native';
 
 type Props = {
   state: TabNavigationState<ParamListBase>;
@@ -21,7 +22,10 @@ type Props = {
   navigation: NavigationHelpers<ParamListBase, BottomTabNavigationEventMap>;
   insets: EdgeInsets;
 };
+
 const TabBar = ({navigation, state, descriptors, ...rest}: Props) => {
+  const route = useRoute();
+  console.log(route.name);
   return (
     <View style={container}>
       {state.routes.map((route, index) => (
