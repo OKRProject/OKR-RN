@@ -7,6 +7,7 @@ import Alarm from './Alarm';
 import People from './People';
 import Filter from './Filter';
 import Plus from './Plus';
+import Close from './Close';
 
 export default {
   Project,
@@ -18,4 +19,5 @@ export default {
   People,
   Filter,
   Plus,
+  Close,
 };
