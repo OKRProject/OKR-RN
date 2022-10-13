@@ -11,9 +11,6 @@ import {ScrollView} from 'react-native-gesture-handler';
 import userStore from '../../../store/userStore';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import Card from './Card';
-import {BottomStackParamList} from '../../../navigation/main/BottomTab';
-import {CompositeNavigationProp} from '@react-navigation/native';
-import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
 import {RootStackParamList} from '../../../navigation/main';
 
 export type ProjectType = {

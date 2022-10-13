@@ -4,14 +4,14 @@ import {
   RoundInput,
   RoundSquareButton,
   DefaultText as Text,
-} from '../../../../components';
-import {ProjectType} from '..';
+} from '../../../../../components';
+import {NewProjectType} from '../..';
 import produce from 'immer';
 import {css} from '@emotion/native';
 
-type OkrType = Pick<ProjectType, 'object' | 'krList'>;
+type OkrType = Pick<NewProjectType, 'object' | 'krList'>;
 type Props = OkrType & {
-  setProject: Dispatch<SetStateAction<ProjectType>>;
+  setProject: Dispatch<SetStateAction<NewProjectType>>;
 };
 const OKR = ({object, krList, setProject}: Props) => {
   const handleChangeObject = (object: string) =>

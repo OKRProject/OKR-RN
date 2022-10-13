@@ -1,6 +1,5 @@
-import {View, TouchableOpacityProps, TouchableOpacity} from 'react-native';
+import {TouchableOpacityProps, TouchableOpacity} from 'react-native';
 import React from 'react';
-
 import {css} from '@emotion/native';
 import {DefaultText as Text} from '..';
 

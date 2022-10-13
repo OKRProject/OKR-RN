@@ -2,9 +2,7 @@ import {css, ReactNativeStyle} from '@emotion/native';
 import React, {ReactNode} from 'react';
 import {View} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import GenericTouchable from 'react-native-gesture-handler/lib/typescript/components/touchables/GenericTouchable';
-
-import {DefaultText as Text, RoundCard} from '../../../../components';
+import {DefaultText as Text, RoundCard} from '../../../../../components';
 
 type Props = {
   title: string;

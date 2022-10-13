@@ -12,6 +12,7 @@ const DefaultText = ({children, style}: Props) => {
 const defaultText = css`
   font-family: 'Pretendard';
   font-size: 14px;
+  color: #fff;
 `;
 
 export default DefaultText;
