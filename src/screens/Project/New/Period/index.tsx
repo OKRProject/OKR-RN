@@ -1,10 +1,10 @@
 import {View} from 'react-native';
-import React, {Dispatch, SetStateAction, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {css} from '@emotion/native';
-import {NewProjectType} from '..';
-import {Card, Header, Title} from '../components';
+import {Header, Title} from '../components';
 import {DefaultText as Text, RoundCard} from '../../../../components';
 import ProjectCalendar from './ProjectCalendar';
+import {dateStringToViewText} from '../../../../utils/calendar';
 
 type Props = {
   title: string;
@@ -12,36 +12,45 @@ type Props = {
   endDt: string;
   onChangeTitle: (title: string) => void;
   onChangePeriod: (startDt: string, endDt: string) => void;
+  onCancel: () => void;
 };
 const Period = ({
-  onChangeTitle,
   title,
-  onChangePeriod,
   startDt,
   endDt,
+  onChangeTitle,
+  onCancel,
+  onChangePeriod,
 }: Props) => {
-  const [newStartDt, setNewStartDt] = useState<string>(startDt);
-  const [newEndDt, setNewEndDt] = useState<string>(endDt);
-  const viewStartDt = useMemo<string>(() => '22년 00월 00일', [newStartDt]);
-  const viewEndDt = useMemo<string>(() => '22년 00월 00일', [newEndDt]);
+  const [{start, end}, setDate] = useState<{
+    start: string;
+    end: string;
+  }>({start: startDt, end: endDt});
 
-  const handleCompletePeriod = () => {};
+  const viewStartDt = useMemo<string>(
+    () => dateStringToViewText(start),
+    [start],
+  );
+
+  const viewEndDt = useMemo<string>(() => dateStringToViewText(end), [end]);
+
+  const handleCompletePeriod = () => start && end && onChangePeriod(start, end);
 
   return (
     <View style={container}>
-      <Header onClickCancel={() => {}} onClickComplete={handleCompletePeriod} />
+      <Header onClickCancel={onCancel} onClickComplete={handleCompletePeriod} />
       <Title title={title} onChangeTitle={onChangeTitle} />
       <RoundCard style={period}>
         <Text style={cardTitle}>기간</Text>
         <View style={dateHeader}>
-          <View style={dateWrap}>
+          <View style={[dateWrap, marginRight]}>
             <Text style={date}>{viewStartDt}</Text>
           </View>
           <View style={dateWrap}>
-            <Text style={date}>{viewStartDt}</Text>
+            <Text style={date}>{viewEndDt}</Text>
           </View>
         </View>
-        <ProjectCalendar />
+        <ProjectCalendar selectDay={setDate} startDt={start} endDt={end} />
       </RoundCard>
     </View>
   );
@@ -70,9 +79,16 @@ const dateWrap = css`
   background: #636363;
   border-radius: 4px;
   padding: 4.5px 14.5px;
+  flex: 1;
 `;
 const date = css`
   font-size: 16px;
+  width: 100%;
+  text-align: center;
+`;
+
+const marginRight = css`
+  margin-right: 13px;
 `;
 
 const dateHeader = css`

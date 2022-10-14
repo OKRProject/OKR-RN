@@ -39,7 +39,6 @@ const dateConfig = () => {
       '토요일',
     ],
     dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-    today: '오늘',
   };
 };
 export const config = () => {

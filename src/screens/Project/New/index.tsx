@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 
 import {Background} from '../../../components';
 import {RootStackParamList} from '../../../navigation/main';
+import {getDate} from '../../../utils/calendar';
 import Main from './Main';
 import Period from './Period';
 
@@ -14,10 +15,12 @@ export type NewProjectType = {
   krList: string[];
 };
 
+const today = new Date().toDateString();
+
 const initProject: NewProjectType = {
   title: '',
-  startDt: '',
-  endDt: '',
+  startDt: getDate(today, 0),
+  endDt: getDate(today, 6),
   object: '',
   krList: [''],
 };
@@ -27,13 +30,16 @@ const New = ({}: Props) => {
   const [isPeriodPage, setPeriodPage] = useState<boolean>(false);
 
   const handleTitle = (title: string) => setProject(prev => ({...prev, title}));
-  const handleChangePeriod = (startDt: string, endDt: string) => {};
+  const handleChangePeriod = (startDt: string, endDt: string) =>
+    setProject(prev => ({...prev, startDt, endDt}));
+  const handleCancelSelectPeriod = () => setPeriodPage(false);
   return (
     <Background>
       {isPeriodPage ? (
         <Period
           onChangeTitle={handleTitle}
           onChangePeriod={handleChangePeriod}
+          onCancel={handleCancelSelectPeriod}
           {...project}
         />
       ) : (

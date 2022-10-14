@@ -1,8 +1,8 @@
-import {View, Text} from 'react-native';
-import React from 'react';
-import {Calendar} from 'react-native-calendars';
 import {css} from '@emotion/native';
-import {Theme} from 'react-native-calendars/src/types';
+import React, {useMemo, useState} from 'react';
+import {Calendar} from 'react-native-calendars';
+import {Theme, MarkedDates} from 'react-native-calendars/src/types';
+import {getElapsedDay, getDate} from '../../../../../utils/calendar';
 
 const theme: Theme = {
   calendarBackground: 'transparent',
@@ -20,7 +20,62 @@ const theme: Theme = {
   arrowColor: '#A9A9A9',
   monthTextColor: '#A9A9A9',
 };
-const ProjectCalendar = () => {
+
+const startDayStyle = {
+  startingDay: true,
+  color: '#1F92F2',
+  textColor: 'white',
+};
+
+const endDayStyle = {endingDay: true, color: '#1F92F2', textColor: 'white'};
+const periodDayStyle = {color: '#254766', textColor: 'white'};
+const selectedDayStyle = {...startDayStyle, ...endDayStyle};
+
+type Props = {
+  startDt: string;
+  endDt: string;
+  selectDay: (period: {start: string; end: string}) => void;
+};
+
+const ProjectCalendar = ({startDt, endDt, selectDay}: Props) => {
+  const markedDates = useMemo<MarkedDates>(() => {
+    if (!startDt && !endDt) return {};
+    if (startDt && startDt === endDt)
+      return {
+        [startDt]: selectedDayStyle,
+      };
+    if (startDt && endDt) {
+      const dayLength = getElapsedDay({start: startDt, end: endDt});
+      const dayList = Array.from({length: dayLength + 1}, (_, i) =>
+        getDate(startDt, i),
+      );
+      return dayList.reduce((prev, cur, idx) => {
+        if (idx === 0)
+          return {
+            [cur]: startDayStyle,
+          };
+        if (idx === dayLength)
+          return {
+            ...prev,
+            [cur]: endDayStyle,
+          };
+        return {...prev, [cur]: periodDayStyle};
+      }, {} as MarkedDates);
+    }
+
+    return {};
+  }, [startDt, endDt]);
+
+  const handleSelectDay = (dateString: string) => {
+    if (
+      startDt &&
+      startDt === endDt &&
+      getElapsedDay({start: startDt, end: dateString}) >= 0
+    )
+      return selectDay({start: startDt, end: dateString});
+    return selectDay({start: dateString, end: dateString});
+  };
+
   return (
     <>
       <Calendar
@@ -28,20 +83,10 @@ const ProjectCalendar = () => {
         monthFormat={'yyyy년 MMM'}
         onPressArrowLeft={subtractMonth => subtractMonth()}
         onPressArrowRight={addMonth => addMonth()}
-        onDayPress={day => {
-          console.log(day);
-        }}
+        onDayPress={({dateString}) => handleSelectDay(dateString)}
         theme={theme}
         markingType={'period'}
-        markedDates={{
-          '2022-10-23': {
-            startingDay: true,
-            color: '#70d7c7',
-            textColor: 'white',
-          },
-          '2022-10-24': {color: '#70d7c7', textColor: 'white'},
-          '2022-10-25': {endingDay: true, color: '#50cebb', textColor: 'white'},
-        }}
+        markedDates={markedDates}
       />
     </>
   );
