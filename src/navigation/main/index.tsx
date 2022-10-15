@@ -23,7 +23,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Main = () => {
   const user = userStore(state => state.user);
 
-  return user ? (
+  return !user ? (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
@@ -33,11 +33,12 @@ const Main = () => {
     </Stack.Navigator>
   ) : (
     <Stack.Navigator
-      initialRouteName="SignIn"
+      initialRouteName="SignUp"
       screenOptions={{
         headerShown: false,
       }}>
       <Stack.Screen name="SignIn" component={Screens.SignIn} />
+      <Stack.Screen name="SignUp" component={Screens.SignUp} />
     </Stack.Navigator>
   );
 };

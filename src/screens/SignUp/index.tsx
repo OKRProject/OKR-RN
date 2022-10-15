@@ -1,11 +1,27 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import React, {ReactNode, useState} from 'react';
+import {Background} from '../../components';
+import {Header} from './components';
+import Layout from './components/Layout';
+import StepName from './StepName';
+import StepField from './StepField';
+import StepDetail from './StepDetail';
 
+type StepType = 'name' | 'field' | 'detail';
+const StepPage: {[key in StepType]: ReactNode} = {
+  name: <StepName />,
+  field: <StepField />,
+  detail: <StepDetail />,
+};
 const SignUp = () => {
+  const [step, setStep] = useState<StepType>('name');
   return (
-    <View>
-      <Text>SignUp</Text>
-    </View>
+    <Background>
+      <SafeAreaView>
+        <Header />
+        {StepPage[step]}
+      </SafeAreaView>
+    </Background>
   );
 };
 
