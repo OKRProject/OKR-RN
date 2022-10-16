@@ -3,6 +3,7 @@ import instance from './instance';
 export type UserProfileType = {
   email: string;
   name: string;
+  field: string;
   profileImage: string;
 };
 
@@ -32,6 +33,17 @@ export type SingUpReqType = {
   device: string;
 };
 
+export type FieldListType = {
+  code: string;
+  title: string;
+}[];
+
+const getCategory = async () =>
+  await instance.get<FieldListType>('user/job/category');
+
+const getFields = async (category: string) =>
+  await instance.get<FieldListType>(`user/job/${category}/fields`);
+
 export type SignUpResType = TokenType & UserProfileType;
 
 export type SignInResType = SessionType | TokenType;
@@ -43,4 +55,4 @@ const signUp = async (body: SingUpReqType) =>
   await instance.post<SignUpResType>('user/mobile/sign-up', body);
 
 const refresh = async () => await instance.get('auth/refresh');
-export default {loginByGoogle, signUp, refresh};
+export default {loginByGoogle, signUp, refresh, getCategory, getFields};

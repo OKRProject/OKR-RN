@@ -9,11 +9,6 @@ interface UserState {
 }
 
 const userStore = create<UserState>(set => ({
-  user: {
-    email: 'moa@gmail.com',
-    name: 'USER',
-    profileImage: '',
-  },
   setAuthSession: session => set(() => ({session})),
   setUserProfile: profile => set(() => ({user: profile})),
 }));

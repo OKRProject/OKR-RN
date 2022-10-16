@@ -20,6 +20,7 @@ const Layout = ({children, title, desc}: Props) => {
 
 const container = css`
   padding: 14px 20px;
+  flex: 1;
 `;
 const titleText = css`
   font-weight: 600;

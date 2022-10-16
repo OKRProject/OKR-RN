@@ -4,10 +4,16 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Icons} from '../../../../components';
 import {css} from '@emotion/native';
 
-const Header = () => {
+type Props = {
+  onClickBack: () => void;
+};
+const Header = ({onClickBack}: Props) => {
   return (
     <View style={container}>
-      <TouchableOpacity style={button}>
+      <TouchableOpacity
+        style={button}
+        onPress={onClickBack}
+        hitSlop={{top: 20, left: 20, bottom: 20, right: 20}}>
         <Icons.Back />
       </TouchableOpacity>
     </View>
@@ -16,7 +22,6 @@ const Header = () => {
 
 const container = css`
   padding: 14px;
-  background-color: red;
 `;
 
 const button = css`

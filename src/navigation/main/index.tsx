@@ -23,7 +23,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Main = () => {
   const user = userStore(state => state.user);
 
-  return !user ? (
+  return user ? (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
