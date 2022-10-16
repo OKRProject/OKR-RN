@@ -2,7 +2,9 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Screens from '../../screens';
 import userStore from '../../store/userStore';
-import BottomTabNavigator from './bottomTab';
+import BottomTabNavigator from './BottomTab';
+
+export type ProjectParam = {type: 'main'} | {type: 'new'} | {type: 'detail'};
 
 export type RootStackParamList = {
   Home: undefined;
@@ -11,9 +13,9 @@ export type RootStackParamList = {
   Calendar: undefined;
   MyPage: undefined;
   Onboard: undefined;
-  Project: undefined;
+  Project: ProjectParam;
   Feedback: undefined;
-  Root: undefined;
+  Bottom: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -26,7 +28,8 @@ const Main = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
+      <Stack.Screen name="Bottom" component={BottomTabNavigator} />
+      <Stack.Screen name="Project" component={Screens.Project} />
     </Stack.Navigator>
   ) : (
     <Stack.Navigator
