@@ -16,6 +16,8 @@ export type RootStackParamList = {
   Project: ProjectParam;
   Feedback: undefined;
   Bottom: undefined;
+  Terms: undefined;
+  Policy: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -33,12 +35,14 @@ const Main = () => {
     </Stack.Navigator>
   ) : (
     <Stack.Navigator
-      initialRouteName="SignUp"
+      initialRouteName="SignIn"
       screenOptions={{
         headerShown: false,
       }}>
       <Stack.Screen name="SignIn" component={Screens.SignIn} />
       <Stack.Screen name="SignUp" component={Screens.SignUp} />
+      <Stack.Screen name="Terms" component={Screens.Terms} />
+      <Stack.Screen name="Policy" component={Screens.Policy} />
     </Stack.Navigator>
   );
 };

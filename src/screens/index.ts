@@ -6,6 +6,8 @@ import MyPage from './MyPage';
 import Onboard from './Onboard';
 import Project from './Project';
 import Feedback from './Feedback';
+import Terms from './Terms';
+import Policy from './Policy';
 
 export default {
   Home,
@@ -16,4 +18,6 @@ export default {
   Onboard,
   Project,
   Feedback,
+  Terms,
+  Policy,
 };
