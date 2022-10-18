@@ -15,7 +15,7 @@ type CallbacksType = {
   signUpCallback: (data: SessionType) => void;
 };
 function isLogin(res: SignInResType): res is TokenType {
-  return (res as TokenType).accessToken !== null;
+  return !!(res as TokenType).accessToken;
 }
 
 const useSignIn = () => {
@@ -25,16 +25,18 @@ const useSignIn = () => {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
       let idToken = userInfo.idToken;
-      console.log(idToken);
+
       if (!idToken) {
         const token = await GoogleSignin.getTokens();
         idToken = token.idToken;
       }
 
       const {data} = await api.user.loginByGoogle(idToken);
+
       if (isLogin(data)) {
         //로그인
         const {refreshToken, accessToken, ...rest} = data;
+
         setUserProfile({...rest});
         //todo token 저장/header 로직
       } else {
@@ -42,14 +44,12 @@ const useSignIn = () => {
         setAuthSession(data);
         signUpCallback(data);
       }
-
-      return;
+      return GoogleSignin.signOut();
     } catch (error: any) {
-      console.log(error, error.message, 'error');
+      console.log(error.response.data, error.response.status, 'error');
       if (error.code !== '-5') {
       }
     }
-    GoogleSignin.signOut();
   }, []);
 
   const appleSignIn = useCallback(async ({signUpCallback}: CallbacksType) => {

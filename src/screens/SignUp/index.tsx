@@ -7,20 +7,10 @@ import StepCategory from './StepCategory';
 import StepField from './StepField';
 import {css} from '@emotion/native';
 import api from '../../api';
-import {FieldListType} from '../../api/user';
 import userStore from '../../store/userStore';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigation/main';
-
-const dum = [
-  {code: '기획', title: '기획'},
-  {code: '디자인', title: '디자인'},
-  {code: '프론트', title: '프론트엔드 개발'},
-  {code: '백엔드 개발', title: '백엔드 개발'},
-  {code: '직무・마케팅', title: '직무・마케팅'},
-  {code: '기타', title: '기타'},
-];
 
 export type StepType = 'name' | 'field' | 'category';
 type navigationProps = StackNavigationProp<RootStackParamList>;
@@ -38,8 +28,7 @@ const SignUp = () => {
   }>({name: session?.name ?? ''});
 
   const init = async () => {
-    // const {data} = await api.user.getCategory();
-    const data: FieldListType = dum;
+    const {data} = await api.user.getCategory();
     const list = data.reduce(
       (prev, cur) => ({...prev, [cur.code]: cur.title}),
       {},
@@ -53,28 +42,34 @@ const SignUp = () => {
 
   const handleSelectCategory = async (category: string) => {
     setPersonalInfo(prev => ({...prev, category}));
-    // const {data} = await api.user.getFields(category);
-    const data: FieldListType = dum;
+    const {data} = await api.user.getFields(category);
+
     const list = data.reduce(
       (prev, cur) => ({...prev, [cur.code]: cur.title}),
       {},
     );
+
     setFieldList(list);
   };
 
   const handleSelectField = (field: string) =>
     setPersonalInfo(prev => ({...prev, field}));
 
-  const handleComplete = () => {
-    //todo api
-    //201이면 setUser
-    const data = {
-      email: 'moa@gmail.com',
-      name: '김모아',
-      profileImage: '',
-      field: '프론트엔드',
+  const handleComplete = async () => {
+    if (!session || !field || !fieldList) return;
+    const body = {
+      tempUserId: session.tempUserId,
+      email: session.email,
+      name,
+      jobField: field,
     };
-    setUserProfile(data);
+
+    try {
+      const {data} = await api.user.signUp(body);
+      setUserProfile(data);
+    } catch (e: any) {
+      console.log(e.response.data, 'error');
+    }
   };
 
   const handleClickBack = () => {
@@ -108,7 +103,7 @@ const SignUp = () => {
         />
       ),
     }),
-    [name, field, category, setPersonalInfo, categoryList],
+    [name, field, category, setPersonalInfo, categoryList, fieldList],
   );
 
   return (

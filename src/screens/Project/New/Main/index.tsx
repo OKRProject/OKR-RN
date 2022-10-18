@@ -8,6 +8,11 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../../navigation/main';
 import type {StackNavigationProp} from '@react-navigation/stack';
 import {dateStringToViewText} from '../../../../utils/calendar';
+import {
+  CreateNewProjectReqType,
+  ProjectTypeEnum,
+} from '../../../../api/project';
+import api from '../../../../api';
 
 type Props = NewProjectType & {
   setProject: Dispatch<SetStateAction<NewProjectType>>;
@@ -40,12 +45,28 @@ const Main = ({
   const handleNavigateProjectMain = () =>
     navigation.navigate('Project', {type: 'main'});
 
+  const handleCompleteCreateProject = async () => {
+    const body: CreateNewProjectReqType = {
+      name: title,
+      keyResults: krList,
+      sdt: startDt,
+      edt: endDt,
+      type: ProjectTypeEnum.single,
+      object,
+    };
+    try {
+      const {data} = await api.project.createNewProject(body);
+      handleNavigateProjectMain();
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <>
       <View style={container}>
         <Header
           onClickCancel={handleNavigateProjectMain}
-          onClickComplete={() => {}}
+          onClickComplete={handleCompleteCreateProject}
         />
         <Title title={title} onChangeTitle={onChangeTitle} />
         <Card title="기간" style={period} onPress={handleClickPeriod}>
