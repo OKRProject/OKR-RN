@@ -7,7 +7,7 @@ export type UserProfileType = {
   profileImage: string;
 };
 
-export type TokenType = UserProfileType & {
+export type TokenType = {
   accessToken: string;
   refreshToken: string;
 };
@@ -31,15 +31,16 @@ export type FieldListType = {
   title: string;
 }[];
 
+export type SignUpResType = TokenType & UserProfileType;
+export type SignInSuccessResType = TokenType & UserProfileType;
+
+export type SignInResType = SessionType | SignInSuccessResType;
+
 const getCategory = async () =>
   await instance.get<FieldListType>('v1/user/job/category');
 
 const getFields = async (category: string) =>
   await instance.get<FieldListType>(`v1/user/job/${category}/fields`);
-
-export type SignUpResType = TokenType & UserProfileType;
-
-export type SignInResType = SessionType | TokenType;
 
 const loginByGoogle = async (idToken: string) =>
   await instance.get<SignInResType>(`auth/login/GOOGLE/${idToken}`);

@@ -17,7 +17,7 @@ type navigationProps = StackNavigationProp<RootStackParamList>;
 
 const SignUp = () => {
   const navigation = useNavigation<navigationProps>();
-  const {setUserProfile, session} = userStore();
+  const {setUserProfile,setAuthSession, session} = userStore();
   const [step, setStep] = useState<StepType>('name');
   const [categoryList, setCategoryList] = useState<{[key in string]: string}>();
   const [fieldList, setFieldList] = useState<{[key in string]: string}>();
@@ -67,6 +67,7 @@ const SignUp = () => {
     try {
       const {data} = await api.user.signUp(body);
       setUserProfile(data);
+      setAuthSession(undefined)
     } catch (e: any) {
       console.log(e.response.data, 'error');
     }
