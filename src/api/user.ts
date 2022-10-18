@@ -20,17 +20,10 @@ export type SessionType = {
 };
 
 export type SingUpReqType = {
-  gender: string;
-  age: string;
-  language: string;
-  policyConfirmed: boolean;
-  nation: string;
-  interests: string[];
+  tempUserId: string;
   email: string;
-  displayName: string;
-  session: string;
-  referralCode?: string;
-  device: string;
+  name: string;
+  jobField: string;
 };
 
 export type FieldListType = {
@@ -39,10 +32,10 @@ export type FieldListType = {
 }[];
 
 const getCategory = async () =>
-  await instance.get<FieldListType>('user/job/category');
+  await instance.get<FieldListType>('v1/user/job/category');
 
 const getFields = async (category: string) =>
-  await instance.get<FieldListType>(`user/job/${category}/fields`);
+  await instance.get<FieldListType>(`v1/user/job/${category}/fields`);
 
 export type SignUpResType = TokenType & UserProfileType;
 
@@ -52,7 +45,7 @@ const loginByGoogle = async (idToken: string) =>
   await instance.get<SignInResType>(`auth/login/GOOGLE/${idToken}`);
 
 const signUp = async (body: SingUpReqType) =>
-  await instance.post<SignUpResType>('user/mobile/sign-up', body);
+  await instance.post<SignUpResType>('auth/join', body);
 
 const refresh = async () => await instance.get('auth/refresh');
 export default {loginByGoogle, signUp, refresh, getCategory, getFields};

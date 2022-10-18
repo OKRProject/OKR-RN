@@ -59,14 +59,15 @@ const container = css`
 
 const categoryWrap = css`
   margin-top: 48px;
+  padding: 0 12px;
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 `;
 
 const fieldItem = css`
-  margin-bottom: 12px;
+  margin: 0 4px 12px 4px;
   padding: 10px 20px;
   border-radius: 50px;
   background-color: #27272a;
