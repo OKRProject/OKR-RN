@@ -26,7 +26,6 @@ const useSignIn = () => {
       const userInfo = await GoogleSignin.signIn();
       let idToken = userInfo.idToken;
       console.log(idToken);
-
       if (!idToken) {
         const token = await GoogleSignin.getTokens();
         idToken = token.idToken;
@@ -41,14 +40,16 @@ const useSignIn = () => {
       } else {
         //회원가입
         setAuthSession(data);
+        signUpCallback(data);
       }
 
       return;
     } catch (error: any) {
-      console.log(error, 'error');
+      console.log(error, error.message, 'error');
       if (error.code !== '-5') {
       }
     }
+    GoogleSignin.signOut();
   }, []);
 
   const appleSignIn = useCallback(async ({signUpCallback}: CallbacksType) => {
@@ -76,6 +77,9 @@ const useSignIn = () => {
       //   }
       //   return;
       // }
+      // appleAuth.performRequest({
+      //   requestedOperation: appleAuth.Operation.LOGOUT,
+      // });
     }
   }, []);
 

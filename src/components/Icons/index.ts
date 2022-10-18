@@ -9,6 +9,8 @@ import Filter from './Filter';
 import Plus from './Plus';
 import Close from './Close';
 import Back from './Back';
+import Google from './Google';
+import Apple from './Apple';
 
 export default {
   Project,
@@ -22,4 +24,6 @@ export default {
   Plus,
   Close,
   Back,
+  Google,
+  Apple,
 };
