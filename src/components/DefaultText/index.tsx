@@ -1,9 +1,8 @@
 import React, {ReactNode} from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, TextProps} from 'react-native';
 import {css, ReactNativeStyle} from '@emotion/native';
-type Props = {
+type Props = TextProps & {
   children: ReactNode;
-  style?: ReactNativeStyle | ReactNativeStyle[];
 };
 const DefaultText = ({children, style}: Props) => {
   return <Text style={[defaultText, style]}>{children}</Text>;

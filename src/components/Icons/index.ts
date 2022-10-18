@@ -8,6 +8,7 @@ import People from './People';
 import Filter from './Filter';
 import Plus from './Plus';
 import Close from './Close';
+import Back from './Back';
 
 export default {
   Project,
@@ -20,4 +21,5 @@ export default {
   Filter,
   Plus,
   Close,
+  Back,
 };
