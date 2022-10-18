@@ -4,22 +4,24 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'react-native-get-random-values';
 import Config from 'react-native-config';
 import api from '../../api';
-import {SessionType, SignInResType, TokenType} from '../../api/user';
+import {SessionType, SignInResType, SignInSuccessResType} from '../../api/user';
 import userStore from '../../store/userStore';
+import {saveSessions} from '../useAxiosInterceptor';
 
 GoogleSignin.configure({
   iosClientId: Config.GOOGLE_IOS_CLIENT_ID,
 });
 
 type CallbacksType = {
-  signUpCallback: (data: SessionType) => void;
+  signUpCallback: () => void;
 };
-function isLogin(res: SignInResType): res is TokenType {
-  return !!(res as TokenType).accessToken;
+function isLogin(res: SignInResType): res is SignInSuccessResType {
+  return !!(res as SignInSuccessResType).accessToken;
 }
 
 const useSignIn = () => {
   const {setAuthSession, setUserProfile} = userStore();
+
   const googleSignIn = useCallback(async ({signUpCallback}: CallbacksType) => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -36,13 +38,12 @@ const useSignIn = () => {
       if (isLogin(data)) {
         //로그인
         const {refreshToken, accessToken, ...rest} = data;
-
         setUserProfile({...rest});
-        //todo token 저장/header 로직
+        saveSessions({refreshToken, accessToken});
       } else {
         //회원가입
         setAuthSession(data);
-        signUpCallback(data);
+        signUpCallback();
       }
       return GoogleSignin.signOut();
     } catch (error: any) {
