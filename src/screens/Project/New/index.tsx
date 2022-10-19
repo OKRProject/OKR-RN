@@ -30,8 +30,10 @@ const New = ({}: Props) => {
   const [isPeriodPage, setPeriodPage] = useState<boolean>(false);
 
   const handleTitle = (title: string) => setProject(prev => ({...prev, title}));
-  const handleChangePeriod = (startDt: string, endDt: string) =>
+  const handleChangePeriod = (startDt: string, endDt: string) => {
     setProject(prev => ({...prev, startDt, endDt}));
+    setPeriodPage(false);
+  };
   const handleCancelSelectPeriod = () => setPeriodPage(false);
   return (
     <Background>

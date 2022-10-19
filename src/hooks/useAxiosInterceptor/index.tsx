@@ -2,10 +2,13 @@ import axios from 'axios';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import Config from 'react-native-config';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import api from '../../api';
+import {TokenType} from '../../api/auth';
 import instance from '../../api/instance';
-import {TokenType} from '../../api/user';
+import userStore from '../../store/userStore';
+import useSignOut, {clearUserSession} from '../useSignOut';
 
-import useSignOut from '../useSignOut';
+const refreshURI = `${Config.API_URL}auth/refresh`;
 
 type SessionType = {access: string; refresh: string};
 
@@ -20,6 +23,8 @@ const getUserSession = async () => {
 };
 
 export const saveSessions = async (tokens: TokenType) => {
+  const beforeSession = await getUserSession();
+  if (beforeSession) await clearUserSession();
   console.log('saveSessions');
   try {
     const session: SessionType = {
@@ -27,13 +32,16 @@ export const saveSessions = async (tokens: TokenType) => {
       refresh: tokens.refreshToken,
     };
     await EncryptedStorage.setItem('user_session', JSON.stringify(session));
-  } catch (error) {}
+  } catch (error) {
+    console.log(error, 'save session error');
+  }
 };
 
 const useAxiosInterceptor = () => {
   const [isInitReq, setIsInitReq] = useState(false);
   const [isInitRes, setIsInitRes] = useState(false);
   const {signOutUser} = useSignOut();
+  const {setUserProfile} = userStore();
 
   const isLoading = useMemo(
     () => !(isInitReq && isInitRes),
@@ -42,6 +50,10 @@ const useAxiosInterceptor = () => {
 
   const initReq = useCallback(async () => {
     const session = await getUserSession();
+    if (session) {
+      const {data} = await api.user.getUserProfile();
+      setUserProfile(data);
+    }
     setIsInitReq(true);
   }, []);
 
@@ -50,7 +62,10 @@ const useAxiosInterceptor = () => {
       const session = await getUserSession();
       if (config.headers && session) {
         const isRefresh =
-          config.url === 'user/sign-out' || config.url === ' user/refresh';
+          config.url === 'user/sign-out' ||
+          config.url === ' auth/refresh' ||
+          config.url === refreshURI;
+
         config.headers.Authorization = `Bearer ${
           session[isRefresh ? 'refresh' : 'access']
         }`;
@@ -60,17 +75,18 @@ const useAxiosInterceptor = () => {
   }, []);
 
   useEffect(() => {
-    const refreshURI = `${Config.API_URL}/user/mobile/refresh`;
-
     initReq();
     instance.interceptors.response.use(
       response => response,
       async error => {
         if (error?.response?.status === 401) {
-          const session = await getUserSession();
-
-          if (error?.config?.url === 'user/mobile/refresh') signOutUser();
+          if (
+            error?.config?.url === 'auth/refresh' ||
+            error?.config?.url === refreshURI
+          )
+            signOutUser();
           else if (error?.config?.url !== 'user/sign-out') {
+            const session = await getUserSession();
             if (session) {
               const _config = {
                 headers: {Authorization: `Bearer ${session.refresh}`},
@@ -96,7 +112,7 @@ const useAxiosInterceptor = () => {
     );
 
     setIsInitRes(true);
-  }, [initReq, signOutUser]);
+  }, [initReq, signOutUser, getUserSession]);
 
   return isLoading;
 };
