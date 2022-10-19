@@ -1,5 +1,6 @@
 import create from 'zustand';
-import {SessionType, UserProfileType} from '../../api/user';
+import {SessionType} from '../../api/auth';
+import {UserProfileType} from '../../api/user';
 
 interface UserState {
   setAuthSession: (session?: SessionType) => void;

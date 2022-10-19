@@ -3,7 +3,8 @@ import {
   NavigationContainerRef,
 } from '@react-navigation/native';
 
-import React from 'react';
+import React, {useEffect} from 'react';
+import {clearUserSession} from '../hooks/useSignOut';
 import Main from './main';
 
 const Navigation = () => {

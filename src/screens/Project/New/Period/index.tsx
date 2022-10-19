@@ -34,7 +34,9 @@ const Period = ({
 
   const viewEndDt = useMemo<string>(() => dateStringToViewText(end), [end]);
 
-  const handleCompletePeriod = () => start && end && onChangePeriod(start, end);
+  const handleCompletePeriod = () => {
+    start && end && onChangePeriod(start, end);
+  };
 
   return (
     <View style={container}>

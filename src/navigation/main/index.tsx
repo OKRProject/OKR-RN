@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Screens from '../../screens';
 import userStore from '../../store/userStore';
 import BottomTabNavigator from './BottomTab';
+import {useAxiosInterceptor} from '../../hooks';
 
 export type ProjectParam = {type: 'main'} | {type: 'new'} | {type: 'detail'};
 
@@ -24,6 +25,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Main = () => {
   const user = userStore(state => state.user);
+  const isLoading = useAxiosInterceptor();
 
   return user ? (
     <Stack.Navigator

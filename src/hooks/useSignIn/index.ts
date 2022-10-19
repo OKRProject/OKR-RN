@@ -4,7 +4,7 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'react-native-get-random-values';
 import Config from 'react-native-config';
 import api from '../../api';
-import {SessionType, SignInResType, SignInSuccessResType} from '../../api/user';
+import {SignInResType, SignInSuccessResType} from '../../api/auth';
 import userStore from '../../store/userStore';
 import {saveSessions} from '../useAxiosInterceptor';
 
@@ -33,7 +33,7 @@ const useSignIn = () => {
         idToken = token.idToken;
       }
 
-      const {data} = await api.user.loginByGoogle(idToken);
+      const {data} = await api.auth.loginByGoogle(idToken);
 
       if (isLogin(data)) {
         //로그인
@@ -45,7 +45,7 @@ const useSignIn = () => {
         setAuthSession(data);
         signUpCallback();
       }
-      return GoogleSignin.signOut();
+      // return GoogleSignin.signOut();
     } catch (error: any) {
       console.log(error.response.data, error.response.status, 'error');
       if (error.code !== '-5') {

@@ -4,10 +4,11 @@ import api from '../../api';
 import userStore from '../../store/userStore';
 
 export const clearUserSession = async () => {
+  console.log('clear');
   try {
     await EncryptedStorage.removeItem('user_session');
   } catch (e) {
-    console.log(e);
+    console.log(e, '삭제할 세션 없음');
   }
 };
 

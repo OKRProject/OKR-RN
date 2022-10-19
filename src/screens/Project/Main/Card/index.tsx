@@ -1,9 +1,9 @@
 import React, {useMemo} from 'react';
 import {View} from 'react-native';
 import {css} from '@emotion/native';
-import {ProjectType} from '..';
 import {Icons, RoundCard, DefaultText as Text} from '../../../../components';
 import LinearGradient from 'react-native-linear-gradient';
+import {ProjectType} from '../../../../api/project';
 
 type Props = {
   project: ProjectType;
@@ -13,41 +13,34 @@ type Props = {
 const Card = ({project, ...rest}: Props) => {
   const {
     id,
-    title,
+    name,
     object,
-    wholeIni,
-    completedIni,
-    member,
-    startDt,
-    endDt,
-    isNew,
-  } = useMemo(() => ({...project}), [project]);
-  const percent = useMemo(
-    () => Math.floor((completedIni / wholeIni) * 100),
-    [wholeIni, completedIni],
-  );
+    teamMemberEmails,
+    teamMemberProfileImages,
+    progress,
+    sdt,
+    edt,
+    newProject,
+  } = useMemo(() => project, [project]);
+  const percent = useMemo(() => Math.floor(progress), [progress]);
 
   const startDate = useMemo(
     () =>
-      startDt
-        .split('-')
-        .reduce((prev, cur) => (prev ? `${prev}.${cur}` : cur), ''),
-    [startDt],
+      sdt.split('-').reduce((prev, cur) => (prev ? `${prev}.${cur}` : cur), ''),
+    [sdt],
   );
 
   const endDate = useMemo(
     () =>
-      endDt
-        .split('-')
-        .reduce((prev, cur) => (prev ? `${prev}.${cur}` : cur), ''),
-    [endDt],
+      edt.split('-').reduce((prev, cur) => (prev ? `${prev}.${cur}` : cur), ''),
+    [edt],
   );
 
   return (
     <RoundCard style={container} {...rest}>
       <View style={titleWrap}>
-        <Text style={projectTitle}>{title}</Text>
-        {isNew && <Text style={newHighlight}>NEW</Text>}
+        <Text style={projectTitle}>{name}</Text>
+        {newProject && <Text style={newHighlight}>NEW</Text>}
       </View>
       <Text style={objectDesc}>목표:{object}</Text>
       <View style={progressWrap}>
@@ -56,7 +49,7 @@ const Card = ({project, ...rest}: Props) => {
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}
             colors={['#43D2FF', '#1F92F2']}
-            style={[progress, {width: `${percent}%`}]}
+            style={[progressGauge, {width: `${percent}%`}]}
           />
         </View>
         <Text style={progressText}>
@@ -66,7 +59,7 @@ const Card = ({project, ...rest}: Props) => {
       <View style={bottom}>
         <View style={people}>
           <Icons.People />
-          <Text style={peopleText}>{member}</Text>
+          <Text style={peopleText}>{''}</Text>
         </View>
         <Text style={period}>
           {startDate} - {endDate}
@@ -114,7 +107,7 @@ const progressBack = css`
   overflow: hidden;
   position: relative;
 `;
-const progress = css`
+const progressGauge = css`
   position: absolute;
   top: 0;
   left: 0;

@@ -56,9 +56,12 @@ const Main = ({
     };
     try {
       const {data} = await api.project.createNewProject(body);
+      console.log(data, 'newProject');
       handleNavigateProjectMain();
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.log(e.response.headers, 'header!!!!');
+      console.log(e.response.data);
+      console.log(e.response, 'error response');
     }
   };
   return (

@@ -11,13 +11,14 @@ import userStore from '../../store/userStore';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigation/main';
+import {saveSessions} from '../../hooks/useAxiosInterceptor';
 
 export type StepType = 'name' | 'field' | 'category';
 type navigationProps = StackNavigationProp<RootStackParamList>;
 
 const SignUp = () => {
   const navigation = useNavigation<navigationProps>();
-  const {setUserProfile,setAuthSession, session} = userStore();
+  const {setUserProfile, setAuthSession, session} = userStore();
   const [step, setStep] = useState<StepType>('name');
   const [categoryList, setCategoryList] = useState<{[key in string]: string}>();
   const [fieldList, setFieldList] = useState<{[key in string]: string}>();
@@ -65,9 +66,11 @@ const SignUp = () => {
     };
 
     try {
-      const {data} = await api.user.signUp(body);
-      setUserProfile(data);
-      setAuthSession(undefined)
+      const {data} = await api.auth.signUp(body);
+      const {refreshToken, accessToken, ...rest} = data;
+      await saveSessions({refreshToken, accessToken});
+      setUserProfile(rest);
+      setAuthSession(undefined);
     } catch (e: any) {
       console.log(e.response.data, 'error');
     }
