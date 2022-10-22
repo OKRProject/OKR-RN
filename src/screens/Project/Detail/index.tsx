@@ -4,7 +4,9 @@ import {RootStackParamList} from '../../../navigation/main';
 import {Background} from '../../../components';
 
 import {ProjectDetailType} from '../../../api/project';
-
+import Header from './Header';
+import KRList from './KRList';
+import ProjectObjective from './ProjectObjective';
 import api from '../../../api';
 
 interface Props extends NativeStackScreenProps<RootStackParamList, 'Project'> {
@@ -18,12 +20,25 @@ const Detail = ({projectId, navigation}: Props) => {
     const {data} = await api.project.getProjectDetail({id: projectId});
     setProject(data);
   };
+  const handleGoBack = () => navigation.goBack();
 
   useEffect(() => {
     init();
   }, []);
 
-  return <Background>{project ? <></> : <></>}</Background>;
+  return (
+    <Background>
+      {project ? (
+        <>
+          <Header {...project} onClickBack={handleGoBack} />
+          <ProjectObjective {...project} />
+          <KRList krList={project.keyResult} />
+        </>
+      ) : (
+        <></>
+      )}
+    </Background>
+  );
 };
 
 export default Detail;
