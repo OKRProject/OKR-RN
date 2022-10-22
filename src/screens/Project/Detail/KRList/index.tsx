@@ -1,20 +1,24 @@
 import {View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {css} from '@emotion/native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {DefaultText as Text} from '../../../../components';
 import {KeyResultType} from '../../../../api/project';
+import IniList from './IniList';
 
 type Props = {
-  krList: KeyResultType[];
+  KRList: KeyResultType[];
 };
-const IniList = ({krList}: Props) => {
-  const [selected, setSelected] = useState<number>(krList[0].keyResultId);
-  return krList[selected - 1] ? (
+const KRList = ({KRList}: Props) => {
+  const [selected, setSelected] = useState<number>(KRList[0].keyResultId);
+  const selectedKR = useMemo(() => KRList[selected - 1], [selected]);
+
+  return KRList[selected - 1] ? (
     <View style={container}>
       <View style={tabWrap}>
-        {krList.map(kr => (
+        {KRList.map(kr => (
           <TouchableWithoutFeedback
+            key={`project_detail_${kr.keyResultId}`}
             style={[tab, selected === kr.keyResultId && tabSelected]}
             onPress={() => setSelected(kr.keyResultId)}>
             <Text
@@ -25,7 +29,8 @@ const IniList = ({krList}: Props) => {
         ))}
       </View>
       <View style={contentWrap}>
-        <Text style={keyTitle}>{krList[selected - 1].keyResultName}</Text>
+        <Text style={keyTitle}>{selectedKR.keyResultName}</Text>
+        <IniList KRId={selectedKR.keyResultId} />
       </View>
     </View>
   ) : (
@@ -77,4 +82,4 @@ const keyTitle = css`
   margin-bottom: 26px;
 `;
 
-export default IniList;
+export default KRList;

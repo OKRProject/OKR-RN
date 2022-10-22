@@ -38,6 +38,19 @@ export type ProjectDetailType = {
   projectType: ProjectTypeEnum;
 };
 
+export type ProjectIniType = {
+  iniSeq: string;
+  iniName: string;
+  iniDetail: string;
+  done: boolean;
+  user: string;
+  endDate: string;
+  email: string;
+  myInitiative: boolean;
+  wroteFeedback: boolean;
+  dday: string;
+};
+
 export type GetProjectListResType = {
   content: ProjectType[];
 };
@@ -47,6 +60,20 @@ export type CreateNewProjectReqType = NewProjectType;
 export type GetProjectDetailReqType = Pick<ProjectType, 'id'>;
 export type GetProjectDetailResType = ProjectDetailType;
 
+export type GetProjectIniListReqType = {
+  KRId: number;
+};
+
+export type GetProjectIniListResType = {
+  content: ProjectIniType[];
+};
+
+export type AddProjectIniReqType = {
+  keyResultId: number;
+  name: string;
+  edt: string;
+  detail: string;
+};
 const createNewProject = (body: CreateNewProjectReqType) =>
   instance.post('v1/project', body);
 
@@ -58,8 +85,12 @@ const getProjectList = () =>
 const getProjectDetail = ({id}: GetProjectDetailReqType) =>
   instance.get<GetProjectDetailResType>(`v1/project/${id}`);
 
+const getIniList = ({KRId}: GetProjectIniListReqType) =>
+  instance.get<GetProjectIniListResType>(`v1/initiative/${KRId}`);
+
 export default {
   createNewProject,
   getProjectList,
   getProjectDetail,
+  getIniList,
 };

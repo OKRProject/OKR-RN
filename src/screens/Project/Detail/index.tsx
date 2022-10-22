@@ -20,7 +20,7 @@ const Detail = ({projectId, navigation}: Props) => {
     const {data} = await api.project.getProjectDetail({id: projectId});
     setProject(data);
   };
-  const handleGoBack = () => navigation.goBack();
+  const handleGoBack = () => navigation.navigate('Project', {type: 'main'});
 
   useEffect(() => {
     init();
@@ -32,7 +32,7 @@ const Detail = ({projectId, navigation}: Props) => {
         <>
           <Header {...project} onClickBack={handleGoBack} />
           <ProjectObjective {...project} />
-          <KRList krList={project.keyResult} />
+          <KRList KRList={project.keyResult} />
         </>
       ) : (
         <></>
