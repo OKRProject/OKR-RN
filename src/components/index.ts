@@ -6,6 +6,7 @@ import Background from './Background';
 import DefaultInput from './DefaultInput';
 import RoundInput from './RoundInput';
 import RoundSquareButton from './RoundSquareButton';
+import DefaultModal from './DefaultModal';
 
 export {
   Icons,
@@ -16,4 +17,5 @@ export {
   DefaultInput,
   RoundInput,
   RoundSquareButton,
+  DefaultModal,
 };
