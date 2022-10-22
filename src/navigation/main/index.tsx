@@ -5,7 +5,10 @@ import userStore from '../../store/userStore';
 import BottomTabNavigator from './BottomTab';
 import {useAxiosInterceptor} from '../../hooks';
 
-export type ProjectParam = {type: 'main'} | {type: 'new'} | {type: 'detail'};
+export type ProjectParam =
+  | {type: 'main'}
+  | {type: 'new'}
+  | {type: 'detail'; projectId: number};
 
 export type RootStackParamList = {
   Home: undefined;

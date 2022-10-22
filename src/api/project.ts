@@ -27,11 +27,25 @@ export type ProjectType = {
   projectType: ProjectTypeEnum;
 };
 
+export type KeyResultType = {keyResultId: number; keyResultName: string};
+export type ProjectDetailType = {
+  projectName: string;
+  projectId: 123;
+  projectObjective: string;
+  projectStartDt: string;
+  projectEndDt: string;
+  keyResult: KeyResultType[];
+  projectType: ProjectTypeEnum;
+};
+
 export type GetProjectListResType = {
   content: ProjectType[];
 };
 
 export type CreateNewProjectReqType = NewProjectType;
+
+export type GetProjectDetailReqType = Pick<ProjectType, 'id'>;
+export type GetProjectDetailResType = ProjectDetailType;
 
 const createNewProject = (body: CreateNewProjectReqType) =>
   instance.post('v1/project', body);
@@ -40,7 +54,12 @@ const getProjectList = () =>
   instance.get<GetProjectListResType>(
     `v1/project?sortType=RECENTLY_CREATE&includeFinishedProjectYN=Y&page=0&size=10`,
   );
+
+const getProjectDetail = ({id}: GetProjectDetailReqType) =>
+  instance.get<GetProjectDetailResType>(`v1/project/${id}`);
+
 export default {
   createNewProject,
   getProjectList,
+  getProjectDetail,
 };
