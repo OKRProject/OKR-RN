@@ -79,6 +79,7 @@ const useAxiosInterceptor = () => {
     instance.interceptors.response.use(
       response => response,
       async error => {
+        console.log(error.config.url, 'url');
         if (error?.response?.status === 401) {
           if (
             error?.config?.url === 'auth/refresh' ||
@@ -91,7 +92,8 @@ const useAxiosInterceptor = () => {
               const _config = {
                 headers: {Authorization: `Bearer ${session.refresh}`},
               };
-              const {status, data} = await axios.post(refreshURI, _config);
+
+              const {status, data} = await axios.post(refreshURI, {}, _config);
 
               if (status === 201) {
                 saveSessions(data);
@@ -107,6 +109,7 @@ const useAxiosInterceptor = () => {
             }
           } else signOutUser(true);
         }
+        //todo api error가 500일떼
         return Promise.reject(error);
       },
     );
