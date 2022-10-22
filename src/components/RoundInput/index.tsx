@@ -1,4 +1,4 @@
-import {View, Text, TextInputProps} from 'react-native';
+import {View, TextInputProps} from 'react-native';
 import React from 'react';
 import DefaultInput from '../DefaultInput';
 import {css} from '@emotion/native';
