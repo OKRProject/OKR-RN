@@ -7,6 +7,7 @@ import DefaultInput from './DefaultInput';
 import RoundInput from './RoundInput';
 import RoundSquareButton from './RoundSquareButton';
 import DefaultModal from './DefaultModal';
+import Calendar from './Calendar';
 
 export {
   Icons,
@@ -18,4 +19,5 @@ export {
   RoundInput,
   RoundSquareButton,
   DefaultModal,
+  Calendar,
 };
