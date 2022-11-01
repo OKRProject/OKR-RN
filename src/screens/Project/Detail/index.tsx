@@ -14,7 +14,6 @@ interface Props extends NativeStackScreenProps<RootStackParamList, 'Project'> {
 }
 const Detail = ({projectId, navigation}: Props) => {
   const [project, setProject] = useState<ProjectDetailType>();
-  const [isAdd, setIsAdd] = useState<boolean>(false);
 
   const init = async () => {
     const {data} = await api.project.getProjectDetail({id: projectId});
