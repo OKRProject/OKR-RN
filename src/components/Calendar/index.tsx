@@ -1,12 +1,6 @@
-import {View} from 'react-native';
-import React, {useMemo, useState} from 'react';
-import {DefaultText as Text, RoundCard} from '..';
+import React, {useMemo} from 'react';
 import {css} from '@emotion/native';
-import {
-  dateStringToViewText,
-  getDate,
-  getElapsedDay,
-} from '../../utils/calendar';
+import {getDate, getElapsedDay} from '../../utils/calendar';
 import {Calendar as ReactCalendars} from 'react-native-calendars';
 import {Theme, MarkedDates} from 'react-native-calendars/src/types';
 
@@ -14,16 +8,8 @@ type Props = {
   start: string; //yy-mm-dd
   end: string; //yy-mm-dd
   setDate: ({start, end}: {start: string; end: string}) => void;
-  title?: string;
 };
-const Calendar = ({start, end, setDate, title}: Props) => {
-  const viewStartDt = useMemo<string>(
-    () => dateStringToViewText(start),
-    [start],
-  );
-
-  const viewEndDt = useMemo<string>(() => dateStringToViewText(end), [end]);
-
+const Calendar = ({start, end, setDate}: Props) => {
   const markedDates = useMemo<MarkedDates>(() => {
     if (!start && !end) return {};
     if (start && start === end)
@@ -59,69 +45,23 @@ const Calendar = ({start, end, setDate, title}: Props) => {
   };
 
   return (
-    <RoundCard style={[period, !title ? {paddingTop: 31} : {}]}>
-      {title && <Text style={cardTitle}>{title}</Text>}
-      <View style={dateHeader}>
-        <View style={[dateWrap, marginRight]}>
-          <Text style={date}>{viewStartDt}</Text>
-        </View>
-        <View style={dateWrap}>
-          <Text style={date}>{viewEndDt}</Text>
-        </View>
-      </View>
-      <>
-        <ReactCalendars
-          style={container}
-          monthFormat={'yyyy년 MMM'}
-          onPressArrowLeft={subtractMonth => subtractMonth()}
-          onPressArrowRight={addMonth => addMonth()}
-          onDayPress={({dateString}) => handleSelectDay(dateString)}
-          theme={theme}
-          markingType={'period'}
-          markedDates={markedDates}
-        />
-      </>
-    </RoundCard>
+    <>
+      <ReactCalendars
+        style={container}
+        monthFormat={'yyyy년 MMM'}
+        onPressArrowLeft={subtractMonth => subtractMonth()}
+        onPressArrowRight={addMonth => addMonth()}
+        onDayPress={({dateString}) => handleSelectDay(dateString)}
+        theme={theme}
+        markingType={'period'}
+        markedDates={markedDates}
+      />
+    </>
   );
 };
 
 const container = css`
   background-color: 'transparent';
-`;
-
-const cardTitle = css`
-  font-weight: 600;
-  font-size: 20px;
-  color: #fdbd40;
-  line-height: 24px;
-  margin-bottom: 18px;
-`;
-const period = css`
-  margin: 16px 0px 41px;
-  padding: 20px 28px;
-`;
-
-const dateWrap = css`
-  background: #636363;
-  border-radius: 4px;
-  padding: 4.5px 14.5px;
-  flex: 1;
-`;
-const date = css`
-  font-size: 16px;
-  width: 100%;
-  text-align: center;
-`;
-
-const marginRight = css`
-  margin-right: 13px;
-`;
-
-const dateHeader = css`
-  flex-direction: row;
-  width: 100%;
-  justify-content: space-between;
-  margin-bottom: 23px;
 `;
 
 const theme: Theme = {

@@ -1,16 +1,13 @@
-import {css, ReactNativeStyle} from '@emotion/native';
-import React, {ReactNode} from 'react';
-import {View, SafeAreaView, TouchableOpacity} from 'react-native';
+import {css} from '@emotion/native';
+import React from 'react';
+import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
 import {DefaultText as Text} from '../../components';
 
-type Props = {
-  children: ReactNode;
-  style?: ReactNativeStyle;
-};
-const TextButton = ({style, children}: Props) => {
+type Props = TouchableOpacityProps;
+const TextButton = ({style, children, ...rest}: Props) => {
   return (
-    <TouchableOpacity>
-      <Text style={[text, style ? style : css``]}>{children}</Text>
+    <TouchableOpacity {...rest}>
+      <Text style={[text, style]}>{children}</Text>
     </TouchableOpacity>
   );
 };

@@ -17,12 +17,21 @@ type Props = DefaultModalProps & {
 const DefaultModal = ({children, isVisible, onClose}: Props) => {
   return (
     <Modal isVisible={isVisible} style={background}>
-      <View style={contents}>
-        <View style={header}>
-          <TouchableOpacity style={closeButton} onPress={onClose}>
-            <Icons.Close color={onClose ? '#fff' : 'transparent'} />
-          </TouchableOpacity>
-        </View>
+      <View
+        style={[
+          contents,
+          !onClose &&
+            css`
+              padding-top: 20px;
+            `,
+        ]}>
+        {onClose && (
+          <View style={header}>
+            <TouchableOpacity style={closeButton} onPress={onClose}>
+              <Icons.Close color={'#fff'} />
+            </TouchableOpacity>
+          </View>
+        )}
         <View style={content}>{children}</View>
       </View>
     </Modal>
