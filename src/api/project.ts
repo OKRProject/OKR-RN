@@ -72,6 +72,7 @@ export type AddProjectIniReqType = {
   keyResultId: number;
   name: string;
   edt: string;
+  sdt: string;
   detail: string;
 };
 const createNewProject = (body: CreateNewProjectReqType) =>
@@ -88,9 +89,13 @@ const getProjectDetail = ({id}: GetProjectDetailReqType) =>
 const getIniList = ({KRId}: GetProjectIniListReqType) =>
   instance.get<GetProjectIniListResType>(`v1/initiative/${KRId}`);
 
+const addProjectIni = (body: AddProjectIniReqType) =>
+  instance.post(`v1/initiative`, body);
+
 export default {
   createNewProject,
   getProjectList,
   getProjectDetail,
   getIniList,
+  addProjectIni,
 };
