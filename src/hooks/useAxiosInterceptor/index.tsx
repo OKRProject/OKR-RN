@@ -93,9 +93,9 @@ const useAxiosInterceptor = () => {
                 headers: {Authorization: `Bearer ${session.refresh}`},
               };
 
-              const {status, data} = await axios.post(refreshURI, {}, _config);
+              const {status, data} = await axios.get(refreshURI, _config);
 
-              if (status === 201) {
+              if (status === 200) {
                 saveSessions(data);
                 const config = {
                   ...error.config,
