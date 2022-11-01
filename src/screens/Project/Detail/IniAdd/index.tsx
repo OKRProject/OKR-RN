@@ -41,7 +41,7 @@ const IniAdd = ({KRId, onClose, ...rest}: Props) => {
   const handleCompleteNewAdd = async () => {
     const {data} = await api.project.addProjectIni(initiative);
     onClose();
-    navigation.navigate('Ini', {type: 'detail', iniId: data});
+    // navigation.navigate('Ini', {type: 'detail', iniId: data});
   };
 
   const handleChangeDate = (sdt: string, edt: string) => {
