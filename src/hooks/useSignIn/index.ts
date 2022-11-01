@@ -1,5 +1,5 @@
 import {useCallback} from 'react';
-import {Platform, Alert} from 'react-native';
+import {Platform} from 'react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'react-native-get-random-values';
 import Config from 'react-native-config';
@@ -38,8 +38,8 @@ const useSignIn = () => {
       if (isLogin(data)) {
         //로그인
         const {refreshToken, accessToken, ...rest} = data;
+        await saveSessions({refreshToken, accessToken});
         setUserProfile({...rest});
-        saveSessions({refreshToken, accessToken});
       } else {
         //회원가입
         setAuthSession(data);

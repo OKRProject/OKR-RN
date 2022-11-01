@@ -11,6 +11,7 @@ import Close from './Close';
 import Back from './Back';
 import Google from './Google';
 import Apple from './Apple';
+import Menu from './Menu';
 
 export default {
   Project,
@@ -26,4 +27,5 @@ export default {
   Back,
   Google,
   Apple,
+  Menu,
 };

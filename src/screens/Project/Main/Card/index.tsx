@@ -1,9 +1,15 @@
 import React, {useMemo} from 'react';
-import {View} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import {css} from '@emotion/native';
 import {Icons, RoundCard, DefaultText as Text} from '../../../../components';
 import LinearGradient from 'react-native-linear-gradient';
 import {ProjectType} from '../../../../api/project';
+import {} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../../../navigation/main';
+
+type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 type Props = {
   project: ProjectType;
@@ -11,6 +17,7 @@ type Props = {
 };
 
 const Card = ({project, ...rest}: Props) => {
+  const navigation = useNavigation<NavigationProps>();
   const {
     id,
     name,
@@ -36,36 +43,41 @@ const Card = ({project, ...rest}: Props) => {
     [edt],
   );
 
+  const handleClickProject = () =>
+    navigation.navigate('Project', {type: 'detail', projectId: project.id});
+
   return (
-    <RoundCard style={container} {...rest}>
-      <View style={titleWrap}>
-        <Text style={projectTitle}>{name}</Text>
-        {newProject && <Text style={newHighlight}>NEW</Text>}
-      </View>
-      <Text style={objectDesc}>목표:{object}</Text>
-      <View style={progressWrap}>
-        <View style={progressBack}>
-          <LinearGradient
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 0}}
-            colors={['#43D2FF', '#1F92F2']}
-            style={[progressGauge, {width: `${percent}%`}]}
-          />
+    <TouchableOpacity onPress={handleClickProject}>
+      <RoundCard style={container} {...rest}>
+        <View style={titleWrap}>
+          <Text style={projectTitle}>{name}</Text>
+          {newProject && <Text style={newHighlight}>NEW</Text>}
         </View>
-        <Text style={progressText}>
-          <Text style={highlight}>{percent}%</Text>/100%
-        </Text>
-      </View>
-      <View style={bottom}>
-        <View style={people}>
-          <Icons.People />
-          <Text style={peopleText}>{''}</Text>
+        <Text style={objectDesc}>목표:{object}</Text>
+        <View style={progressWrap}>
+          <View style={progressBack}>
+            <LinearGradient
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              colors={['#43D2FF', '#1F92F2']}
+              style={[progressGauge, {width: `${percent}%`}]}
+            />
+          </View>
+          <Text style={progressText}>
+            <Text style={highlight}>{percent}%</Text>/100%
+          </Text>
         </View>
-        <Text style={period}>
-          {startDate} - {endDate}
-        </Text>
-      </View>
-    </RoundCard>
+        <View style={bottom}>
+          <View style={people}>
+            <Icons.People />
+            <Text style={peopleText}>{''}</Text>
+          </View>
+          <Text style={period}>
+            {startDate} - {endDate}
+          </Text>
+        </View>
+      </RoundCard>
+    </TouchableOpacity>
   );
 };
 

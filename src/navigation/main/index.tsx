@@ -5,7 +5,12 @@ import userStore from '../../store/userStore';
 import BottomTabNavigator from './BottomTab';
 import {useAxiosInterceptor} from '../../hooks';
 
-export type ProjectParam = {type: 'main'} | {type: 'new'} | {type: 'detail'};
+export type ProjectParam =
+  | {type: 'main'}
+  | {type: 'new'}
+  | {type: 'detail'; projectId: number};
+
+export type IniParam = {type: 'detail'; iniId: number};
 
 export type RootStackParamList = {
   Home: undefined;
@@ -19,6 +24,7 @@ export type RootStackParamList = {
   Bottom: undefined;
   Terms: undefined;
   Policy: undefined;
+  Ini: IniParam;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -34,6 +40,7 @@ const Main = () => {
       }}>
       <Stack.Screen name="Bottom" component={BottomTabNavigator} />
       <Stack.Screen name="Project" component={Screens.Project} />
+      <Stack.Screen name="Ini" component={Screens.Ini} />
     </Stack.Navigator>
   ) : (
     <Stack.Navigator

@@ -8,6 +8,7 @@ import Project from './Project';
 import Feedback from './Feedback';
 import Terms from './Terms';
 import Policy from './Policy';
+import Ini from './Ini';
 
 export default {
   Home,
@@ -20,4 +21,5 @@ export default {
   Feedback,
   Terms,
   Policy,
+  Ini,
 };

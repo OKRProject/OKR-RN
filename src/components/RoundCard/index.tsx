@@ -1,11 +1,9 @@
-import React, {ReactNode} from 'react';
-import {View} from 'react-native';
-import {css, ReactNativeStyle} from '@emotion/native';
+import React from 'react';
+import {View, ViewProps} from 'react-native';
+import {css} from '@emotion/native';
 
-type Props = {
-  children: ReactNode;
-  style?: ReactNativeStyle;
-};
+type Props = ViewProps;
+
 const RoundCard = ({children, style}: Props) => {
   return <View style={[container, style]}>{children}</View>;
 };

@@ -1,11 +1,9 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-
-import {Background} from '../../../components';
+import {Background, CalendarModal} from '../../../components';
 import {RootStackParamList} from '../../../navigation/main';
 import {getDate} from '../../../utils/calendar';
 import Main from './Main';
-import Period from './Period';
 
 export type NewProjectType = {
   title: string;
@@ -37,21 +35,19 @@ const New = ({}: Props) => {
   const handleCancelSelectPeriod = () => setPeriodPage(false);
   return (
     <Background>
-      {isPeriodPage ? (
-        <Period
-          onChangeTitle={handleTitle}
-          onChangePeriod={handleChangePeriod}
-          onCancel={handleCancelSelectPeriod}
-          {...project}
-        />
-      ) : (
-        <Main
-          {...project}
-          onChangeTitle={handleTitle}
-          setPeriodPage={setPeriodPage}
-          setProject={setProject}
-        />
-      )}
+      <Main
+        {...project}
+        onChangeTitle={handleTitle}
+        setPeriodPage={setPeriodPage}
+        setProject={setProject}
+      />
+      <CalendarModal
+        isVisible={isPeriodPage}
+        startDt={project.startDt}
+        endDt={project.endDt}
+        onCancel={handleCancelSelectPeriod}
+        onChangePeriod={handleChangePeriod}
+      />
     </Background>
   );
 };
