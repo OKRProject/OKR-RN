@@ -16,7 +16,7 @@ const Description = ({
     <View style={container}>
       <View style={flex}>
         <View style={userProfile} />
-        <Text style={userName}>{user}</Text>
+        <Text style={userName}>{user.userName}</Text>
       </View>
       <Text style={desc}>{iniDetail}</Text>
       <View style={flex}>

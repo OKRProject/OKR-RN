@@ -16,7 +16,7 @@ const InitiativeCard = ({iniSeq, iniName, user, dday, onPress}: Props) => {
           <Text style={title}>{iniName}</Text>
         </View>
         <View style={right}>
-          <Text style={tag}>{user}</Text>
+          <Text style={tag}>{user.userName}</Text>
           <Text style={tag}>{dday}</Text>
         </View>
       </RoundCard>

@@ -43,7 +43,7 @@ export type ProjectIniType = {
   iniName: string;
   iniDetail: string;
   done: boolean;
-  user: string;
+  user: {userName: string; profileImageUrl: string};
   endDate: string;
   email: string;
   myInitiative: boolean;
@@ -90,7 +90,7 @@ const getIniList = ({KRId}: GetProjectIniListReqType) =>
   instance.get<GetProjectIniListResType>(`v1/initiative/${KRId}`);
 
 const addProjectIni = (body: AddProjectIniReqType) =>
-  instance.post(`v1/initiative`, body);
+  instance.post<ProjectIniType>(`v1/initiative`, body);
 
 export default {
   createNewProject,

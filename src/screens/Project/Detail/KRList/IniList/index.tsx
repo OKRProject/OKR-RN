@@ -41,15 +41,20 @@ const IniList = ({KRId, projectTitle}: Props) => {
     <ScrollView>
       {iniList.map((ini, idx) => (
         <InitiativeCard
-          key={`KR${KRId}_${ini.iniSeq}`}
           {...ini}
+          key={`KR${KRId}_${ini.iniSeq}`}
           onPress={() => handleMoveIniDetail(idx)}
         />
       ))}
       <RoundSquareButton type="primary" size="xl" onPress={handleAddIni}>
         이니셔티브 추가하기
       </RoundSquareButton>
-      <IniAdd KRId={KRId} isVisible={openAdd} onClose={handleCloseIni} />
+      <IniAdd
+        KRId={KRId}
+        isVisible={openAdd}
+        onClose={handleCloseIni}
+        projectTitle={projectTitle}
+      />
     </ScrollView>
   );
 };
