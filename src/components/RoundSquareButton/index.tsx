@@ -50,8 +50,6 @@ const RoundSquareButton = ({
 
 const container = css`
   border-radius: 12px;
-  flex: 1;
-  min-width: 0;
   width: 100%;
   justify-content: center;
   align-items: center;

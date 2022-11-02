@@ -26,10 +26,13 @@ const Description = ({
           </RoundSquareButton>
         ) : myInitiative && !done ? (
           <>
-            <RoundSquareButton type="secondary" size="m">
+            <RoundSquareButton type="secondary" size="m" style={halfButton}>
               수정하기
             </RoundSquareButton>
-            <RoundSquareButton type="primary" size="m" style={secondButton}>
+            <RoundSquareButton
+              type="primary"
+              size="m"
+              style={[secondButton, halfButton]}>
               완료하기
             </RoundSquareButton>
           </>
@@ -72,6 +75,11 @@ const desc = css`
   font-size: 16px;
   line-height: 22px;
   margin: 18px 0;
+`;
+
+const halfButton = css`
+  flex: 1;
+  min-width: 0;
 `;
 
 const secondButton = css`
