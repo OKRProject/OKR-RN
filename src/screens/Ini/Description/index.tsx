@@ -4,7 +4,7 @@ import {ProjectIniType} from '../../../api/project';
 import {css} from '@emotion/native';
 import {DefaultText as Text, RoundSquareButton} from '../../../components';
 
-type Props = Omit<ProjectIniType, 'iniName' | 'dday' | 'endDate'>;
+type Props = Omit<ProjectIniType, 'iniName' | 'dday' | 'endDate' | 'iniSeq'>;
 const Description = ({
   done,
   myInitiative,

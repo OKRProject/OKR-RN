@@ -5,11 +5,13 @@ import {View} from 'react-native';
 import {Background, DefaultText as Text, Header} from '../../components';
 import {css} from '@emotion/native';
 import Description from './Description';
+import Feedbacks from './Feedbacks';
+import {ScrollView} from 'react-native-gesture-handler';
 
 interface Props extends NativeStackScreenProps<RootStackParamList, 'Ini'> {}
 
 const Ini = ({route, navigation}: Props) => {
-  const {iniName, endDate, dday, ...rest} = useMemo(
+  const {iniName, endDate, dday, iniSeq, ...rest} = useMemo(
     () => route.params.data,
     [route.params.data],
   );
@@ -17,15 +19,18 @@ const Ini = ({route, navigation}: Props) => {
 
   return (
     <Background>
-      <Header onBack={handleBack} title={route.params.data.iniSeq} />
-      <View style={summeryWrap}>
-        <Text style={project}>{route.params.title}</Text>
-        <Text style={iniTitle}>{iniName}</Text>
-        <Text style={endDt}>
-          마감일: {endDate} {dday}
-        </Text>
-      </View>
-      <Description {...rest} />
+      <Header onBack={handleBack} title={`Ini ${route.params.data.iniSeq}`} />
+      <ScrollView>
+        <View style={summeryWrap}>
+          <Text style={project}>{route.params.title}</Text>
+          <Text style={iniTitle}>{iniName}</Text>
+          <Text style={endDt}>
+            마감일: {endDate} {dday}
+          </Text>
+        </View>
+        <Description {...rest} />
+        <Feedbacks iniId={iniSeq} />
+      </ScrollView>
     </Background>
   );
 };
