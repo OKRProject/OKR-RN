@@ -30,7 +30,6 @@ const IniList = ({KRId, projectTitle}: Props) => {
     navigation.navigate('Ini', {
       type: 'detail',
       data: iniList[idx],
-      title: `${projectTitle}-KR${KRId}`,
     });
 
   useEffect(() => {

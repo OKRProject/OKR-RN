@@ -11,7 +11,9 @@ export type ProjectParam =
   | {type: 'new'}
   | {type: 'detail'; projectId: number};
 
-export type IniParam = {type: 'detail'; data: ProjectIniType; title: string};
+export type IniParam =
+  | {type: 'detail'; data: ProjectIniType}
+  | {type: 'feedback'; data: ProjectIniType};
 
 export type RootStackParamList = {
   Home: undefined;

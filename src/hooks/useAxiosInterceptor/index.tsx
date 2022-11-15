@@ -109,8 +109,9 @@ const useAxiosInterceptor = () => {
             }
           } else signOutUser(true);
         }
-        //todo api error가 500일떼
-        return Promise.reject(error);
+
+        clearUserSession();
+        // return Promise.reject(error);
       },
     );
 

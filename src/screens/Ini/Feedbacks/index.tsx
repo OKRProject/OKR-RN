@@ -4,7 +4,7 @@ import {DefaultText as Text, Feedback} from '../../../components';
 import {css} from '@emotion/native';
 import {FeedbackEnum, FeedbackType} from '../../../api/feedback';
 type Props = {
-  iniId: string;
+  iniId: number;
 };
 const Feedbacks = ({iniId}: Props) => {
   const [feedbackList, setFeedbackList] = useState<FeedbackType[]>([]);

@@ -30,7 +30,7 @@ export type ProjectType = {
 export type KeyResultType = {keyResultId: number; keyResultName: string};
 export type ProjectDetailType = {
   projectName: string;
-  projectId: 123;
+  projectId: number;
   projectObjective: string;
   projectStartDt: string;
   projectEndDt: string;
@@ -39,7 +39,7 @@ export type ProjectDetailType = {
 };
 
 export type ProjectIniType = {
-  iniSeq: string;
+  iniSeq: number;
   iniName: string;
   iniDetail: string;
   done: boolean;
@@ -49,6 +49,7 @@ export type ProjectIniType = {
   myInitiative: boolean;
   wroteFeedback: boolean;
   dday: string;
+  projectId: number;
 };
 
 export type GetProjectListResType = {

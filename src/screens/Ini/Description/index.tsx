@@ -1,17 +1,19 @@
 import {View} from 'react-native';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {ProjectIniType} from '../../../api/project';
 import {css} from '@emotion/native';
 import {DefaultText as Text, RoundSquareButton} from '../../../components';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../../../navigation/main';
 
-type Props = Omit<ProjectIniType, 'iniName' | 'dday' | 'endDate' | 'iniSeq'>;
-const Description = ({
-  done,
-  myInitiative,
-  wroteFeedback,
-  iniDetail,
-  user,
-}: Props) => {
+type Props = ProjectIniType;
+const Description = (data: Props) => {
+  const {iniDetail, user, myInitiative, done} = useMemo(() => data, [data]);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const handleWriteFeedback = () => {
+    navigation.navigate('Ini', {type: 'feedback', data});
+  };
   return (
     <View style={container}>
       <View style={flex}>
@@ -20,27 +22,32 @@ const Description = ({
       </View>
       <Text style={desc}>{iniDetail}</Text>
       <View style={flex}>
-        {!myInitiative && done && !wroteFeedback ? (
-          <RoundSquareButton type="primary" size="m">
-            피드백하기
-          </RoundSquareButton>
-        ) : myInitiative && !done ? (
-          <>
-            <RoundSquareButton type="secondary" size="m" style={halfButton}>
-              수정하기
-            </RoundSquareButton>
+        {
+          /* !myInitiative && done && !wroteFeedback  */ true ? (
             <RoundSquareButton
               type="primary"
               size="m"
-              style={[secondButton, halfButton]}>
-              완료하기
+              onPress={handleWriteFeedback}>
+              피드백하기
             </RoundSquareButton>
-          </>
-        ) : (
-          <RoundSquareButton type="secondary" size="m">
-            완료됨
-          </RoundSquareButton>
-        )}
+          ) : myInitiative && !done ? (
+            <>
+              <RoundSquareButton type="secondary" size="m" style={halfButton}>
+                수정하기
+              </RoundSquareButton>
+              <RoundSquareButton
+                type="primary"
+                size="m"
+                style={[secondButton, halfButton]}>
+                완료하기
+              </RoundSquareButton>
+            </>
+          ) : (
+            <RoundSquareButton type="secondary" size="m">
+              완료됨
+            </RoundSquareButton>
+          )
+        }
       </View>
     </View>
   );
