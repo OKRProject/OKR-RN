@@ -5,6 +5,7 @@ export enum FeedbackEnum {
   'BURNING_PASSION' = 'BURNING_PASSION',
   'COMMUNI_KING' = 'COMMUNI_KING',
 }
+
 export type FeedbackType = {
   feedbackId: number;
   text: string;
@@ -14,3 +15,15 @@ export type FeedbackType = {
   writerJob: string;
   profileImage: string;
 };
+
+type AddFeedbackReqType = {
+  opinion: string;
+  grade: FeedbackEnum;
+  projectId: number;
+  initiativeId: number;
+};
+
+const addFeedback = (body: AddFeedbackReqType) =>
+  instance.post(`v1/feedback`, body);
+
+export default {addFeedback};

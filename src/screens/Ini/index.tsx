@@ -11,7 +11,7 @@ const Ini = ({route, navigation}: Props) => {
   return route.params.type === 'detail' ? (
     <Detail {...route.params.data} />
   ) : (
-    <></>
+    <WriteFeedback {...route.params.data} />
   );
 };
 
