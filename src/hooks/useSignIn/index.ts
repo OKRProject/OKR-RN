@@ -32,7 +32,7 @@ const useSignIn = () => {
         const token = await GoogleSignin.getTokens();
         idToken = token.idToken;
       }
-
+      console.log(idToken);
       const {data} = await api.auth.loginByGoogle(idToken);
 
       if (isLogin(data)) {

@@ -11,6 +11,8 @@ import Calendar from './Calendar';
 import TextButton from './TextButton';
 import CalendarModal from './CalendarModal';
 import SelectCalendar from './SelectCalendar';
+import Header from './Header';
+import Feedback from './Feedback';
 
 export {
   Icons,
@@ -26,4 +28,6 @@ export {
   TextButton,
   CalendarModal,
   SelectCalendar,
+  Header,
+  Feedback,
 };

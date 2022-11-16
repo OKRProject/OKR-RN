@@ -30,7 +30,7 @@ export type ProjectType = {
 export type KeyResultType = {keyResultId: number; keyResultName: string};
 export type ProjectDetailType = {
   projectName: string;
-  projectId: 123;
+  projectId: number;
   projectObjective: string;
   projectStartDt: string;
   projectEndDt: string;
@@ -39,16 +39,17 @@ export type ProjectDetailType = {
 };
 
 export type ProjectIniType = {
-  iniSeq: string;
+  iniSeq: number;
   iniName: string;
   iniDetail: string;
   done: boolean;
-  user: string;
+  user: {userName: string; profileImageUrl: string};
   endDate: string;
   email: string;
   myInitiative: boolean;
   wroteFeedback: boolean;
   dday: string;
+  projectId: number;
 };
 
 export type GetProjectListResType = {
@@ -90,12 +91,15 @@ const getIniList = ({KRId}: GetProjectIniListReqType) =>
   instance.get<GetProjectIniListResType>(`v1/initiative/${KRId}`);
 
 const addProjectIni = (body: AddProjectIniReqType) =>
-  instance.post(`v1/initiative`, body);
+  instance.post<ProjectIniType>(`v1/initiative`, body);
 
+const completeProjectIni = (iniId: number) =>
+  instance.put(`v1/initiative/${iniId}/done`);
 export default {
   createNewProject,
   getProjectList,
   getProjectDetail,
   getIniList,
   addProjectIni,
+  completeProjectIni,
 };

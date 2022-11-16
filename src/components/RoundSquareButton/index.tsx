@@ -28,12 +28,13 @@ const RoundSquareButton = ({
   children,
   isSelected,
   style,
+  disabled,
   ...rest
 }: Props) => {
   return (
     <TouchableOpacity
       {...rest}
-      disabled={type === 'disable'}
+      disabled={type === 'disable' || disabled}
       style={[
         container,
         css`

@@ -4,13 +4,16 @@ import Screens from '../../screens';
 import userStore from '../../store/userStore';
 import BottomTabNavigator from './BottomTab';
 import {useAxiosInterceptor} from '../../hooks';
+import {ProjectIniType} from '../../api/project';
 
 export type ProjectParam =
   | {type: 'main'}
   | {type: 'new'}
   | {type: 'detail'; projectId: number};
 
-export type IniParam = {type: 'detail'; iniId: number};
+export type IniParam =
+  | {type: 'detail'; data: ProjectIniType}
+  | {type: 'feedback'; data: ProjectIniType};
 
 export type RootStackParamList = {
   Home: undefined;

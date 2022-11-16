@@ -31,7 +31,10 @@ const Detail = ({projectId, navigation}: Props) => {
         <>
           <Header {...project} onClickBack={handleGoBack} />
           <ProjectObjective {...project} />
-          <KRList KRList={project.keyResult} />
+          <KRList
+            KRList={project.keyResult}
+            projectTitle={project.projectName}
+          />
         </>
       ) : (
         <></>

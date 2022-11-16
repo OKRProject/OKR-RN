@@ -4,17 +4,19 @@ import {RoundCard, DefaultText as Text} from '../../../../../../components';
 import {css} from '@emotion/native';
 import {ProjectIniType} from '../../../../../../api/project';
 
-type Props = ProjectIniType;
-const InitiativeCard = ({iniSeq, iniName, user, dday}: Props) => {
+type Props = ProjectIniType & {
+  onPress: () => void;
+};
+const InitiativeCard = ({iniSeq, iniName, user, dday, onPress}: Props) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <RoundCard style={card}>
         <View style={left}>
           <Text style={[tag, tagHighlight]}>{iniSeq}</Text>
           <Text style={title}>{iniName}</Text>
         </View>
         <View style={right}>
-          <Text style={tag}>{user}</Text>
+          <Text style={tag}>{user.userName}</Text>
           <Text style={tag}>{dday}</Text>
         </View>
       </RoundCard>

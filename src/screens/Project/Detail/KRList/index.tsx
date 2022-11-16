@@ -8,8 +8,9 @@ import IniList from './IniList';
 
 type Props = {
   KRList: KeyResultType[];
+  projectTitle: string;
 };
-const KRList = ({KRList}: Props) => {
+const KRList = ({KRList, projectTitle}: Props) => {
   const [selected, setSelected] = useState<number>(KRList[0].keyResultId);
   const selectedKR = useMemo(() => KRList[selected - 1], [selected]);
 
@@ -30,7 +31,7 @@ const KRList = ({KRList}: Props) => {
       </View>
       <View style={contentWrap}>
         <Text style={keyTitle}>{selectedKR.keyResultName}</Text>
-        <IniList KRId={selectedKR.keyResultId} />
+        <IniList KRId={selectedKR.keyResultId} projectTitle={projectTitle} />
       </View>
     </View>
   ) : (

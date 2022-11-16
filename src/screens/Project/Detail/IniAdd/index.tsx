@@ -24,10 +24,11 @@ type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 type Props = DefaultModalProps & {
   KRId: number;
+  projectTitle: string;
   onClose: () => void;
 };
 
-const IniAdd = ({KRId, onClose, ...rest}: Props) => {
+const IniAdd = ({KRId, onClose, projectTitle, ...rest}: Props) => {
   const navigation = useNavigation<NavigationProps>();
   const [isCalendar, setCalendar] = useState<boolean>(false);
   const [initiative, setInitiative] = useState<AddProjectIniReqType>({
@@ -41,7 +42,7 @@ const IniAdd = ({KRId, onClose, ...rest}: Props) => {
   const handleCompleteNewAdd = async () => {
     const {data} = await api.project.addProjectIni(initiative);
     onClose();
-    navigation.navigate('Ini', {type: 'detail', iniId: data});
+    navigation.navigate('Ini', {type: 'detail', data});
   };
 
   const handleChangeDate = (sdt: string, edt: string) => {
