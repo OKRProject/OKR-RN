@@ -1,11 +1,12 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {Background, Header} from '../../components';
 
 const MyPage = () => {
   return (
-    <View>
-      <Text>MyPage</Text>
-    </View>
+    <Background>
+      <Header title="My" />
+    </Background>
   );
 };
 

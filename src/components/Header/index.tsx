@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import React from 'react';
+import React, {useMemo} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Icons, DefaultText as Text} from '..';
 import {css} from '@emotion/native';
@@ -11,13 +11,14 @@ type Props = {
 };
 
 const Header = ({title, onBack, onMenu}: Props) => {
+  const onlyTitle = useMemo(() => !onMenu && !onBack, [onBack, onMenu]);
   return (
-    <View style={container}>
-      <TouchableOpacity style={button} onPress={onBack}>
+    <View style={[container, onlyTitle && noButtonHeader]}>
+      <TouchableOpacity style={[button, onlyTitle && hide]} onPress={onBack}>
         {onBack && <Icons.Back />}
       </TouchableOpacity>
       <Text style={titleText}>{title}</Text>
-      <TouchableOpacity style={button} onPress={onMenu}>
+      <TouchableOpacity style={[button, onlyTitle && hide]} onPress={onMenu}>
         {onMenu && <Icons.Menu />}
       </TouchableOpacity>
     </View>
@@ -30,11 +31,19 @@ const container = css`
   width: 100%;
   padding: 14px;
 `;
+
+const noButtonHeader = css`
+  justify-content: flex-start;
+  padding: 14px 20px;
+`;
 const button = css`
   width: 24px;
   height: 24px;
 `;
 
+const hide = css`
+  width: 0;
+`;
 const titleText = css`
   font-weight: 600;
   font-size: 20px;
