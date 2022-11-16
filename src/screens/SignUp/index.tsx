@@ -1,4 +1,4 @@
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, View} from 'react-native';
 import React, {ReactNode, useEffect, useMemo, useState} from 'react';
 import {Background} from '../../components';
 import {Header} from './components';
@@ -12,14 +12,17 @@ import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../navigation/main';
 import {saveSessions} from '../../hooks/useAxiosInterceptor';
+import StepComplete from './StepComplete';
+import {UserProfileType} from '../../api/user';
 
-export type StepType = 'name' | 'field' | 'category';
+export type StepType = 'name' | 'field' | 'category' | 'complete';
 type navigationProps = StackNavigationProp<RootStackParamList>;
 
 const SignUp = () => {
   const navigation = useNavigation<navigationProps>();
-  const {setUserProfile, setAuthSession, session} = userStore();
+  const {setAuthSession, session} = userStore();
   const [step, setStep] = useState<StepType>('name');
+  const [profile, setProfile] = useState<UserProfileType>();
   const [categoryList, setCategoryList] = useState<{[key in string]: string}>();
   const [fieldList, setFieldList] = useState<{[key in string]: string}>();
   const [{name, field, category}, setPersonalInfo] = useState<{
@@ -69,8 +72,9 @@ const SignUp = () => {
       const {data} = await api.auth.signUp(body);
       const {refreshToken, accessToken, ...rest} = data;
       await saveSessions({refreshToken, accessToken});
-      setUserProfile(rest);
+      setProfile(rest);
       setAuthSession(undefined);
+      setStep('complete');
     } catch (e: any) {
       console.log(e.response.data, 'error');
     }
@@ -106,16 +110,21 @@ const SignUp = () => {
           onComplete={handleComplete}
         />
       ),
+      complete: <></>,
     }),
     [name, field, category, setPersonalInfo, categoryList, fieldList],
   );
 
   return (
     <Background>
-      <SafeAreaView style={container}>
-        <Header onClickBack={handleClickBack} />
-        {StepPage[step]}
-      </SafeAreaView>
+      {step === 'complete' && profile ? (
+        <StepComplete profile={profile} />
+      ) : (
+        <View style={container}>
+          <Header onClickBack={handleClickBack} />
+          {StepPage[step]}
+        </View>
+      )}
     </Background>
   );
 };

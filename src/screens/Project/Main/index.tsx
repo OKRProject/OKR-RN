@@ -5,6 +5,7 @@ import {
   DefaultText as Text,
   RoundAddButton,
   Background,
+  RoundCard,
 } from '../../../components';
 import {css} from '@emotion/native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -93,13 +94,21 @@ const Main = ({navigation}: Props) => {
             </TouchableOpacity>
           </View>
           <ScrollView style={projectWrapper}>
-            {filteredProjectList.map(project => (
-              <Card
-                key={`project_card_${project.id}`}
-                project={project}
-                onPress={() => handleClickProject(project.id.toString())}
-              />
-            ))}
+            {filteredProjectList.length > 0 ? (
+              filteredProjectList.map(project => (
+                <Card
+                  key={`project_card_${project.id}`}
+                  project={project}
+                  onPress={() => handleClickProject(project.id.toString())}
+                />
+              ))
+            ) : (
+              <RoundCard style={emptyCard}>
+                <Text>아직 등록된 프로젝트가 없어요.</Text>
+                <Text>하단의 + 버튼을 클릭해</Text>
+                <Text>새 프로젝트를 만들어보세요!</Text>
+              </RoundCard>
+            )}
           </ScrollView>
         </View>
       </View>
@@ -182,6 +191,11 @@ const filterButton = css`
 
 const projectWrapper = css`
   flex: 1;
+`;
+
+const emptyCard = css`
+  padding: 21px 17px 14px 17px;
+  margin-bottom: 12px;
 `;
 
 export default Main;
