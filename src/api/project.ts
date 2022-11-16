@@ -93,10 +93,13 @@ const getIniList = ({KRId}: GetProjectIniListReqType) =>
 const addProjectIni = (body: AddProjectIniReqType) =>
   instance.post<ProjectIniType>(`v1/initiative`, body);
 
+const completeProjectIni = (iniId: number) =>
+  instance.put(`v1/initiative/${iniId}/done`);
 export default {
   createNewProject,
   getProjectList,
   getProjectDetail,
   getIniList,
   addProjectIni,
+  completeProjectIni,
 };
