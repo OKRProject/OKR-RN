@@ -5,7 +5,6 @@ import {
   DefaultText as Text,
   RoundAddButton,
   Background,
-  RoundCard,
 } from '../../../components';
 import {css} from '@emotion/native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -15,6 +14,7 @@ import Card from './Card';
 import {RootStackParamList} from '../../../navigation/main';
 import api from '../../../api';
 import {ProjectType, ProjectTypeEnum} from '../../../api/project';
+import EmptyCard from './EmptyCard';
 
 const tabList: {[key in ProjectTypeEnum]: string} = {
   WHOLE: '전체',
@@ -103,11 +103,7 @@ const Main = ({navigation}: Props) => {
                 />
               ))
             ) : (
-              <RoundCard style={emptyCard}>
-                <Text>아직 등록된 프로젝트가 없어요.</Text>
-                <Text>하단의 + 버튼을 클릭해</Text>
-                <Text>새 프로젝트를 만들어보세요!</Text>
-              </RoundCard>
+              <EmptyCard />
             )}
           </ScrollView>
         </View>
@@ -191,11 +187,6 @@ const filterButton = css`
 
 const projectWrapper = css`
   flex: 1;
-`;
-
-const emptyCard = css`
-  padding: 21px 17px 14px 17px;
-  margin-bottom: 12px;
 `;
 
 export default Main;

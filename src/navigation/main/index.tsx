@@ -15,12 +15,14 @@ export type IniParam =
   | {type: 'detail'; data: ProjectIniType}
   | {type: 'feedback'; data: ProjectIniType};
 
+export type MyPage = undefined | {type: 'detail'};
+
 export type RootStackParamList = {
   Home: undefined;
   SignIn: undefined;
   SignUp: undefined;
   Calendar: undefined;
-  MyPage: undefined;
+  MyPage: MyPage;
   Onboard: undefined;
   Project: ProjectParam;
   Feedback: undefined;
@@ -35,7 +37,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Main = () => {
   const user = userStore(state => state.user);
   const isLoading = useAxiosInterceptor();
-
+  // clearUserSession();
   return user ? (
     <Stack.Navigator
       screenOptions={{
@@ -44,6 +46,8 @@ const Main = () => {
       <Stack.Screen name="Bottom" component={BottomTabNavigator} />
       <Stack.Screen name="Project" component={Screens.Project} />
       <Stack.Screen name="Ini" component={Screens.Ini} />
+      <Stack.Screen name="Terms" component={Screens.Terms} />
+      <Stack.Screen name="Policy" component={Screens.Policy} />
     </Stack.Navigator>
   ) : (
     <Stack.Navigator
