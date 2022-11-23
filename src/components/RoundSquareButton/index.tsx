@@ -1,5 +1,5 @@
 import {TouchableOpacityProps, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {css} from '@emotion/native';
 import {DefaultText as Text} from '..';
 
@@ -19,7 +19,7 @@ const buttonSize = {
 type Props = TouchableOpacityProps & {
   type: keyof typeof buttonColor;
   size: keyof typeof buttonSize;
-  children: string;
+  children: string | ReactNode;
   isSelected?: boolean;
 };
 const RoundSquareButton = ({
@@ -44,7 +44,13 @@ const RoundSquareButton = ({
         style,
         isSelected && selected,
       ]}>
-      <Text style={[text, isSelected ? selectedText : css``]}>{children}</Text>
+      {typeof children === 'string' ? (
+        <Text style={[text, isSelected ? selectedText : css``]}>
+          {children}
+        </Text>
+      ) : (
+        children
+      )}
     </TouchableOpacity>
   );
 };
