@@ -1,6 +1,6 @@
 import React, {ReactNode} from 'react';
-import {StyleSheet, Text, TextProps} from 'react-native';
-import {css, ReactNativeStyle} from '@emotion/native';
+import {Text, TextProps} from 'react-native';
+import {css} from '@emotion/native';
 type Props = TextProps & {
   children: ReactNode;
 };
