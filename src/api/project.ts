@@ -45,11 +45,22 @@ export type ProjectIniType = {
   done: boolean;
   user: {userName: string; profileImageUrl: string};
   endDate: string;
+  startDate: string;
   email: string;
   myInitiative: boolean;
   wroteFeedback: boolean;
   dday: string;
   projectId: number;
+  projectNm: string;
+  krId: number;
+};
+
+export type AddProjectIniReqType = {
+  keyResultId: number;
+  name: string;
+  edt: string;
+  sdt: string;
+  detail: string;
 };
 
 export type GetProjectListResType = {
@@ -69,13 +80,8 @@ export type GetProjectIniListResType = {
   content: ProjectIniType[];
 };
 
-export type AddProjectIniReqType = {
-  keyResultId: number;
-  name: string;
-  edt: string;
-  sdt: string;
-  detail: string;
-};
+export type GetIniListByDateResType = ProjectIniType[];
+
 const createNewProject = (body: CreateNewProjectReqType) =>
   instance.post('v1/project', body);
 
@@ -95,6 +101,10 @@ const addProjectIni = (body: AddProjectIniReqType) =>
 
 const completeProjectIni = (iniId: number) =>
   instance.put(`v1/initiative/${iniId}/done`);
+
+const getIniListByDate = (date: string) =>
+  instance.get<GetIniListByDateResType>(`v1/initiative/byDate/${date}`);
+
 export default {
   createNewProject,
   getProjectList,
@@ -102,4 +112,5 @@ export default {
   getIniList,
   addProjectIni,
   completeProjectIni,
+  getIniListByDate,
 };

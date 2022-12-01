@@ -8,8 +8,9 @@ type Props = {
   start: string; //yy-mm-dd
   end: string; //yy-mm-dd
   setDate: ({start, end}: {start: string; end: string}) => void;
+  selectOneDate?: string; //yy-mm-dd
 };
-const Calendar = ({start, end, setDate}: Props) => {
+const Calendar = ({start, end, setDate, selectOneDate}: Props) => {
   const markedDates = useMemo<MarkedDates>(() => {
     if (!start && !end) return {};
     if (start && start === end)
@@ -38,7 +39,23 @@ const Calendar = ({start, end, setDate}: Props) => {
     return {};
   }, [start, end]);
 
+  const markedDatesWithSelectOneDay = useMemo<MarkedDates>(
+    () =>
+      selectOneDate
+        ? {
+            ...markedDates,
+            [selectOneDate]: {
+              ...selectedDayStyle,
+              color: '#fff',
+              textColor: '#27272A',
+            },
+          }
+        : markedDates,
+    [markedDates, selectOneDate],
+  );
+
   const handleSelectDay = (dateString: string) => {
+    if (selectOneDate) return setDate({start: dateString, end: dateString});
     if (start && start === end && getElapsedDay({start, end: dateString}) >= 0)
       return setDate({start, end: dateString});
     return setDate({start: dateString, end: dateString});
@@ -54,7 +71,7 @@ const Calendar = ({start, end, setDate}: Props) => {
         onDayPress={({dateString}) => handleSelectDay(dateString)}
         theme={theme}
         markingType={'period'}
-        markedDates={markedDates}
+        markedDates={markedDatesWithSelectOneDay}
       />
     </>
   );
