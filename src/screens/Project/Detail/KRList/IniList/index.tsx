@@ -11,7 +11,7 @@ import {useNavigation} from '@react-navigation/native';
 
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 type Props = {
-  KRId: number;
+  KRId: string;
   projectTitle: string;
 };
 const IniList = ({KRId, projectTitle}: Props) => {

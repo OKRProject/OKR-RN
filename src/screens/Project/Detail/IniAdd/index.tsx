@@ -23,7 +23,7 @@ const today = new Date().toDateString();
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 type Props = DefaultModalProps & {
-  KRId: number;
+  KRId: string;
   projectTitle: string;
   onClose: () => void;
 };

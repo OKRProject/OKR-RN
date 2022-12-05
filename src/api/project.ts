@@ -27,7 +27,7 @@ export type ProjectType = {
   projectType: ProjectTypeEnum;
 };
 
-export type KeyResultType = {keyResultId: number; keyResultName: string};
+export type KeyResultType = {keyResultId: string; keyResultName: string};
 export type ProjectDetailType = {
   projectName: string;
   projectId: number;
@@ -56,7 +56,7 @@ export type ProjectIniType = {
 };
 
 export type AddProjectIniReqType = {
-  keyResultId: number;
+  keyResultId: string;
   name: string;
   edt: string;
   sdt: string;
@@ -73,7 +73,7 @@ export type GetProjectDetailReqType = Pick<ProjectType, 'id'>;
 export type GetProjectDetailResType = ProjectDetailType;
 
 export type GetProjectIniListReqType = {
-  KRId: number;
+  KRId: string;
 };
 
 export type GetProjectIniListResType = {

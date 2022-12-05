@@ -11,10 +11,14 @@ type Props = {
   projectTitle: string;
 };
 const KRList = ({KRList, projectTitle}: Props) => {
-  const [selected, setSelected] = useState<number>(KRList[0].keyResultId);
-  const selectedKR = useMemo(() => KRList[selected - 1], [selected]);
+  const [selected, setSelected] = useState<string>(KRList[0].keyResultId);
+  const selectedKR = useMemo(
+    () => KRList[Number(selected.split('-')[1]) - 1],
+    [selected],
+  );
+  // const selectedKR = useMemo(() => KRList[selected - 1], [selected]);
 
-  return KRList[selected - 1] ? (
+  return KRList[0] ? (
     <View style={container}>
       <View style={tabWrap}>
         {KRList.map(kr => (
@@ -30,7 +34,7 @@ const KRList = ({KRList, projectTitle}: Props) => {
         ))}
       </View>
       <View style={contentWrap}>
-        <Text style={keyTitle}>{selectedKR.keyResultName}</Text>
+        <Text style={keyTitle}>{selectedKR?.keyResultName}</Text>
         <IniList KRId={selectedKR.keyResultId} projectTitle={projectTitle} />
       </View>
     </View>
