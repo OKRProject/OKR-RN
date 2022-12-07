@@ -13,6 +13,7 @@ import CalendarModal from './CalendarModal';
 import SelectCalendar from './SelectCalendar';
 import Header from './Header';
 import Feedback from './Feedback';
+import Progress from './Progress';
 
 export {
   Icons,
@@ -30,4 +31,5 @@ export {
   SelectCalendar,
   Header,
   Feedback,
+  Progress,
 };

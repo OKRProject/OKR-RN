@@ -108,10 +108,10 @@ const useAxiosInterceptor = () => {
               }
             }
           } else signOutUser(true);
+          // clearUserSession();
         }
 
-        clearUserSession();
-        // return Promise.reject(error);
+        return Promise.reject(error);
       },
     );
 

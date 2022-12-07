@@ -9,6 +9,7 @@ type Props = {
   projectStartDt: string;
   projectEndDt: string;
   onClickBack: () => void;
+  onClickMenu: () => void;
 };
 
 const Header = ({
@@ -16,6 +17,7 @@ const Header = ({
   projectStartDt,
   projectEndDt,
   onClickBack,
+  onClickMenu,
 }: Props) => {
   return (
     <View style={container}>
@@ -23,7 +25,7 @@ const Header = ({
         <TouchableOpacity style={button} onPress={onClickBack}>
           <Icons.Back />
         </TouchableOpacity>
-        <TouchableOpacity style={button}>
+        <TouchableOpacity style={button} onPress={onClickMenu}>
           <Icons.Menu />
         </TouchableOpacity>
       </View>

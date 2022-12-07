@@ -1,10 +1,13 @@
 import React, {useMemo} from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import {css} from '@emotion/native';
-import {Icons, RoundCard, DefaultText as Text} from '../../../../components';
-import LinearGradient from 'react-native-linear-gradient';
+import {
+  Icons,
+  RoundCard,
+  DefaultText as Text,
+  Progress,
+} from '../../../../components';
 import {ProjectType} from '../../../../api/project';
-import {} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../../navigation/main';
@@ -54,19 +57,7 @@ const Card = ({project, ...rest}: Props) => {
           {newProject && <Text style={newHighlight}>NEW</Text>}
         </View>
         <Text style={objectDesc}>목표:{object}</Text>
-        <View style={progressWrap}>
-          <View style={progressBack}>
-            <LinearGradient
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              colors={['#43D2FF', '#1F92F2']}
-              style={[progressGauge, {width: `${percent}%`}]}
-            />
-          </View>
-          <Text style={progressText}>
-            <Text style={highlight}>{percent}%</Text>/100%
-          </Text>
-        </View>
+        <Progress percent={percent} style={progressWrap} />
         <View style={bottom}>
           <View style={people}>
             <Icons.People />
@@ -110,31 +101,6 @@ const objectDesc = css`
 `;
 const progressWrap = css`
   margin: 24px 0;
-`;
-
-const progressBack = css`
-  height: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50px;
-  overflow: hidden;
-  position: relative;
-`;
-const progressGauge = css`
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 8px;
-  background-color: red;
-`;
-const progressText = css`
-  margin-top: 5px;
-  margin-left: auto;
-  color: #636363;
-  font-size: 12px;
-  line-height: 18px;
-`;
-const highlight = css`
-  color: #1f92f2;
 `;
 
 const bottom = css`
