@@ -77,7 +77,14 @@ const WriteFeedback = (data: Props) => {
         <Header title="피드백 작성하기" onBack={handleClose} />
         <View style={infoWrap}>
           <View style={flex}>
-            <View style={userProfile} />
+            <View style={userProfile}>
+              {user.profileImageUrl && (
+                <Image
+                  source={{uri: user.profileImageUrl}}
+                  style={{width: '100%', height: '100%'}}
+                />
+              )}
+            </View>
             <Text style={userName}>{user.userName}</Text>
           </View>
           <Text style={desc}>{iniDetail}</Text>

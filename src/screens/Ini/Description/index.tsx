@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {Image, View} from 'react-native';
 import React, {useMemo} from 'react';
 import {ProjectIniType} from '../../../api/project';
 import {css} from '@emotion/native';
@@ -7,16 +7,18 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../navigation/main';
 import api from '../../../api';
 
-type Props = ProjectIniType;
+type Props = ProjectIniType & {
+  wroteFeedback: boolean;
+};
 const Description = (data: Props) => {
   const {
     iniDetail,
     user,
     myInitiative,
     done,
-    wroteFeedback,
     iniSeq,
     projectId,
+    wroteFeedback,
   } = useMemo(() => data, [data]);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
@@ -31,10 +33,18 @@ const Description = (data: Props) => {
       console.log('project 완료 실패', e);
     }
   };
+  console.log(myInitiative, done, wroteFeedback);
   return (
     <View style={container}>
       <View style={flex}>
-        <View style={userProfile} />
+        <View style={userProfile}>
+          {user.profileImageUrl && (
+            <Image
+              source={{uri: user.profileImageUrl}}
+              style={{width: '100%', height: '100%'}}
+            />
+          )}
+        </View>
         <Text style={userName}>{user.userName}</Text>
       </View>
       <Text style={desc}>{iniDetail}</Text>

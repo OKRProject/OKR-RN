@@ -54,7 +54,6 @@ export type ProjectIniType = {
   startDate: string;
   email: string;
   myInitiative: boolean;
-  wroteFeedback: boolean;
   dday: string;
   projectId: number;
   projectNm: string;

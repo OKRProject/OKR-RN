@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {ProjectIniType} from '../../../api/project';
 import {css} from '@emotion/native';
 import {View} from 'react-native';
@@ -9,12 +9,28 @@ import Feedbacks from '../Feedbacks';
 import {ScrollView} from 'react-native-gesture-handler';
 import {RootStackParamList} from '../../../navigation/main';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {FeedbackType} from '../../../api/feedback';
+import api from '../../../api';
 
 type Props = ProjectIniType;
 const Detail = (data: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const {dday, endDate, iniSeq, iniName} = useMemo(() => data, [data]);
+  const [feedbackList, setFeedbackList] = useState<FeedbackType[]>([]);
+  const [feedbackEnded, setFeedbackEnded] = useState<boolean>(false);
   const handleBack = () => navigation.goBack();
+
+  const init = async () => {
+    //todo api
+    const {data} = await api.feedback.getIniFeedbacks(iniSeq);
+    setFeedbackEnded(data.wroteFeedback);
+    setFeedbackList(data.feedback);
+    // setFeedbackList(dummy);
+  };
+  useEffect(() => {
+    init();
+  }, []);
+
   return (
     <Background>
       <Header onBack={handleBack} title={`Ini ${iniSeq}`} />
@@ -26,8 +42,8 @@ const Detail = (data: Props) => {
             마감일: {endDate} {dday}
           </Text>
         </View>
-        <Description {...data} />
-        <Feedbacks iniId={iniSeq} />
+        <Description {...data} wroteFeedback={feedbackEnded} />
+        <Feedbacks iniId={iniSeq} feedbackList={feedbackList} />
       </ScrollView>
     </Background>
   );
