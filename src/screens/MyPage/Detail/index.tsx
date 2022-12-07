@@ -22,7 +22,10 @@ const Detail = ({profileImage, field, name}: Props) => {
       <Header title="프로필 상세" onBack={handleGoBack} />
       <View style={profile}>
         <View style={imageWrap}>
-          <Image style={{width: '100%', height: '100%'}} />
+          <Image
+            source={{uri: profileImage}}
+            style={{width: '100%', height: '100%'}}
+          />
         </View>
       </View>
       <View style={buttonsWrap}>

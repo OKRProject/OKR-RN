@@ -33,7 +33,7 @@ const Main = ({name, field, email, profileImage}: Props) => {
       <View style={container}>
         <TouchableOpacity style={profile} onPress={handleClickProfileDetail}>
           <View style={img}>
-            <Image source={{uri: profileImage}} style={{width: '100%'}} />
+            <Image source={{uri: profileImage}} style={{width: '100%', height:"100%"}} />
           </View>
           <View>
             <Text style={profileName}>{name}</Text>

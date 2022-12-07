@@ -28,7 +28,7 @@ const KRList = ({KRList, projectTitle}: Props) => {
             onPress={() => setSelected(kr.keyResultId)}>
             <Text
               style={[tabText, selected === kr.keyResultId && tabTextSelected]}>
-              {`KR${kr.keyResultId}`}
+              {`KR${kr.keyResultId.split('-')[1]}`}
             </Text>
           </TouchableWithoutFeedback>
         ))}
