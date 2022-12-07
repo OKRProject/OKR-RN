@@ -5,6 +5,7 @@ import userStore from '../../store/userStore';
 import BottomTabNavigator from './BottomTab';
 import {useAxiosInterceptor} from '../../hooks';
 import {ProjectIniType} from '../../api/project';
+import {clearUserSession} from '../../hooks/useSignOut';
 
 export type ProjectParam =
   | {type: 'main'}

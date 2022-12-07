@@ -28,6 +28,11 @@ export type ProjectType = {
 };
 
 export type KeyResultType = {keyResultId: string; keyResultName: string};
+export type TeamMemberType = {
+  userName: string;
+  profileImageUrl: string;
+  jobField: string;
+};
 export type ProjectDetailType = {
   projectName: string;
   projectId: number;
@@ -36,6 +41,7 @@ export type ProjectDetailType = {
   projectEndDt: string;
   keyResult: KeyResultType[];
   projectType: ProjectTypeEnum;
+  teamMemberInfoList: TeamMemberType[];
 };
 
 export type ProjectIniType = {
@@ -82,6 +88,19 @@ export type GetProjectIniListResType = {
 
 export type GetIniListByDateResType = ProjectIniType[];
 
+export type AddMemberToTeamReqType = {projectId: number; emails: string[]};
+export type AddMemberToTeamResType = {
+  failedEmailList: string[];
+  addedEmailList: string[];
+};
+
+export type GetTeamInfoResType = {
+  period: string;
+  progress: number;
+  teamMembers: TeamMemberType[];
+  projectType: string;
+  dday: string;
+};
 const createNewProject = (body: CreateNewProjectReqType) =>
   instance.post('v1/project', body);
 
@@ -105,6 +124,15 @@ const completeProjectIni = (iniId: number) =>
 const getIniListByDate = (date: string) =>
   instance.get<GetIniListByDateResType>(`v1/initiative/byDate/${date}`);
 
+const getProjectTeamInfo = (projectId: number) =>
+  instance.get(`v1/project/${projectId}/side`);
+
+const inviteMember = (body: AddMemberToTeamReqType) =>
+  instance.post<AddMemberToTeamResType>(`v1/team/invite`, body);
+
+const inviteMemberEmailValidate = (email: string) =>
+  instance.get<GetTeamInfoResType>(`v1/team/invite/${email}`);
+
 export default {
   createNewProject,
   getProjectList,
@@ -113,4 +141,7 @@ export default {
   addProjectIni,
   completeProjectIni,
   getIniListByDate,
+  inviteMember,
+  inviteMemberEmailValidate,
+  getProjectTeamInfo,
 };

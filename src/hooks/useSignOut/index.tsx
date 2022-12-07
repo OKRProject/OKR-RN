@@ -17,6 +17,7 @@ const useSignOut = () => {
 
   const signOutUser = useCallback(
     async (callFailed?: boolean) => {
+      console.log('signout');
       // if (!callFailed) api.user.signOut({device});
       clearUserSession();
       setUserProfile(undefined);
