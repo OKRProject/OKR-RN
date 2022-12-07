@@ -20,7 +20,7 @@ const icons: {[key in FeedbackEnum]: {img: ImageRequireSource; title: string}} =
 type Props = FeedbackType;
 
 const Feedback = ({
-  text,
+  opinion,
   grade,
   profileImage,
   writerJob,
@@ -37,10 +37,15 @@ const Feedback = ({
         />
         <Text style={tagText}>{icons[grade].title}</Text>
       </View>
-      <Text style={opinion}>{text}</Text>
+      <Text style={opinionText}>{opinion}</Text>
       <View style={writerWrap}>
         <View style={imgWrap}>
-          {profileImage && <Image source={{uri: profileImage}} />}
+          {profileImage && (
+            <Image
+              source={{uri: profileImage}}
+              style={{width: '100%', height: '100%'}}
+            />
+          )}
         </View>
         <Text style={writer}>
           {writerName} {writerJob}
@@ -70,7 +75,7 @@ const tagText = css`
 `;
 
 //todo 말줄임
-const opinion = css`
+const opinionText = css`
   margin: 16px 0;
   font-size: 16px;
 `;

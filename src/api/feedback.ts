@@ -8,7 +8,7 @@ export enum FeedbackEnum {
 
 export type FeedbackType = {
   feedbackId: number;
-  text: string;
+  opinion: string;
   grade: FeedbackEnum;
   writerId: number;
   writerName: string;
@@ -23,7 +23,22 @@ type AddFeedbackReqType = {
   initiativeId: number;
 };
 
+export type GetIniFeedbackInfoResType = {
+  myInitiative: true;
+  wroteFeedback: false;
+  feedback: FeedbackType[];
+};
+
+export type GetMyFeedbacksResType = {
+  content: FeedbackType[];
+};
+
 const addFeedback = (body: AddFeedbackReqType) =>
   instance.post(`v1/feedback`, body);
 
-export default {addFeedback};
+const getIniFeedbacks = (iniId: number) =>
+  instance.get<GetIniFeedbackInfoResType>(`v1/feedback/${iniId}`);
+
+const getMyFeedbackList = () =>
+  instance.get<GetMyFeedbacksResType>(`v1/feedback?page=0&size=10`);
+export default {addFeedback, getIniFeedbacks, getMyFeedbackList};
