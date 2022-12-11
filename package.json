@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/native": "^11.10.0",
     "@emotion/react": "^11.10.4",
+    "@invertase/react-native-apple-authentication": "^2.2.2",
     "@react-native-google-signin/google-signin": "^8.0.0",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/native": "^6.0.12",
@@ -20,6 +21,7 @@
     "@types/react-native-calendars": "^1.1264.3",
     "axios": "^0.27.2",
     "immer": "^9.0.15",
+    "pm2": "^5.2.2",
     "react": "18.1.0",
     "react-native": "0.70.0",
     "react-native-calendars": "^1.1289.0",
