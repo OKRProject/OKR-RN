@@ -16,7 +16,6 @@ type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 type Props = {
   project: ProjectType;
-  onPress: () => void;
 };
 
 const Card = ({project, ...rest}: Props) => {

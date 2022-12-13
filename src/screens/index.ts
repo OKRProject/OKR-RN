@@ -9,6 +9,7 @@ import Feedback from './Feedback';
 import Terms from './Terms';
 import Policy from './Policy';
 import Ini from './Ini';
+import Notification from './Notification';
 
 export default {
   Home,
@@ -22,4 +23,5 @@ export default {
   Terms,
   Policy,
   Ini,
+  Notification,
 };

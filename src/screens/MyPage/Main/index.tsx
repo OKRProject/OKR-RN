@@ -12,16 +12,17 @@ import {css} from '@emotion/native';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../navigation/main';
 import {UserProfileType} from '../../../api/user';
+import {useSignOut} from '../../../hooks';
 
 type Props = UserProfileType;
 const Main = ({name, field, email, profileImage}: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
+  const {signOutUser} = useSignOut();
   // console.log(field, name, profileImage, email);
 
   const handleClickPolicy = () => navigation.navigate('Policy');
   const handleClickTerms = () => navigation.navigate('Terms');
-  const handleClickLogout = () => {};
+  const handleClickLogout = () => signOutUser();
   const handleClickWithdrawal = () => {};
   const handleClickProfileDetail = () =>
     navigation.navigate('MyPage', {
@@ -33,7 +34,10 @@ const Main = ({name, field, email, profileImage}: Props) => {
       <View style={container}>
         <TouchableOpacity style={profile} onPress={handleClickProfileDetail}>
           <View style={img}>
-            <Image source={{uri: profileImage}} style={{width: '100%', height:"100%"}} />
+            <Image
+              source={{uri: profileImage}}
+              style={{width: '100%', height: '100%'}}
+            />
           </View>
           <View>
             <Text style={profileName}>{name}</Text>

@@ -12,13 +12,37 @@ export type FieldListType = {
   title: string;
 }[];
 
-const getCategory = async () =>
-  await instance.get<FieldListType>('v1/user/job/category');
+export enum NotificationEnum {
+  NEW_TEAM_MATE = 'NEW_TEAM_MATE',
+  INITIATIVE_ACHIEVED = 'INITIATIVE_ACHIEVED',
+  PROJECT_PROGRESS_ACHIEVED_QUARTER = 'PROJECT_PROGRESS_ACHIEVED_QUARTER',
+  PROJECT_PROGRESS_ACHIEVED_HALF = 'PROJECT_PROGRESS_ACHIEVED_HALF',
+  PROJECT_PROGRESS_ACHIEVED_THREE_QUARTERS = 'PROJECT_PROGRESS_ACHIEVED_THREE_QUARTERS',
+  PROJECT_FINISHED = 'PROJECT_FINISHED',
+  NEW_FEEDBACK = 'NEW_FEEDBACK',
+}
+export type NotificationType = {
+  id: number;
+  notiType: NotificationEnum;
+  msg: string;
+  checked: boolean;
+};
+const getCategory = () => instance.get<FieldListType>('v1/user/job/category');
 
-const getFields = async (category: string) =>
-  await instance.get<FieldListType>(`v1/user/job/${category}/fields`);
+const getFields = (category: string) =>
+  instance.get<FieldListType>(`v1/user/job/${category}/fields`);
 
-const getUserProfile = async () =>
-  await instance.get<UserProfileType>(`v1/user`);
+const getUserProfile = () => instance.get<UserProfileType>(`v1/user`);
 
-export default {getCategory, getFields, getUserProfile};
+const getNotificationList = () => instance.get(`v1/user/notification`);
+
+const confirmNotification = (id: number) =>
+  instance.put(`v1/user/notification/${id}`);
+
+export default {
+  getCategory,
+  getFields,
+  getUserProfile,
+  getNotificationList,
+  confirmNotification,
+};

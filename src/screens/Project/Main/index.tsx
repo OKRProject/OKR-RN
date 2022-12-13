@@ -58,17 +58,16 @@ const Main = ({navigation}: Props) => {
   }, [selectedTab, originProjectList]);
 
   const handleClickTab = (tab: keyof typeof tabList) => setSelectedTab(tab);
-  const handleClickProject = (id: string) => {
-    //todo navigate project detail with id
-  };
+
   const handleClickAddProject = () =>
     navigation.navigate('Project', {type: 'new'});
 
+  const handleClickNotification = () => navigation.navigate('Notification');
   return (
     <Background style={container}>
       <View style={header}>
         <Icons.Logo />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleClickNotification}>
           <Icons.Alarm color="#fff" />
         </TouchableOpacity>
       </View>
@@ -96,11 +95,7 @@ const Main = ({navigation}: Props) => {
           <ScrollView style={projectWrapper}>
             {filteredProjectList.length > 0 ? (
               filteredProjectList.map(project => (
-                <Card
-                  key={`project_card_${project.id}`}
-                  project={project}
-                  onPress={() => handleClickProject(project.id.toString())}
-                />
+                <Card key={`project_card_${project.id}`} project={project} />
               ))
             ) : (
               <EmptyCard />
