@@ -62,17 +62,26 @@ const useSignIn = () => {
             requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
           });
 
-          console.log('????', appleAuthRequestResponse);
-
           const {user, email, nonce, identityToken, realUserStatus} =
             appleAuthRequestResponse;
 
           const credentialState = await appleAuth.getCredentialStateForUser(
             user,
           );
-          console.log(appleAuthRequestResponse, 'res');
-          if (credentialState === appleAuth.State.AUTHORIZED) {
+
+          if (credentialState === appleAuth.State.AUTHORIZED && identityToken) {
             console.log('user is authenticated');
+            const {data} = await api.auth.loginByApple(identityToken);
+            if (isLogin(data)) {
+              //로그인
+              const {refreshToken, accessToken, ...rest} = data;
+              await saveSessions({refreshToken, accessToken});
+              setUserProfile({...rest});
+            } else {
+              //회원가입
+              setAuthSession(data);
+              signUpCallback();
+            }
           }
 
           //todo idtoken null일 때 토큰 가져오기

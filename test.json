@@ -1,0 +1,18 @@
+{
+  "authorizationCode": "cece903affa9a4417b7df7be80f3e3a4e.0.rvrt.a3De7HE4x4x3zdv57AEJiA",
+  "authorizedScopes": [],
+  "email": null,
+  "fullName": {
+    "familyName": null,
+    "givenName": null,
+    "middleName": null,
+    "namePrefix": null,
+    "nameSuffix": null,
+    "nickname": null
+  },
+  "identityToken": "eyJraWQiOiJXNldjT0tCIiwiYWxnIjoiUlMyNTYifQ.eyJpc3MiOiJodHRwczovL2FwcGxlaWQuYXBwbGUuY29tIiwiYXVkIjoiaW8ubW9hLm1vYmlsZSIsImV4cCI6MTY3MDg0MDk4OCwiaWF0IjoxNjcwNzU0NTg4LCJzdWIiOiIwMDA1MTMuNmY0YTUwYzgyMmJlNDRlOWJjMzBlYjk5NjNlZGZhYzQuMDkzMCIsIm5vbmNlIjoiN2JhNjBjOTdmNTM4Mzc1NzZiMTVlZmQ1MDdiZDU5ZThkYmI4NDU3YTgzMjY0ZjkyZTNkOTNkMGU2ZDczOGY2MSIsImNfaGFzaCI6IlRQTk5fN2VwUVpxc3dKWTlzYjdOb2ciLCJlbWFpbCI6IndheWlud2F5bmVAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOiJ0cnVlIiwiYXV0aF90aW1lIjoxNjcwNzU0NTg4LCJub25jZV9zdXBwb3J0ZWQiOnRydWV9.RhxIfsHSXhf_36hD7pRtbgKu2LLJmYxGA21xgOvpZydADC3G-q3CeB9LM3BlJB09iLXukoEYTP59ouTqWF6BRcAuaJtD6M4zPOqQ5hRYznXFCV74zGEVjI2rgdkzIghIk0NTZ6vux9UGEU7viuNOwwskCyxC4WTtJSivMY2GIJeSonNX_F3Yob0yKCR2zjmFhptPKd2R0-Jjv-JD-ZiNGRAKNuPwW8vwq_CcvJvbAoF2SGOQt85VN8m7SduIv6I9XwhUpgujcYpCT0itqj6OX4_dZGEuOJ7QzM6tAJiiR842LPm1-LqXhFp-C7PRZah_DU9KpR657Kv3VupXyGjhfg",
+  "nonce": "u4cwExI6QJ25un6c9b54lK2OgZGXXxL3",
+  "realUserStatus": 1,
+  "state": null,
+  "user": "000513.6f4a50c822be44e9bc30eb9963edfac4.0930"
+}
