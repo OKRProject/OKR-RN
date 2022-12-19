@@ -60,7 +60,7 @@ const Card = ({project, ...rest}: Props) => {
         <View style={bottom}>
           <View style={people}>
             <Icons.People />
-            <Text style={peopleText}>{''}</Text>
+            <Text style={peopleText}>{teamMemberEmails.length}</Text>
           </View>
           <Text style={period}>
             {startDate} - {endDate}
