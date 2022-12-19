@@ -34,10 +34,14 @@ const getFields = (category: string) =>
 
 const getUserProfile = () => instance.get<UserProfileType>(`v1/user`);
 
-const getNotificationList = () => instance.get(`v1/user/notification`);
+const getNotificationList = () =>
+  instance.get<NotificationType[]>(`v1/user/notification`);
 
 const confirmNotification = (id: number) =>
-  instance.put(`v1/user/notification/${id}`);
+  instance.put(`v1/notification/${id}`);
+
+const deleteNotification = (id: number) =>
+  instance.delete(`v1/notification/${id}`);
 
 export default {
   getCategory,
@@ -45,4 +49,5 @@ export default {
   getUserProfile,
   getNotificationList,
   confirmNotification,
+  deleteNotification,
 };

@@ -1,34 +1,41 @@
 import {View, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Background, DefaultText as Text, Header, Icons} from '../../components';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigation/main';
 import {NotificationEnum, NotificationType} from '../../api/user';
 import {css} from '@emotion/native';
+import api from '../../api';
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'Notification'> {}
+
 const Notification = ({navigation}: Props) => {
-  const [notiList, setNotiList] = useState<NotificationType[]>([
-    {
-      id: 0,
-      notiType: NotificationEnum.INITIATIVE_ACHIEVED,
-      msg: 'adadasdasdasdasd',
-      checked: false,
-    },
-    {
-      id: 1,
-      notiType: NotificationEnum.INITIATIVE_ACHIEVED,
-      msg: 'adadasdasdasdasd',
-      checked: true,
-    },
-  ]);
+  const [notiList, setNotiList] = useState<NotificationType[]>([]);
   const handleClickBack = () => navigation.goBack();
+  const handleClickNotification = (id: number, notiType: NotificationEnum) => {
+    //noti type별로 다른 행동?
+    api.user.confirmNotification(id);
+  };
+
+  const handleClickDeleteNoti = async (id: number) => {
+    await api.user.deleteNotification(id);
+  };
+
+  const getNotiList = async () => {
+    const {data} = await api.user.getNotificationList();
+    setNotiList(data);
+  };
+  useEffect(() => {
+    getNotiList();
+  }, []);
+
   return (
     <Background>
       <Header title="알림" onBack={handleClickBack} />
       <View>
         {notiList.map(({id, notiType, msg, checked}) => (
-          <View
+          <TouchableOpacity
+            onPress={() => handleClickNotification(id, notiType)}
             key={`notification_${id}`}
             style={[
               notiConatainer,
@@ -45,13 +52,18 @@ const Notification = ({navigation}: Props) => {
                   ? '동료 피드백'
                   : '프로젝트'}
               </Text>
-              <TouchableOpacity style={closeIcon}>
+              <TouchableOpacity
+                style={closeIcon}
+                onPress={e => {
+                  e.stopPropagation();
+                  handleClickDeleteNoti(id);
+                }}>
                 <Icons.Close color={'#fff'} />
               </TouchableOpacity>
             </View>
             <Text style={message}>{msg}</Text>
             <Text style={date}>2022.09.11 (일)</Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
     </Background>
