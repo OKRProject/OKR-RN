@@ -57,7 +57,7 @@ export type ProjectIniType = {
   dday: string;
   projectId: number;
   projectNm: string;
-  krId: number;
+  krId: string;
 };
 
 export type AddProjectIniReqType = {
@@ -132,6 +132,9 @@ const inviteMember = (body: AddMemberToTeamReqType) =>
 const inviteMemberEmailValidate = (email: string) =>
   instance.get<GetTeamInfoResType>(`v1/team/invite/${email}`);
 
+const getIniDatesByMonth = (yyyymm: string) =>
+  instance.get<string[]>(`v1/initiative/yearmonth/${yyyymm}`);
+
 export default {
   createNewProject,
   getProjectList,
@@ -143,4 +146,5 @@ export default {
   inviteMember,
   inviteMemberEmailValidate,
   getProjectTeamInfo,
+  getIniDatesByMonth,
 };

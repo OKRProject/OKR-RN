@@ -8,6 +8,7 @@ import {getDate} from '../../utils/calendar';
 import {ProjectIniType} from '../../api/project';
 import api from '../../api';
 import ProjectIniList from './ProjectIniList';
+
 const today = new Date().toDateString();
 
 const Calendar = () => {
@@ -17,6 +18,8 @@ const Calendar = () => {
   });
   const [selectedDate, setSelectedDate] = useState<string>(getDate(today, 0));
   const [iniListByDate, setIniListByDate] = useState<ProjectIniType[]>([]);
+  const [activeIniListDatesByMonth, setActiveIniListDatesByMonth] =
+    useState<string[]>();
 
   const getIniListByDate = async () => {
     try {
@@ -27,9 +30,25 @@ const Calendar = () => {
       console.log(e.response.data);
     }
   };
+
+  const getActiveIniListDatesByMonth = async () => {
+    const todayString = getDate(today, 0);
+    const list = todayString.split('-');
+    const year = list[0];
+    const month = list[1];
+    if (year && month) {
+      const yyyymm = `${year}-${month}`;
+      const {data} = await api.project.getIniDatesByMonth(yyyymm);
+      setActiveIniListDatesByMonth(data);
+    }
+  };
   useEffect(() => {
     getIniListByDate();
   }, [selectedDate]);
+
+  useEffect(() => {
+    getActiveIniListDatesByMonth();
+  }, []);
 
   const handleSelectIni = (dates: {start: string; end: string}) =>
     setDate(dates);
@@ -46,6 +65,7 @@ const Calendar = () => {
         end={end}
         setDate={handleSelectDate}
         selectOneDate={selectedDate}
+        highlightDates={activeIniListDatesByMonth}
       />
       <ProjectIniList
         iniList={iniListByDate}

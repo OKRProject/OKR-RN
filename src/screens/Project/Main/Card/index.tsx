@@ -16,7 +16,6 @@ type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 type Props = {
   project: ProjectType;
-  onPress: () => void;
 };
 
 const Card = ({project, ...rest}: Props) => {
@@ -61,7 +60,7 @@ const Card = ({project, ...rest}: Props) => {
         <View style={bottom}>
           <View style={people}>
             <Icons.People />
-            <Text style={peopleText}>{''}</Text>
+            <Text style={peopleText}>{teamMemberEmails.length}</Text>
           </View>
           <Text style={period}>
             {startDate} - {endDate}

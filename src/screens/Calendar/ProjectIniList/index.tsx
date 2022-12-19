@@ -41,7 +41,9 @@ const ProjectIniList = ({iniList, onClick, selectedDate}: Props) => {
               <View style={contents}>
                 <View style={tag}>
                   <Text style={tagText}>
-                    {`${ini.projectNm} > KR ${ini.krId} > Ini ${ini.iniSeq}`}
+                    {`${ini.projectNm} > KR ${ini.krId.split('-')[1]} > Ini ${
+                      ini.iniSeq
+                    }`}
                   </Text>
                 </View>
                 <Text style={iniName}>{ini.iniName}</Text>

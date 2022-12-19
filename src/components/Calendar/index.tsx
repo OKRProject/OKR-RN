@@ -3,18 +3,36 @@ import {css} from '@emotion/native';
 import {getDate, getElapsedDay} from '../../utils/calendar';
 import {Calendar as ReactCalendars} from 'react-native-calendars';
 import {Theme, MarkedDates} from 'react-native-calendars/src/types';
+import {MarkingProps} from 'react-native-calendars/src/calendar/day/marking';
 
 type Props = {
   start: string; //yy-mm-dd
   end: string; //yy-mm-dd
   setDate: ({start, end}: {start: string; end: string}) => void;
   selectOneDate?: string; //yy-mm-dd
+  highlightDates?: string[]; //yy-mm-dd[]
 };
-const Calendar = ({start, end, setDate, selectOneDate}: Props) => {
+const Calendar = ({
+  start,
+  end,
+  setDate,
+  selectOneDate,
+  highlightDates,
+}: Props) => {
   const markedDates = useMemo<MarkedDates>(() => {
-    if (!start && !end) return {};
+    const customStyle: MarkingProps = {
+      customTextStyle: {fontWeight: '700'},
+    };
+
+    const highlights = highlightDates?.reduce(
+      (prev, cur) => ({...prev, [cur]: customStyle}),
+      {} as MarkedDates,
+    );
+
+    if (!start && !end) return {...highlights};
     if (start && start === end)
       return {
+        ...highlights,
         [start]: selectedDayStyle,
       };
     if (start && end) {
@@ -22,22 +40,32 @@ const Calendar = ({start, end, setDate, selectOneDate}: Props) => {
       const dayList = Array.from({length: dayLength + 1}, (_, i) =>
         getDate(start, i),
       );
-      return dayList.reduce((prev, cur, idx) => {
-        if (idx === 0)
-          return {
-            [cur]: startDayStyle,
-          };
-        if (idx === dayLength)
+      return dayList.reduce(
+        (prev, cur, idx) => {
+          if (idx === 0)
+            return {
+              ...prev,
+              [cur]: startDayStyle,
+            };
+          if (idx === dayLength)
+            return {
+              ...prev,
+              [cur]: endDayStyle,
+            };
           return {
             ...prev,
-            [cur]: endDayStyle,
+            [cur]: {
+              ...periodDayStyle,
+              color: selectOneDate ? '#1F92F2' : '#254766',
+            },
           };
-        return {...prev, [cur]: periodDayStyle};
-      }, {} as MarkedDates);
+        },
+        {...highlights} as MarkedDates,
+      );
     }
 
     return {};
-  }, [start, end]);
+  }, [start, end, selectOneDate, highlightDates]);
 
   const markedDatesWithSelectOneDay = useMemo<MarkedDates>(
     () =>
@@ -45,9 +73,10 @@ const Calendar = ({start, end, setDate, selectOneDate}: Props) => {
         ? {
             ...markedDates,
             [selectOneDate]: {
-              ...selectedDayStyle,
-              color: '#fff',
-              textColor: '#27272A',
+              ...markedDates[selectOneDate],
+              marked: true,
+              dotColor: '#fff',
+              customTextStyle: {fontWeight: '600', color: '#fff'},
             },
           }
         : markedDates,
@@ -69,7 +98,10 @@ const Calendar = ({start, end, setDate, selectOneDate}: Props) => {
         onPressArrowLeft={subtractMonth => subtractMonth()}
         onPressArrowRight={addMonth => addMonth()}
         onDayPress={({dateString}) => handleSelectDay(dateString)}
-        theme={theme}
+        theme={{
+          ...theme,
+          dayTextColor: highlightDates ? '#636363' : '#fff',
+        }}
         markingType={'period'}
         markedDates={markedDatesWithSelectOneDay}
       />
@@ -101,11 +133,11 @@ const theme: Theme = {
 const startDayStyle = {
   startingDay: true,
   color: '#1F92F2',
-  textColor: 'white',
+  textColor: '#fff',
 };
 
-const endDayStyle = {endingDay: true, color: '#1F92F2', textColor: 'white'};
-const periodDayStyle = {color: '#254766', textColor: 'white'};
+const endDayStyle = {endingDay: true, color: '#1F92F2', textColor: '#fff'};
+const periodDayStyle = {color: '#254766', textColor: '#fff'};
 const selectedDayStyle = {...startDayStyle, ...endDayStyle};
 
 export default Calendar;

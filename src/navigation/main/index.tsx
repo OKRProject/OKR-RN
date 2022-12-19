@@ -31,6 +31,7 @@ export type RootStackParamList = {
   Terms: undefined;
   Policy: undefined;
   Ini: IniParam;
+  Notification: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -49,6 +50,7 @@ const Main = () => {
       <Stack.Screen name="Ini" component={Screens.Ini} />
       <Stack.Screen name="Terms" component={Screens.Terms} />
       <Stack.Screen name="Policy" component={Screens.Policy} />
+      <Stack.Screen name="Notification" component={Screens.Notification} />
     </Stack.Navigator>
   ) : (
     <Stack.Navigator
