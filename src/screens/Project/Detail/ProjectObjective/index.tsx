@@ -4,13 +4,13 @@ import {css} from '@emotion/native';
 import {DefaultText as Text} from '../../../../components';
 
 type Props = {
-  projectObjective: string;
+  objective: string;
 };
-const ProjectObjective = ({projectObjective}: Props) => {
+const ProjectObjective = ({objective}: Props) => {
   return (
     <View style={container}>
       <Text style={tag}>목표(O)</Text>
-      <Text style={title}>{projectObjective}</Text>
+      <Text style={title}>{objective}</Text>
     </View>
   );
 };

@@ -5,20 +5,14 @@ import {Icons, DefaultText as Text} from '../../../../components';
 import {dateStringToViewText} from '../../../../utils/calendar';
 
 type Props = {
-  projectName: string;
-  projectStartDt: string;
-  projectEndDt: string;
+  name: string;
+  sdt: string;
+  edt: string;
   onClickBack: () => void;
   onClickMenu: () => void;
 };
 
-const Header = ({
-  projectName,
-  projectStartDt,
-  projectEndDt,
-  onClickBack,
-  onClickMenu,
-}: Props) => {
+const Header = ({name, sdt, edt, onClickBack, onClickMenu}: Props) => {
   return (
     <View style={container}>
       <View style={buttonWrap}>
@@ -30,10 +24,9 @@ const Header = ({
         </TouchableOpacity>
       </View>
       <View>
-        <Text style={titleText}>{projectName}</Text>
+        <Text style={titleText}>{name}</Text>
         <Text style={periodText}>
-          {dateStringToViewText(projectStartDt)} -{' '}
-          {dateStringToViewText(projectEndDt)}
+          {dateStringToViewText(sdt)} - {dateStringToViewText(edt)}
         </Text>
       </View>
     </View>

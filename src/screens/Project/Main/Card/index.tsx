@@ -21,11 +21,10 @@ type Props = {
 const Card = ({project, ...rest}: Props) => {
   const navigation = useNavigation<NavigationProps>();
   const {
-    id,
+    projectToken,
     name,
     object,
-    teamMemberEmails,
-    teamMemberProfileImages,
+    teamMembers,
     progress,
     sdt,
     edt,
@@ -46,7 +45,10 @@ const Card = ({project, ...rest}: Props) => {
   );
 
   const handleClickProject = () =>
-    navigation.navigate('Project', {type: 'detail', projectId: project.id});
+    navigation.navigate('Project', {
+      type: 'detail',
+      projectToken,
+    });
 
   return (
     <TouchableOpacity onPress={handleClickProject}>
@@ -60,7 +62,7 @@ const Card = ({project, ...rest}: Props) => {
         <View style={bottom}>
           <View style={people}>
             <Icons.People />
-            <Text style={peopleText}>{teamMemberEmails.length}</Text>
+            <Text style={peopleText}>{teamMembers.length}</Text>
           </View>
           <Text style={period}>
             {startDate} - {endDate}

@@ -15,14 +15,17 @@ import api from '../../../api';
 type Props = ProjectIniType;
 const Detail = (data: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const {dday, endDate, iniSeq, iniName} = useMemo(() => data, [data]);
+  const {dDay, endDate, initiativeToken, initiativeName} = useMemo(
+    () => data,
+    [data],
+  );
   const [feedbackList, setFeedbackList] = useState<FeedbackType[]>([]);
   const [feedbackEnded, setFeedbackEnded] = useState<boolean>(false);
   const handleBack = () => navigation.goBack();
 
   const init = async () => {
     //todo api
-    const {data} = await api.feedback.getIniFeedbacks(iniSeq);
+    const {data} = await api.feedback.getIniFeedbacks(initiativeToken);
     setFeedbackEnded(data.wroteFeedback);
     setFeedbackList(data.feedback);
     // setFeedbackList(dummy);
@@ -33,17 +36,20 @@ const Detail = (data: Props) => {
 
   return (
     <Background>
-      <Header onBack={handleBack} title={`Ini ${iniSeq}`} />
+      <Header onBack={handleBack} title={`Ini ${initiativeToken}`} />
       <ScrollView>
         <View style={summeryWrap}>
-          <Text style={project}>{`Ini ${iniSeq}`}</Text>
-          <Text style={iniTitle}>{iniName}</Text>
+          <Text style={project}>{`Ini ${initiativeToken}`}</Text>
+          <Text style={iniTitle}>{initiativeName}</Text>
           <Text style={endDt}>
-            마감일: {endDate} {dday}
+            마감일: {endDate} {dDay}
           </Text>
         </View>
         <Description {...data} wroteFeedback={feedbackEnded} />
-        <Feedbacks iniId={iniSeq} feedbackList={feedbackList} />
+        <Feedbacks
+          initiativeToken={initiativeToken}
+          feedbackList={feedbackList}
+        />
       </ScrollView>
     </Background>
   );

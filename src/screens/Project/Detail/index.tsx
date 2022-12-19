@@ -11,16 +11,16 @@ import TeamModal from './TeamModal';
 import TeamMemberAddModal from './TeamMemberAddModal';
 
 interface Props extends NativeStackScreenProps<RootStackParamList, 'Project'> {
-  projectId: number;
+  projectToken: string;
 }
-const Detail = ({projectId, navigation}: Props) => {
+const Detail = ({projectToken, navigation}: Props) => {
   const [project, setProject] = useState<ProjectDetailType>();
   const [openModal, setOpenModal] = useState<
     'addMember' | 'menu' | undefined
   >();
 
   const init = async () => {
-    const {data} = await api.project.getProjectDetail({id: projectId});
+    const {data} = await api.project.getProjectDetail({projectToken});
     setProject(data);
   };
   const handleGoBack = () => navigation.navigate('Project', {type: 'main'});
@@ -41,16 +41,12 @@ const Detail = ({projectId, navigation}: Props) => {
             onClickMenu={handleClickModalOpen}
           />
           <ProjectObjective {...project} />
-          <KRList
-            KRList={project.keyResult}
-            projectTitle={project.projectName}
-          />
+          <KRList KRList={project.keyResults} projectTitle={project.name} />
           {openModal === 'menu' && (
             <TeamModal
-              projectId={project.projectId}
+              projectToken={project.projectToken}
               isVisible={openModal === 'menu'}
               onClickClose={handleClickModalClose}
-              teamList={project.teamMemberInfoList}
               onClickAddMember={() => {
                 setOpenModal('addMember');
               }}
@@ -58,7 +54,7 @@ const Detail = ({projectId, navigation}: Props) => {
           )}
           {openModal === 'addMember' && (
             <TeamMemberAddModal
-              projectId={project.projectId}
+              projectToken={project.projectToken}
               isVisible={openModal === 'addMember'}
               onClose={() => setOpenModal('menu')}
               onComplete={() => setOpenModal('menu')}

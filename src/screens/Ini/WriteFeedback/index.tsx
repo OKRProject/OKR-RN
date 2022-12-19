@@ -41,7 +41,10 @@ type Props = ProjectIniType;
 
 const WriteFeedback = (data: Props) => {
   const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
-  const {user, iniDetail, projectId, iniSeq} = useMemo(() => data, [data]);
+  const {user, initiativeDetail, projectToken, initiativeToken} = useMemo(
+    () => data,
+    [data],
+  );
   const [{grade, opinion}, setFeedback] = useState<{
     grade?: FeedbackEnum;
     opinion: string;
@@ -61,8 +64,8 @@ const WriteFeedback = (data: Props) => {
         await api.feedback.addFeedback({
           grade,
           opinion,
-          projectId,
-          initiativeId: iniSeq,
+          projectToken,
+          initiativeToken,
         });
         handleClose();
       } catch (e) {
@@ -78,16 +81,16 @@ const WriteFeedback = (data: Props) => {
         <View style={infoWrap}>
           <View style={flex}>
             <View style={userProfile}>
-              {user.profileImageUrl && (
+              {user.profileImage && (
                 <Image
-                  source={{uri: user.profileImageUrl}}
+                  source={{uri: user.profileImage}}
                   style={{width: '100%', height: '100%'}}
                 />
               )}
             </View>
             <Text style={userName}>{user.userName}</Text>
           </View>
-          <Text style={desc}>{iniDetail}</Text>
+          <Text style={desc}>{initiativeDetail}</Text>
         </View>
       </View>
       <View style={container}>

@@ -95,7 +95,10 @@ const Main = ({navigation}: Props) => {
           <ScrollView style={projectWrapper}>
             {filteredProjectList.length > 0 ? (
               filteredProjectList.map(project => (
-                <Card key={`project_card_${project.id}`} project={project} />
+                <Card
+                  key={`project_card_${project.projectToken}`}
+                  project={project}
+                />
               ))
             ) : (
               <EmptyCard />

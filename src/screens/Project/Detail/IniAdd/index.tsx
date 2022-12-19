@@ -23,16 +23,16 @@ const today = new Date().toDateString();
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 type Props = DefaultModalProps & {
-  KRId: string;
+  keyResultToken: string;
   projectTitle: string;
   onClose: () => void;
 };
 
-const IniAdd = ({KRId, onClose, projectTitle, ...rest}: Props) => {
+const IniAdd = ({keyResultToken, onClose, projectTitle, ...rest}: Props) => {
   const navigation = useNavigation<NavigationProps>();
   const [isCalendar, setCalendar] = useState<boolean>(false);
   const [initiative, setInitiative] = useState<AddProjectIniReqType>({
-    keyResultId: KRId,
+    keyResultToken,
     name: '',
     edt: getDate(today, 6),
     sdt: getDate(today, 0),

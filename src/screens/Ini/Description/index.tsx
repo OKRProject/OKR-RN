@@ -12,12 +12,12 @@ type Props = ProjectIniType & {
 };
 const Description = (data: Props) => {
   const {
-    iniDetail,
+    initiativeDetail,
     user,
     myInitiative,
     done,
-    iniSeq,
-    projectId,
+    initiativeToken,
+    projectToken,
     wroteFeedback,
   } = useMemo(() => data, [data]);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -27,8 +27,8 @@ const Description = (data: Props) => {
   };
   const handleClickDone = async () => {
     try {
-      await api.project.completeProjectIni(iniSeq);
-      navigation.navigate('Project', {type: 'detail', projectId});
+      await api.project.completeProjectIni(initiativeToken);
+      navigation.navigate('Project', {type: 'detail', projectToken});
     } catch (e) {
       console.log('project 완료 실패', e);
     }
@@ -38,16 +38,16 @@ const Description = (data: Props) => {
     <View style={container}>
       <View style={flex}>
         <View style={userProfile}>
-          {user.profileImageUrl && (
+          {user.profileImage && (
             <Image
-              source={{uri: user.profileImageUrl}}
+              source={{uri: user.profileImage}}
               style={{width: '100%', height: '100%'}}
             />
           )}
         </View>
         <Text style={userName}>{user.userName}</Text>
       </View>
-      <Text style={desc}>{iniDetail}</Text>
+      <Text style={desc}>{initiativeDetail}</Text>
       <View style={flex}>
         {!myInitiative && done && !wroteFeedback ? (
           <RoundSquareButton

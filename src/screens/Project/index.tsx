@@ -12,7 +12,11 @@ const Project = ({route, ...rest}: Props) => {
   if (route.params.type === 'new') return <New route={route} {...rest} />;
   if (route.params.type === 'detail')
     return (
-      <Detail route={route} {...rest} projectId={route.params.projectId} />
+      <Detail
+        route={route}
+        {...rest}
+        projectToken={route.params.projectToken}
+      />
     );
   return <Main route={route} {...rest} />;
 };

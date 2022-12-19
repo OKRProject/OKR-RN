@@ -7,17 +7,23 @@ import {ProjectIniType} from '../../../../../../api/project';
 type Props = ProjectIniType & {
   onPress: () => void;
 };
-const InitiativeCard = ({iniSeq, iniName, user, dday, onPress}: Props) => {
+const InitiativeCard = ({
+  initiativeToken,
+  initiativeName,
+  user,
+  dDay,
+  onPress,
+}: Props) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <RoundCard style={card}>
         <View style={left}>
-          <Text style={[tag, tagHighlight]}>{iniSeq}</Text>
-          <Text style={title}>{iniName}</Text>
+          <Text style={[tag, tagHighlight]}>{initiativeToken}</Text>
+          <Text style={title}>{initiativeName}</Text>
         </View>
         <View style={right}>
           <Text style={tag}>{user.userName}</Text>
-          <Text style={tag}>{dday}</Text>
+          <Text style={tag}>{dDay}</Text>
         </View>
       </RoundCard>
     </TouchableOpacity>

@@ -12,14 +12,14 @@ import {debounce} from 'lodash';
 
 type Props = {
   isVisible: boolean;
-  projectId: number;
+  projectToken: string;
   onClose: () => void;
   onComplete: () => void;
 };
 const TeamMemberAddModal = ({
   isVisible,
   onClose,
-  projectId,
+  projectToken,
   onComplete,
 }: Props) => {
   const [email, setEmail] = useState('');
@@ -30,7 +30,10 @@ const TeamMemberAddModal = ({
       /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
     if (email_format.test(email)) {
       try {
-        const {data} = await api.project.inviteMemberEmailValidate(email);
+        const {data} = await api.project.inviteMemberEmailValidate(
+          email,
+          projectToken,
+        );
         setValidate(true);
       } catch (e: any) {
         console.log(e);
@@ -42,7 +45,7 @@ const TeamMemberAddModal = ({
   const handleClickComplete = async () => {
     try {
       const {data} = await api.project.inviteMember({
-        projectId,
+        projectToken,
         emails: [email],
       });
       if (data.addedEmailList.length > 0) onComplete();

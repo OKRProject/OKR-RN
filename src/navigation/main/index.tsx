@@ -10,7 +10,7 @@ import {clearUserSession} from '../../hooks/useSignOut';
 export type ProjectParam =
   | {type: 'main'}
   | {type: 'new'}
-  | {type: 'detail'; projectId: number};
+  | {type: 'detail'; projectToken: string};
 
 export type IniParam =
   | {type: 'detail'; data: ProjectIniType}

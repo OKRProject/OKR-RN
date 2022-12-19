@@ -11,16 +11,16 @@ import {useNavigation} from '@react-navigation/native';
 
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 type Props = {
-  KRId: string;
+  keyResultToken: string;
   projectTitle: string;
 };
-const IniList = ({KRId, projectTitle}: Props) => {
+const IniList = ({keyResultToken, projectTitle}: Props) => {
   const navigation = useNavigation<NavigationProps>();
   const [iniList, setIniList] = useState<ProjectIniType[]>([]);
   const [openAdd, setOpenAdd] = useState<boolean>(false);
 
   const getIniList = async () => {
-    const {data} = await api.project.getIniList({KRId});
+    const {data} = await api.project.getIniList({keyResultToken});
     setIniList(data.content);
   };
 
@@ -34,14 +34,14 @@ const IniList = ({KRId, projectTitle}: Props) => {
 
   useEffect(() => {
     getIniList();
-  }, [KRId]);
+  }, [keyResultToken]);
 
   return (
     <ScrollView>
       {iniList.map((ini, idx) => (
         <InitiativeCard
           {...ini}
-          key={`KR${KRId}_${ini.iniSeq}`}
+          key={`KR${keyResultToken}_${ini.initiativeToken}`}
           onPress={() => handleMoveIniDetail(idx)}
         />
       ))}
@@ -49,7 +49,7 @@ const IniList = ({KRId, projectTitle}: Props) => {
         이니셔티브 추가하기
       </RoundSquareButton>
       <IniAdd
-        KRId={KRId}
+        keyResultToken={keyResultToken}
         isVisible={openAdd}
         onClose={handleCloseIni}
         projectTitle={projectTitle}

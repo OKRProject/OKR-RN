@@ -17,7 +17,7 @@ const ProjectIniList = ({iniList, onClick, selectedDate}: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleClickIni = (iniInfo: ProjectIniType) => {
-    const id = `${iniInfo.projectId}-${iniInfo.krId}-${iniInfo.iniSeq}`;
+    const id = `${iniInfo.projectToken}-${iniInfo.keyResultToken}-${iniInfo.initiativeToken}`;
     if (selectedIni === id)
       return navigation.navigate('Ini', {type: 'detail', data: iniInfo});
 
@@ -33,20 +33,20 @@ const ProjectIniList = ({iniList, onClick, selectedDate}: Props) => {
     <View style={container}>
       {iniList.map(ini => {
         const onPress = () => handleClickIni(ini);
-        const id = `${ini.projectId}-${ini.krId}-${ini.iniSeq}`;
+        const id = `${ini.projectToken}-${ini.keyResultToken}-${ini.initiativeToken}`;
         const isSelected = id === selectedIni;
         return (
-          <TouchableOpacity key={ini.iniSeq} onPress={onPress}>
+          <TouchableOpacity key={ini.initiativeToken} onPress={onPress}>
             <View style={[card, isSelected && selected]}>
               <View style={contents}>
                 <View style={tag}>
                   <Text style={tagText}>
-                    {`${ini.projectNm} > KR ${ini.krId.split('-')[1]} > Ini ${
-                      ini.iniSeq
-                    }`}
+                    {`${ini.projectName} > KR ${
+                      ini.keyResultToken.split('-')[1]
+                    } > Ini ${ini.initiativeToken}`}
                   </Text>
                 </View>
-                <Text style={iniName}>{ini.iniName}</Text>
+                <Text style={iniName}>{ini.initiativeName}</Text>
                 <Text style={endDate}>마감일 : {ini.endDate}</Text>
               </View>
               <View style={icon}>{isSelected && <Icons.Back />}</View>

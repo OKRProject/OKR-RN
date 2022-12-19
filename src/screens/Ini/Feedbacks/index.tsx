@@ -5,10 +5,10 @@ import {css} from '@emotion/native';
 import {FeedbackEnum, FeedbackType} from '../../../api/feedback';
 import api from '../../../api';
 type Props = {
-  iniId: number;
+  initiativeToken: string;
   feedbackList: FeedbackType[];
 };
-const Feedbacks = ({iniId, feedbackList}: Props) => {
+const Feedbacks = ({initiativeToken, feedbackList}: Props) => {
   return (
     <View>
       {feedbackList.length > 0 && (
@@ -16,7 +16,7 @@ const Feedbacks = ({iniId, feedbackList}: Props) => {
           <Text style={title}>팀원들의 피드백 ({feedbackList.length})</Text>
           {feedbackList.map(feedback => (
             <Feedback
-              key={`ini_${iniId}_feedback${feedback.feedbackId}`}
+              key={`ini_${initiativeToken}_feedback${feedback.feedbackId}`}
               {...feedback}
             />
           ))}

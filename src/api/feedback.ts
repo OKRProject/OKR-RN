@@ -19,8 +19,8 @@ export type FeedbackType = {
 type AddFeedbackReqType = {
   opinion: string;
   grade: FeedbackEnum;
-  projectId: number;
-  initiativeId: number;
+  projectToken: string;
+  initiativeToken: string;
 };
 
 export type GetIniFeedbackInfoResType = {
@@ -36,8 +36,8 @@ export type GetMyFeedbacksResType = {
 const addFeedback = (body: AddFeedbackReqType) =>
   instance.post(`v1/feedback`, body);
 
-const getIniFeedbacks = (iniId: number) =>
-  instance.get<GetIniFeedbackInfoResType>(`v1/feedback/${iniId}`);
+const getIniFeedbacks = (initiativeToken: string) =>
+  instance.get<GetIniFeedbackInfoResType>(`v1/feedback/${initiativeToken}`);
 
 const getMyFeedbackList = () =>
   instance.get<GetMyFeedbacksResType>(`v1/feedback?page=0&size=10`);

@@ -16,20 +16,18 @@ import api from '../../../../api';
 type Props = Partial<ModalProps> & {
   onClickClose: () => void;
   onClickAddMember: () => void;
-  teamList: TeamMemberType[];
-  projectId: number;
+  projectToken: string;
 };
 const TeamModal = ({
   onClickClose,
-  teamList,
   onClickAddMember,
-  projectId,
+  projectToken,
   ...rest
 }: Props) => {
   const [teamData, setTeamData] = useState<GetTeamInfoResType>();
   const getData = async () => {
     try {
-      const {data} = await api.project.getProjectTeamInfo(projectId);
+      const {data} = await api.project.getProjectTeamInfo(projectToken);
       setTeamData(data);
     } catch (e) {
       console.log(e);
