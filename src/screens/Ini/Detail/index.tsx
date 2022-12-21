@@ -12,46 +12,51 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {FeedbackType} from '../../../api/feedback';
 import api from '../../../api';
 
-type Props = ProjectIniType;
-const Detail = (data: Props) => {
+type Props = {
+  initiativeToken: string;
+};
+const Detail = ({initiativeToken: iniToken}: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const {dDay, endDate, initiativeToken, initiativeName} = useMemo(
-    () => data,
-    [data],
-  );
+  const [iniInfo, setIniInfo] = useState<ProjectIniType>();
   const [feedbackList, setFeedbackList] = useState<FeedbackType[]>([]);
   const [feedbackEnded, setFeedbackEnded] = useState<boolean>(false);
   const handleBack = () => navigation.goBack();
 
+  const getIniInfo = async () => {
+    const {data} = await api.project.getProjectIni(iniToken);
+    setIniInfo(data);
+  };
   const init = async () => {
-    //todo api
-    const {data} = await api.feedback.getIniFeedbacks(initiativeToken);
+    //todo api 정리
+    getIniInfo();
+    const {data} = await api.feedback.getIniFeedbacks(iniToken);
     setFeedbackEnded(data.wroteFeedback);
     setFeedbackList(data.feedback);
-    // setFeedbackList(dummy);
   };
   useEffect(() => {
     init();
   }, []);
 
-  return (
+  return iniInfo ? (
     <Background>
-      <Header onBack={handleBack} title={`Ini ${initiativeToken}`} />
+      <Header onBack={handleBack} title={`Ini ${iniInfo.initiativeToken}`} />
       <ScrollView>
         <View style={summeryWrap}>
-          <Text style={project}>{`Ini ${initiativeToken}`}</Text>
-          <Text style={iniTitle}>{initiativeName}</Text>
+          <Text style={project}>{`Ini ${iniInfo.initiativeToken}`}</Text>
+          <Text style={iniTitle}>{iniInfo.initiativeName}</Text>
           <Text style={endDt}>
-            마감일: {endDate} {dDay}
+            마감일: {iniInfo.endDate} {iniInfo.dDay}
           </Text>
         </View>
-        <Description {...data} wroteFeedback={feedbackEnded} />
+        <Description {...iniInfo} wroteFeedback={feedbackEnded} />
         <Feedbacks
-          initiativeToken={initiativeToken}
+          initiativeToken={iniInfo.initiativeToken}
           feedbackList={feedbackList}
         />
       </ScrollView>
     </Background>
+  ) : (
+    <></>
   );
 };
 

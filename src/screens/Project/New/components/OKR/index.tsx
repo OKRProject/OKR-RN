@@ -9,13 +9,13 @@ import {NewProjectType} from '../..';
 import produce from 'immer';
 import {css} from '@emotion/native';
 
-type OkrType = Pick<NewProjectType, 'object' | 'krList'>;
+type OkrType = Pick<NewProjectType, 'objective' | 'krList'>;
 type Props = OkrType & {
   setProject: Dispatch<SetStateAction<NewProjectType>>;
 };
-const OKR = ({object, krList, setProject}: Props) => {
-  const handleChangeObject = (object: string) =>
-    setProject(prev => ({...prev, object}));
+const OKR = ({objective, krList, setProject}: Props) => {
+  const handleChangeObject = (objective: string) =>
+    setProject(prev => ({...prev, objective}));
   const handleChangeKr = (idx: number, kr: string) =>
     setProject(
       produce(draft => {
@@ -36,7 +36,7 @@ const OKR = ({object, krList, setProject}: Props) => {
         <Text style={okrTitle}>목표(O)</Text>
         <RoundInput
           placeholder="1년안에 마라톤 풀코스 완주하자!!"
-          value={object}
+          value={objective}
           onChangeText={handleChangeObject}
         />
       </View>

@@ -62,14 +62,14 @@ const SignUp = () => {
   const handleComplete = async () => {
     if (!session || !field || !fieldList) return;
     const body = {
-      tempUserId: session.tempUserId,
+      guestUserId: session.guestUserId,
       email: session.email,
       name,
       jobField: field,
     };
 
     try {
-      const {data} = await api.auth.signUp(body);
+      const {data} = await api.user.signUp(body);
       const {refreshToken, accessToken, ...rest} = data;
       await saveSessions({refreshToken, accessToken});
       setProfile(rest);

@@ -9,7 +9,7 @@ interface Props extends NativeStackScreenProps<RootStackParamList, 'Ini'> {}
 
 const Ini = ({route, navigation}: Props) => {
   return route.params.type === 'detail' ? (
-    <Detail {...route.params.data} />
+    <Detail initiativeToken={route.params.initiativeToken} />
   ) : (
     <WriteFeedback {...route.params.data} />
   );

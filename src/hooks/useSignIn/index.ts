@@ -4,10 +4,11 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import 'react-native-get-random-values';
 import Config from 'react-native-config';
 import api from '../../api';
-import {SignInResType, SignInSuccessResType} from '../../api/auth';
+
 import userStore from '../../store/userStore';
 import {saveSessions} from '../useAxiosInterceptor';
 import {appleAuth} from '@invertase/react-native-apple-authentication';
+import {SignInResType, SignInSuccessResType} from '../../api/user';
 GoogleSignin.configure({
   iosClientId: Config.GOOGLE_IOS_CLIENT_ID,
 });
@@ -33,7 +34,7 @@ const useSignIn = () => {
         idToken = token.idToken;
       }
       console.log(idToken);
-      const {data} = await api.auth.loginByGoogle(idToken);
+      const {data} = await api.user.loginByGoogle(idToken);
 
       if (isLogin(data)) {
         //로그인
@@ -71,7 +72,7 @@ const useSignIn = () => {
 
           if (credentialState === appleAuth.State.AUTHORIZED && identityToken) {
             console.log('user is authenticated');
-            const {data} = await api.auth.loginByApple(identityToken);
+            const {data} = await api.user.loginByApple(identityToken);
             if (isLogin(data)) {
               //로그인
               const {refreshToken, accessToken, ...rest} = data;

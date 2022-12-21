@@ -27,7 +27,7 @@ const Main = ({
   setPeriodPage,
   setProject,
   onChangeTitle,
-  object,
+  objective,
   krList,
   startDt,
   endDt,
@@ -52,7 +52,7 @@ const Main = ({
       sdt: startDt,
       edt: endDt,
       type: ProjectTypeEnum.single,
-      object,
+      objective,
     };
     try {
       const {data} = await api.project.createNewProject(body);
@@ -78,7 +78,7 @@ const Main = ({
           </Text>
         </Card>
       </View>
-      <OKR setProject={setProject} object={object} krList={krList} />
+      <OKR setProject={setProject} objective={objective} krList={krList} />
     </>
   );
 };

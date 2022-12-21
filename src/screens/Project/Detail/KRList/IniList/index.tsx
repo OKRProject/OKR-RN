@@ -25,11 +25,14 @@ const IniList = ({keyResultToken, projectTitle}: Props) => {
   };
 
   const handleAddIni = () => setOpenAdd(true);
-  const handleCloseIni = () => setOpenAdd(false);
+  const handleCloseIni = () => {
+    setOpenAdd(false);
+    getIniList();
+  };
   const handleMoveIniDetail = (idx: number) =>
     navigation.navigate('Ini', {
       type: 'detail',
-      data: iniList[idx],
+      initiativeToken: iniList[idx].initiativeToken,
     });
 
   useEffect(() => {

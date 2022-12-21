@@ -13,7 +13,7 @@ export type ProjectParam =
   | {type: 'detail'; projectToken: string};
 
 export type IniParam =
-  | {type: 'detail'; data: ProjectIniType}
+  | {type: 'detail'; initiativeToken: string}
   | {type: 'feedback'; data: ProjectIniType};
 
 export type MyPage = undefined | {type: 'detail'};

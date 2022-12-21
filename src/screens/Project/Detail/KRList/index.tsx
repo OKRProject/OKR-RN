@@ -11,27 +11,29 @@ type Props = {
   projectTitle: string;
 };
 const KRList = ({KRList, projectTitle}: Props) => {
-  const [selected, setSelected] = useState<string>(KRList[0].keyResultToken);
+  const [selectedKrToken, setSelected] = useState<string>(
+    KRList[0].keyResultToken,
+  );
   const selectedKR = useMemo(
-    () => KRList[Number(selected.split('-')[1]) - 1],
-    [selected],
+    () => KRList.find(kr => kr.keyResultToken === selectedKrToken)!,
+    [selectedKrToken],
   );
   // const selectedKR = useMemo(() => KRList[selected - 1], [selected]);
 
   return KRList[0] ? (
     <View style={container}>
       <View style={tabWrap}>
-        {KRList.map(kr => (
+        {KRList.map((kr, idx) => (
           <TouchableWithoutFeedback
             key={`project_detail_${kr.keyResultToken}`}
-            style={[tab, selected === kr.keyResultToken && tabSelected]}
+            style={[tab, selectedKrToken === kr.keyResultToken && tabSelected]}
             onPress={() => setSelected(kr.keyResultToken)}>
             <Text
               style={[
                 tabText,
-                selected === kr.keyResultToken && tabTextSelected,
+                selectedKrToken === kr.keyResultToken && tabTextSelected,
               ]}>
-              {`KR${kr.keyResultToken.split('-')[1]}`}
+              {`KR${kr.keyResultIndex}`}
             </Text>
           </TouchableWithoutFeedback>
         ))}
@@ -39,7 +41,7 @@ const KRList = ({KRList, projectTitle}: Props) => {
       <View style={contentWrap}>
         <Text style={keyTitle}>{selectedKR?.keyResultName}</Text>
         <IniList
-          keyResultToken={selectedKR.keyResultToken}
+          keyResultToken={selectedKR?.keyResultToken}
           projectTitle={projectTitle}
         />
       </View>

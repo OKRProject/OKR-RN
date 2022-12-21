@@ -50,7 +50,7 @@ const WriteFeedback = (data: Props) => {
     opinion: string;
   }>({opinion: ''});
 
-  const handleClose = () => navigate('Ini', {type: 'detail', data});
+  const handleClose = () => navigate('Ini', {type: 'detail', initiativeToken});
 
   const handleClickIcon = (grade: FeedbackEnum) =>
     setFeedback(prev => ({...prev, grade}));

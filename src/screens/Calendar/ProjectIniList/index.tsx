@@ -19,7 +19,10 @@ const ProjectIniList = ({iniList, onClick, selectedDate}: Props) => {
   const handleClickIni = (iniInfo: ProjectIniType) => {
     const id = `${iniInfo.projectToken}-${iniInfo.keyResultToken}-${iniInfo.initiativeToken}`;
     if (selectedIni === id)
-      return navigation.navigate('Ini', {type: 'detail', data: iniInfo});
+      return navigation.navigate('Ini', {
+        type: 'detail',
+        initiativeToken: iniInfo.initiativeToken,
+      });
 
     setSelectedIni(id);
     onClick({start: iniInfo.startDate, end: iniInfo.endDate});
@@ -41,9 +44,7 @@ const ProjectIniList = ({iniList, onClick, selectedDate}: Props) => {
               <View style={contents}>
                 <View style={tag}>
                   <Text style={tagText}>
-                    {`${ini.projectName} > KR ${
-                      ini.keyResultToken.split('-')[1]
-                    } > Ini ${ini.initiativeToken}`}
+                    {`${ini.projectName} > KR ${ini.keyResultIndex} > Ini ${ini.initiativeIndex}`}
                   </Text>
                 </View>
                 <Text style={iniName}>{ini.initiativeName}</Text>

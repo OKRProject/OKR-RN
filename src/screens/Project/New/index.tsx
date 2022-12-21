@@ -9,7 +9,7 @@ export type NewProjectType = {
   title: string;
   startDt: string;
   endDt: string;
-  object: string;
+  objective: string;
   krList: string[];
 };
 
@@ -19,7 +19,7 @@ const initProject: NewProjectType = {
   title: '',
   startDt: getDate(today, 0),
   endDt: getDate(today, 6),
-  object: '',
+  objective: '',
   krList: [''],
 };
 interface Props extends NativeStackScreenProps<RootStackParamList, 'Project'> {}

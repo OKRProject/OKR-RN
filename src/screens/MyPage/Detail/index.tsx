@@ -12,11 +12,13 @@ import {RootStackParamList} from '../../../navigation/main';
 import {css} from '@emotion/native';
 
 type Props = UserProfileType;
-const Detail = ({profileImage, field, name}: Props) => {
+const Detail = ({profileImage, jobFieldDetail, name}: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   const handleGoBack = () => navigation.navigate('MyPage');
   const handleClickEditName = () => {};
   const handleClickEditField = () => {};
+
   return (
     <Background>
       <Header title="프로필 상세" onBack={handleGoBack} />
@@ -46,7 +48,7 @@ const Detail = ({profileImage, field, name}: Props) => {
           onPress={handleClickEditField}>
           <View style={buttonContents}>
             <Text style={label}>대표 분야 수정</Text>
-            <Text style={content}>{field}</Text>
+            <Text style={content}>{jobFieldDetail}</Text>
           </View>
         </RoundSquareButton>
       </View>

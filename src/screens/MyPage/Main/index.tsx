@@ -15,7 +15,7 @@ import {UserProfileType} from '../../../api/user';
 import {useSignOut} from '../../../hooks';
 
 type Props = UserProfileType;
-const Main = ({name, field, email, profileImage}: Props) => {
+const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const {signOutUser} = useSignOut();
   // console.log(field, name, profileImage, email);
@@ -41,7 +41,7 @@ const Main = ({name, field, email, profileImage}: Props) => {
           </View>
           <View>
             <Text style={profileName}>{name}</Text>
-            <Text style={profileField}>{field}</Text>
+            <Text style={profileField}>{jobFieldDetail}</Text>
             <Text style={profileEmail}>{email}</Text>
           </View>
           <View style={rotate}>

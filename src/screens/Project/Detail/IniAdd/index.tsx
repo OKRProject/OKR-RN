@@ -27,22 +27,25 @@ type Props = DefaultModalProps & {
   projectTitle: string;
   onClose: () => void;
 };
-
+const initial = {
+  name: '',
+  edt: getDate(today, 6),
+  sdt: getDate(today, 0),
+  detail: '',
+};
 const IniAdd = ({keyResultToken, onClose, projectTitle, ...rest}: Props) => {
   const navigation = useNavigation<NavigationProps>();
   const [isCalendar, setCalendar] = useState<boolean>(false);
   const [initiative, setInitiative] = useState<AddProjectIniReqType>({
     keyResultToken,
-    name: '',
-    edt: getDate(today, 6),
-    sdt: getDate(today, 0),
-    detail: '',
+    ...initial,
   });
 
   const handleCompleteNewAdd = async () => {
     const {data} = await api.project.addProjectIni(initiative);
+    setInitiative({keyResultToken, ...initial});
     onClose();
-    navigation.navigate('Ini', {type: 'detail', data});
+    navigation.navigate('Ini', {type: 'detail', initiativeToken: data});
   };
 
   const handleChangeDate = (sdt: string, edt: string) => {

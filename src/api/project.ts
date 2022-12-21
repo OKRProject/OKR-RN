@@ -10,7 +10,7 @@ export type NewProjectType = {
   sdt: string;
   edt: string;
   type: ProjectTypeEnum;
-  object: string;
+  objective: string;
   keyResults: string[];
 };
 
@@ -31,10 +31,14 @@ export type ProjectType = {
   projectType: ProjectTypeEnum;
 };
 
-export type KeyResultType = {keyResultToken: string; keyResultName: string};
+export type KeyResultType = {
+  keyResultToken: string;
+  keyResultName: string;
+  keyResultIndex: number;
+};
 export type TeamMemberType = {
   userName: string;
-  profileImageUrl: string;
+  profileImage: string;
   jobField: string;
 };
 export type ProjectDetailType = {
@@ -48,6 +52,7 @@ export type ProjectDetailType = {
 };
 
 export type ProjectIniType = {
+  initiativeIndex: number;
   initiativeToken: string;
   initiativeName: string;
   initiativeDetail: string;
@@ -61,6 +66,7 @@ export type ProjectIniType = {
   projectToken: string;
   projectName: string;
   keyResultToken: string;
+  keyResultIndex: number;
 };
 
 export type AddProjectIniReqType = {
@@ -89,6 +95,7 @@ export type GetProjectIniListResType = {
 };
 
 export type GetIniListByDateResType = ProjectIniType[];
+export type GetIniResType = ProjectIniType;
 
 export type AddMemberToTeamReqType = {projectToken: string; emails: string[]};
 export type AddMemberToTeamResType = {
@@ -115,16 +122,21 @@ const getProjectDetail = ({projectToken}: GetProjectDetailReqType) =>
   instance.get<GetProjectDetailResType>(`v1/project/${projectToken}`);
 
 const getIniList = ({keyResultToken}: GetProjectIniListReqType) =>
-  instance.get<GetProjectIniListResType>(`v1/initiative/${keyResultToken}`);
+  instance.get<GetProjectIniListResType>(
+    `v1/initiative/list/${keyResultToken}`,
+  );
+
+const getProjectIni = (iniToken: string) =>
+  instance.get<GetIniResType>(`v1/initiative/${iniToken}`);
 
 const addProjectIni = (body: AddProjectIniReqType) =>
-  instance.post<ProjectIniType>(`v1/initiative`, body);
+  instance.post<string>(`v1/initiative`, body);
 
 const completeProjectIni = (initiativeToken: string) =>
   instance.put(`v1/initiative/${initiativeToken}/done`);
 
 const getIniListByDate = (date: string) =>
-  instance.get<GetIniListByDateResType>(`v1/initiative/byDate/${date}`);
+  instance.get<GetIniListByDateResType>(`v1/initiative/date/${date}`);
 
 const getProjectTeamInfo = (projectToken: string) =>
   instance.get<GetTeamInfoResType>(`v1/project/${projectToken}/side`);
@@ -150,4 +162,5 @@ export default {
   inviteMemberEmailValidate,
   getProjectTeamInfo,
   getIniDatesByMonth,
+  getProjectIni,
 };
