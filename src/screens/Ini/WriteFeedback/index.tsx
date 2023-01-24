@@ -1,4 +1,10 @@
-import {View, Image} from 'react-native';
+import {
+  View,
+  Image,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Keyboard,
+} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import {
   Header,
@@ -75,56 +81,64 @@ const WriteFeedback = (data: Props) => {
   };
 
   return (
-    <View style={background}>
-      <View>
-        <Header title="피드백 작성하기" onBack={handleClose} />
-        <View style={infoWrap}>
-          <View style={flex}>
-            <View style={userProfile}>
-              {user.profileImage && (
-                <Image
-                  source={{uri: user.profileImage}}
-                  style={{width: '100%', height: '100%'}}
-                />
-              )}
-            </View>
-            <Text style={userName}>{user.userName}</Text>
-          </View>
-          <Text style={desc}>{initiativeDetail}</Text>
-        </View>
-      </View>
-      <View style={container}>
-        <View style={iconsWrap}>
-          {feedbackIcons.map(({icon, text, feedbackGrade}) => (
-            <TouchableOpacity onPress={() => handleClickIcon(feedbackGrade)}>
-              <View
-                key={`feedback_${feedbackGrade}`}
-                style={[iconButton, feedbackGrade === grade && {opacity: 1}]}>
-                <Image
-                  style={{height: 38, width: 38}}
-                  resizeMode="contain"
-                  source={icon}
-                />
-                <Text>{text}</Text>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <KeyboardAvoidingView behavior="padding">
+        <View style={background}>
+          <View>
+            <Header title="피드백 작성하기" onBack={handleClose} />
+            <View style={infoWrap}>
+              <View style={flex}>
+                <View style={userProfile}>
+                  {user.profileImage && (
+                    <Image
+                      source={{uri: user.profileImage}}
+                      style={{width: '100%', height: '100%'}}
+                    />
+                  )}
+                </View>
+                <Text style={userName}>{user.userName}</Text>
               </View>
-            </TouchableOpacity>
-          ))}
+              <Text style={desc}>{initiativeDetail}</Text>
+            </View>
+          </View>
+          <View style={container}>
+            <View style={iconsWrap}>
+              {feedbackIcons.map(({icon, text, feedbackGrade}) => (
+                <TouchableOpacity
+                  onPress={() => handleClickIcon(feedbackGrade)}>
+                  <View
+                    key={`feedback_${feedbackGrade}`}
+                    style={[
+                      iconButton,
+                      feedbackGrade === grade && {opacity: 1},
+                    ]}>
+                    <Image
+                      style={{height: 38, width: 38}}
+                      resizeMode="contain"
+                      source={icon}
+                    />
+                    <Text>{text}</Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </View>
+            <RoundInput
+              multiline
+              value={opinion}
+              style={feedbackInput}
+              onChangeText={handleChangeInput}
+            />
+            <RoundSquareButton
+              type={opinion.length === 0 ? 'secondary' : 'primary'}
+              size="m"
+              disabled={opinion.length === 0}
+              onPress={handleConfirm}>
+              작성 완료
+            </RoundSquareButton>
+          </View>
         </View>
-        <RoundInput
-          multiline
-          value={opinion}
-          style={feedbackInput}
-          onChangeText={handleChangeInput}
-        />
-        <RoundSquareButton
-          type={opinion.length === 0 ? 'secondary' : 'primary'}
-          size="m"
-          disabled={opinion.length === 0}
-          onPress={handleConfirm}>
-          작성 완료
-        </RoundSquareButton>
-      </View>
-    </View>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 const background = css`

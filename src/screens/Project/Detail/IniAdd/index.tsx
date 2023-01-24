@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import {css} from '@emotion/native';
 import React, {useMemo, useState} from 'react';
 import {
@@ -13,7 +13,6 @@ import {DefaultModalProps} from '../../../../components/DefaultModal';
 import {AddProjectIniReqType} from '../../../../api/project';
 import api from '../../../../api';
 import {dateStringToViewText, getDate} from '../../../../utils/calendar';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../../navigation/main';
 import {useNavigation} from '@react-navigation/native';
@@ -77,8 +76,8 @@ const IniAdd = ({keyResultToken, onClose, projectTitle, ...rest}: Props) => {
       endDt={initiative.edt}
     />
   ) : (
-    <Modal {...rest}>
-      <>
+    <Modal {...rest} onClose={onClose}>
+      <View>
         <View style={inputWrap}>
           <Text style={label}>이니셔티브 (Ini)</Text>
           <RoundInput
@@ -87,6 +86,7 @@ const IniAdd = ({keyResultToken, onClose, projectTitle, ...rest}: Props) => {
             onChangeText={handleChangeName}
           />
         </View>
+
         <View style={inputWrap}>
           <Text style={label}>상세내용</Text>
           <RoundInput
@@ -113,7 +113,7 @@ const IniAdd = ({keyResultToken, onClose, projectTitle, ...rest}: Props) => {
           onPress={handleCompleteNewAdd}>
           이니셔티브 작성 완료
         </RoundSquareButton>
-      </>
+      </View>
     </Modal>
   );
 };

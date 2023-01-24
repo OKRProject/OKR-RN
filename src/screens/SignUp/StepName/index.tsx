@@ -1,4 +1,9 @@
-import {View} from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import React, {useMemo} from 'react';
 import {Layout} from '../components';
 import {DefaultInput as Input, RoundSquareButton} from '../../../components';
@@ -18,24 +23,39 @@ const StepName = ({name, onChange, nextStep}: Props) => {
   const handleComplete = () => validate && nextStep('category');
 
   return (
-    <Layout title="이름을 입력해주세요" desc={desc}>
-      <View style={container}>
-        <Input
-          autoFocus
-          style={input}
-          maxLength={8}
-          value={name}
-          onChangeText={onChange}
-          hitSlop={{top: 200, left: 100, bottom: 200, right: 100}}
-        />
-        <RoundSquareButton
-          type={validate ? 'primary' : 'disable'}
-          size="m"
-          onPress={handleComplete}>
-          다음
-        </RoundSquareButton>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View
+        style={css`
+          flex: 1;
+          width: 100%;
+        `}>
+        <Layout title="이름을 입력해주세요" desc={desc}>
+          <View style={container}>
+            <View
+              onStartShouldSetResponder={event => true}
+              onTouchEnd={e => {
+                e.stopPropagation();
+              }}>
+              <Input
+                autoFocus
+                style={input}
+                maxLength={8}
+                value={name}
+                onChangeText={onChange}
+                placeholder="NAME"
+                hitSlop={{top: 20, left: 20, bottom: 20, right: 20}}
+              />
+            </View>
+            <RoundSquareButton
+              type={validate ? 'primary' : 'disable'}
+              size="m"
+              onPress={handleComplete}>
+              다음
+            </RoundSquareButton>
+          </View>
+        </Layout>
       </View>
-    </Layout>
+    </TouchableWithoutFeedback>
   );
 };
 const container = css`

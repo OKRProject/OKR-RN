@@ -1,4 +1,9 @@
-import {View} from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import React, {Dispatch, SetStateAction} from 'react';
 import {
   RoundInput,
@@ -31,38 +36,43 @@ const OKR = ({objective, krList, setProject}: Props) => {
     setProject(prev => ({...prev, krList: [...prev.krList, '']}));
 
   return (
-    <View style={okrWrap}>
-      <View style={objectWrap}>
-        <Text style={okrTitle}>목표(O)</Text>
-        <RoundInput
-          placeholder="1년안에 마라톤 풀코스 완주하자!!"
-          value={objective}
-          onChangeText={handleChangeObject}
-        />
-      </View>
-      <View style={krWrap}>
-        <Text style={okrTitle}>핵심 결과(KR)</Text>
-        {krList.map((kr, idx) => {
-          const onChange = (text: string) => handleChangeKr(idx, text);
-          const onDelete = idx !== 0 ? () => handleDeleteKr(idx) : undefined;
-          return (
-            <RoundInput
-              placeholder="1km 당 페이스 5’00으로 늘리기"
-              style={krInput}
-              value={kr}
-              key={`new_project_kr${idx}`}
-              onDelete={onDelete}
-              onChangeText={onChange}
-            />
-          );
-        })}
-        {krList.length < 3 && (
-          <RoundSquareButton type="primary" size="s" onPress={handleAddKr}>
-            KR 추가하기
-          </RoundSquareButton>
-        )}
-      </View>
-    </View>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <KeyboardAvoidingView style={okrWrap} behavior="padding">
+        <View style={objectWrap}>
+          <Text style={okrTitle}>목표(O)</Text>
+          <RoundInput
+            placeholder="1년안에 마라톤 풀코스 완주하자!!"
+            value={objective}
+            onChangeText={handleChangeObject}
+          />
+        </View>
+        <TouchableWithoutFeedback>
+          <View style={krWrap}>
+            <Text style={okrTitle}>핵심 결과(KR)</Text>
+            {krList.map((kr, idx) => {
+              const onChange = (text: string) => handleChangeKr(idx, text);
+              const onDelete =
+                idx !== 0 ? () => handleDeleteKr(idx) : undefined;
+              return (
+                <RoundInput
+                  placeholder="1km 당 페이스 5’00으로 늘리기"
+                  style={krInput}
+                  value={kr}
+                  key={`new_project_kr${idx}`}
+                  onDelete={onDelete}
+                  onChangeText={onChange}
+                />
+              );
+            })}
+            {krList.length < 3 && (
+              <RoundSquareButton type="primary" size="s" onPress={handleAddKr}>
+                KR 추가하기
+              </RoundSquareButton>
+            )}
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 };
 

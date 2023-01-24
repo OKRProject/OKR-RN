@@ -1,5 +1,7 @@
+import {css} from '@emotion/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
+import {Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {Background, CalendarModal} from '../../../components';
 import {RootStackParamList} from '../../../navigation/main';
 import {getDate} from '../../../utils/calendar';
@@ -51,5 +53,12 @@ const New = ({}: Props) => {
     </Background>
   );
 };
+
+const container = css`
+  width: 100%;
+  flex: 1;
+  border: 1px solid red;
+  background-color: red;
+`;
 
 export default New;

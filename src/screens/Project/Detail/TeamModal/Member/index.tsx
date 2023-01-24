@@ -3,18 +3,27 @@ import React from 'react';
 import {css} from '@emotion/native';
 import {DefaultText as Text} from '../../../../../components';
 import {TeamMemberType} from '../../../../../api/project';
+
 type Props = TeamMemberType;
-const Member = ({profileImageUrl, userName, jobField}: Props) => {
+
+const Member = ({profileImage, userName, jobField}: Props) => {
   return (
     <View style={container}>
-      <View style={imageWrap}>
-        <Image
-          style={{width: '100%', height: '100%'}}
-          source={{uri: profileImageUrl}}
-        />
+      <View
+        style={css`
+          flex-direction: row;
+        `}>
+        <View style={imageWrap}>
+          <Image
+            style={{width: '100%', height: '100%'}}
+            source={{uri: profileImage}}
+          />
+        </View>
+        <Text style={name}>{userName}</Text>
       </View>
-      <Text style={name}>{userName}</Text>
-      <Text style={field}>({jobField})</Text>
+      <View>
+        <Text style={field}>({jobField})</Text>
+      </View>
     </View>
   );
 };
@@ -22,8 +31,6 @@ const Member = ({profileImageUrl, userName, jobField}: Props) => {
 export default Member;
 
 const container = css`
-  flex-direction: row;
-  align-items: center;
   margin-bottom: 18px;
 `;
 
@@ -44,4 +51,5 @@ const name = css`
 const field = css`
   font-size: 16px;
   color: #a9a9a9;
+  margin-left: 36px;
 `;

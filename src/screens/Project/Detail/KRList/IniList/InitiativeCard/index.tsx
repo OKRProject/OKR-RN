@@ -8,7 +8,7 @@ type Props = ProjectIniType & {
   onPress: () => void;
 };
 const InitiativeCard = ({
-  initiativeToken,
+  initiativeIndex,
   initiativeName,
   user,
   dDay,
@@ -18,7 +18,7 @@ const InitiativeCard = ({
     <TouchableOpacity onPress={onPress}>
       <RoundCard style={card}>
         <View style={left}>
-          <Text style={[tag, tagHighlight]}>{initiativeToken}</Text>
+          <Text style={[tag, tagHighlight]}>ini {initiativeIndex}</Text>
           <Text style={title}>{initiativeName}</Text>
         </View>
         <View style={right}>

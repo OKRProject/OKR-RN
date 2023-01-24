@@ -1,5 +1,5 @@
 import React, {Dispatch, SetStateAction, useMemo} from 'react';
-import {View} from 'react-native';
+import {Keyboard, TouchableWithoutFeedback, View} from 'react-native';
 import {Card, Header, OKR, Title} from '../components';
 import {NewProjectType} from '..';
 import {css} from '@emotion/native';
@@ -41,7 +41,9 @@ const Main = ({
 
   const viewEndDt = useMemo<string>(() => dateStringToViewText(endDt), [endDt]);
 
-  const handleClickPeriod = () => setPeriodPage(true);
+  const handleClickPeriod = () => {
+    setPeriodPage(true);
+  };
   const handleNavigateProjectMain = () =>
     navigation.navigate('Project', {type: 'main'});
 
@@ -66,18 +68,20 @@ const Main = ({
   };
   return (
     <>
-      <View style={container}>
-        <Header
-          onClickCancel={handleNavigateProjectMain}
-          onClickComplete={handleCompleteCreateProject}
-        />
-        <Title title={title} onChangeTitle={onChangeTitle} />
-        <Card title="기간" style={period} onPress={handleClickPeriod}>
-          <Text style={periodText}>
-            {viewStartDt} - {viewEndDt}
-          </Text>
-        </Card>
-      </View>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={container}>
+          <Header
+            onClickCancel={handleNavigateProjectMain}
+            onClickComplete={handleCompleteCreateProject}
+          />
+          <Title title={title} onChangeTitle={onChangeTitle} />
+          <Card title="기간" style={period} onPress={handleClickPeriod}>
+            <Text style={periodText}>
+              {viewStartDt} - {viewEndDt}
+            </Text>
+          </Card>
+        </View>
+      </TouchableWithoutFeedback>
       <OKR setProject={setProject} objective={objective} krList={krList} />
     </>
   );

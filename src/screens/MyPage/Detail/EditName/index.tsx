@@ -4,7 +4,7 @@ import {DefaultModal as Modal} from '../../../../components';
 
 const EditName = () => {
   return (
-    <Modal isVisible>
+    <Modal isVisible onClose={() => {}}>
       <View></View>
     </Modal>
   );
