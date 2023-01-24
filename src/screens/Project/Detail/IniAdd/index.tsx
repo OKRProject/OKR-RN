@@ -1,4 +1,10 @@
-import {View, TouchableOpacity} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {css} from '@emotion/native';
 import React, {useMemo, useState} from 'react';
 import {
@@ -77,43 +83,46 @@ const IniAdd = ({keyResultToken, onClose, projectTitle, ...rest}: Props) => {
     />
   ) : (
     <Modal {...rest} onClose={onClose}>
-      <View>
-        <View style={inputWrap}>
-          <Text style={label}>이니셔티브 (Ini)</Text>
-          <RoundInput
-            placeholder="매일 공원 3km씩 달리기"
-            value={initiative.name}
-            onChangeText={handleChangeName}
-          />
-        </View>
-
-        <View style={inputWrap}>
-          <Text style={label}>상세내용</Text>
-          <RoundInput
-            multiline
-            value={initiative.detail}
-            style={desc}
-            onChangeText={handleChangeDetail}
-          />
-        </View>
-        <View style={inputWrap}>
-          <Text style={label}>마감일</Text>
-          <TouchableOpacity onPress={() => setCalendar(true)}>
-            <RoundCard style={roundBox}>
-              <Text>
-                {viewStartDt} - {viewEndDt}
-              </Text>
-            </RoundCard>
-          </TouchableOpacity>
-        </View>
-        <RoundSquareButton
-          style={button}
-          type="primary"
-          size="xl"
-          onPress={handleCompleteNewAdd}>
-          이니셔티브 작성 완료
-        </RoundSquareButton>
-      </View>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <KeyboardAvoidingView behavior="padding">
+          <View>
+            <View style={inputWrap}>
+              <Text style={label}>이니셔티브 (Ini)</Text>
+              <RoundInput
+                placeholder="매일 공원 3km씩 달리기"
+                value={initiative.name}
+                onChangeText={handleChangeName}
+              />
+            </View>
+            <View style={inputWrap}>
+              <Text style={label}>상세내용</Text>
+              <RoundInput
+                multiline
+                value={initiative.detail}
+                style={desc}
+                onChangeText={handleChangeDetail}
+              />
+            </View>
+            <View style={inputWrap}>
+              <Text style={label}>마감일</Text>
+              <TouchableOpacity onPress={() => setCalendar(true)}>
+                <RoundCard style={roundBox}>
+                  <Text>
+                    {viewStartDt} - {viewEndDt}
+                  </Text>
+                </RoundCard>
+              </TouchableOpacity>
+            </View>
+            <RoundSquareButton
+              style={button}
+              type="primary"
+              size="xl"
+              onPress={handleCompleteNewAdd}>
+              이니셔티브 작성 완료
+            </RoundSquareButton>
+          </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };

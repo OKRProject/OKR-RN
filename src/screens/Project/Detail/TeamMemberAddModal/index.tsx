@@ -1,7 +1,12 @@
-import {View} from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import {
-  DefaultModal,
+  DefaultModal as Modal,
   DefaultText as Text,
   RoundInput,
   RoundSquareButton,
@@ -57,36 +62,45 @@ const TeamMemberAddModal = ({
   const debounceEmailValidate = useCallback((value: string) => {
     validateEmail(value);
   }, []);
+
   const handleChangeInput = (value: string) => {
     setEmail(value);
     debounceEmailValidate(value);
   };
+
   return (
-    <DefaultModal isVisible={isVisible} onClose={onClose} close>
-      <Text style={title}>팀원 추가하기</Text>
-      <View style={inputWrap}>
-        <Text style={label}>이메일</Text>
-        <RoundInput
-          placeholder="이메일 입력"
-          value={email}
-          onChangeText={handleChangeInput}
-        />
-        <View style={message}>
-          {email.length > 0 && !validate && (
-            <Text style={fail}>이메일 주소가 올바르지 않습니다.</Text>
-          )}
-          {validate && (
-            <Text style={success}>팀원 추가 가능한 이메일입니다.</Text>
-          )}
-        </View>
-      </View>
-      <RoundSquareButton
-        type={validate ? 'primary' : 'disable'}
-        size="m"
-        onPress={handleClickComplete}>
-        완료
-      </RoundSquareButton>
-    </DefaultModal>
+    <Modal isVisible={isVisible} onClose={onClose} close>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <KeyboardAvoidingView style={{height: 500}} behavior="padding">
+          <View style={{height: '100%'}}>
+            <Text style={title}>팀원 추가하기</Text>
+            <View style={inputWrap}>
+              <Text style={label}>이메일</Text>
+              <RoundInput
+                placeholder="이메일 입력"
+                value={email}
+                onChangeText={handleChangeInput}
+              />
+              <View style={message}>
+                {email.length > 0 && !validate && (
+                  <Text style={fail}>이메일 주소가 올바르지 않습니다.</Text>
+                )}
+                {validate && (
+                  <Text style={success}>팀원 추가 가능한 이메일입니다.</Text>
+                )}
+              </View>
+            </View>
+            <RoundSquareButton
+              style={{marginTop: 'auto'}}
+              type={validate ? 'primary' : 'disable'}
+              size="m"
+              onPress={handleClickComplete}>
+              완료
+            </RoundSquareButton>
+          </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
+    </Modal>
   );
 };
 

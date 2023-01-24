@@ -25,27 +25,23 @@ type Props = DefaultModalProps & {
 const DefaultModal = ({children, isVisible, onClose, close}: Props) => {
   return (
     <Modal isVisible={isVisible} style={background} onBackdropPress={onClose}>
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <KeyboardAvoidingView behavior="padding">
-          <View
-            style={[
-              contents,
-              !close &&
-                css`
-                  padding-top: 20px;
-                `,
-            ]}>
-            {close && (
-              <View style={header}>
-                <TouchableOpacity style={closeButton} onPress={onClose}>
-                  <Icons.Close color={'#fff'} />
-                </TouchableOpacity>
-              </View>
-            )}
-            <View style={content}>{children}</View>
+      <View
+        style={[
+          contents,
+          !close &&
+            css`
+              padding-top: 20px;
+            `,
+        ]}>
+        {close && (
+          <View style={header}>
+            <TouchableOpacity style={closeButton} onPress={onClose}>
+              <Icons.Close color={'#fff'} />
+            </TouchableOpacity>
           </View>
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+        )}
+        <View style={content}>{children}</View>
+      </View>
     </Modal>
   );
 };
