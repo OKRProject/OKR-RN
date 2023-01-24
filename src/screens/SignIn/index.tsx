@@ -1,4 +1,4 @@
-import {View, TouchableOpacity, SafeAreaView} from 'react-native';
+import {View, TouchableOpacity, SafeAreaView, Image} from 'react-native';
 import React from 'react';
 import {useSignIn} from '../../hooks';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -28,8 +28,12 @@ const SignIn = ({navigation}: Props) => {
       <SafeAreaView style={container}>
         <View>
           <Text style={logoHighlight}>나의 프로젝트를 한눈에!</Text>
-          <Text style={logo}>나의 OKR 앱</Text>
-          <Text style={[logo, logoBold]}>MOA 모아</Text>
+          <Text style={logoDesc}>나의 OKR 앱</Text>
+          <Image
+            style={{height: 40, width: 132}}
+            resizeMode="contain"
+            source={require('../../img/icn-logo-row.png')}
+          />
         </View>
         <View style={bottom}>
           <TouchableOpacity style={button} onPress={handleGoogleSignIn}>
@@ -75,13 +79,15 @@ const container = css`
   justify-content: space-between;
 `;
 
-const logo = css`
+const logoDesc = css`
   font-size: 32px;
   line-height: 42px;
 `;
 
-const logoBold = css`
-  font-weight: 700;
+const logoWrap = css`
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
 `;
 const bottom = css`
   width: 100%;

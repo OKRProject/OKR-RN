@@ -1,4 +1,4 @@
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
   Icons,
@@ -66,7 +66,11 @@ const Main = ({navigation}: Props) => {
   return (
     <Background style={container}>
       <View style={header}>
-        <Icons.Logo />
+        <Image
+          style={{height: 26, width: 84}}
+          resizeMode="contain"
+          source={require('../../../img/icn-logo-row.png')}
+        />
         <TouchableOpacity onPress={handleClickNotification}>
           <Icons.Alarm color="#fff" />
         </TouchableOpacity>
