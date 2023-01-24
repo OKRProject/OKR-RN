@@ -27,7 +27,7 @@ const CalendarModal = ({
     start && end && onChangePeriod(start, end);
   };
   return (
-    <Modal isVisible={isVisible}>
+    <Modal isVisible={isVisible} onClose={onCancel}>
       <View style={buttons}>
         <TextButton onPress={onCancel} style={button}>
           취소

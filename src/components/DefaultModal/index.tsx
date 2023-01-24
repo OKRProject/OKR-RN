@@ -1,45 +1,58 @@
 import React, {ReactNode} from 'react';
-import {View, Text} from 'react-native';
+import {
+  View,
+  Text,
+  KeyboardAvoidingView,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import {css} from '@emotion/native';
-import Modal, {ModalProps, ReactNativeModal} from 'react-native-modal';
+import Modal from 'react-native-modal';
 import Icons from '../Icons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export type DefaultModalProps = {
-  onClose?: () => void;
+  onClose: () => void;
   isVisible: boolean;
+  close?: boolean;
 };
 
 type Props = DefaultModalProps & {
   children: ReactNode;
 };
 
-const DefaultModal = ({children, isVisible, onClose}: Props) => {
+const DefaultModal = ({children, isVisible, onClose, close}: Props) => {
   return (
-    <Modal isVisible={isVisible} style={background}>
-      <View
-        style={[
-          contents,
-          !onClose &&
-            css`
-              padding-top: 20px;
-            `,
-        ]}>
-        {onClose && (
-          <View style={header}>
-            <TouchableOpacity style={closeButton} onPress={onClose}>
-              <Icons.Close color={'#fff'} />
-            </TouchableOpacity>
+    <Modal isVisible={isVisible} style={background} onBackdropPress={onClose}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <KeyboardAvoidingView behavior="padding">
+          <View
+            style={[
+              contents,
+              !close &&
+                css`
+                  padding-top: 20px;
+                `,
+            ]}>
+            {close && (
+              <View style={header}>
+                <TouchableOpacity style={closeButton} onPress={onClose}>
+                  <Icons.Close color={'#fff'} />
+                </TouchableOpacity>
+              </View>
+            )}
+            <View style={content}>{children}</View>
           </View>
-        )}
-        <View style={content}>{children}</View>
-      </View>
+        </KeyboardAvoidingView>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };
 
 const background = css`
   margin: -24px 0;
+  justify-content: flex-end;
 `;
 
 const contents = css`

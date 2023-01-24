@@ -62,7 +62,7 @@ const TeamMemberAddModal = ({
     debounceEmailValidate(value);
   };
   return (
-    <DefaultModal isVisible={isVisible} onClose={onClose}>
+    <DefaultModal isVisible={isVisible} onClose={onClose} close>
       <Text style={title}>팀원 추가하기</Text>
       <View style={inputWrap}>
         <Text style={label}>이메일</Text>

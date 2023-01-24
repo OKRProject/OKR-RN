@@ -13,5 +13,6 @@ const container = css`
   width: 100%;
   flex: 1;
   background-color: #18181b;
+  min-height: 0;
 `;
 export default Background;

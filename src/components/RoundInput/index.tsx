@@ -18,16 +18,22 @@ const RoundInput = ({onDelete, style, ...rest}: Props) => {
     if (inputRef.current) inputRef.current.focus();
   };
   return (
-    <TouchableWithoutFeedback
-      style={[container, style]}
-      onPress={handleClickInputParent}>
-      <DefaultInput {...rest} style={input} inputRef={inputRef} />
-      {onDelete && (
-        <TouchableOpacity onPress={onDelete} style={deleteButton}>
-          <Icons.Close color="#535358" />
-        </TouchableOpacity>
-      )}
-    </TouchableWithoutFeedback>
+    <View
+      onStartShouldSetResponder={event => true}
+      onTouchEnd={e => {
+        e.stopPropagation();
+      }}>
+      <TouchableWithoutFeedback
+        style={[container, style]}
+        onPress={handleClickInputParent}>
+        <DefaultInput {...rest} style={input} inputRef={inputRef} />
+        {onDelete && (
+          <TouchableOpacity onPress={onDelete} style={deleteButton}>
+            <Icons.Close color="#535358" />
+          </TouchableOpacity>
+        )}
+      </TouchableWithoutFeedback>
+    </View>
   );
 };
 
@@ -36,6 +42,7 @@ const container = css`
   padding: 9px 10px;
   width: 100%;
   align-items: center;
+  justify-content: space-between;
   background: #27272a;
   border: 1px solid #35353a;
   border-radius: 12px;

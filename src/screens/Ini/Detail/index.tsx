@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ProjectIniType} from '../../../api/project';
 import {css} from '@emotion/native';
 import {View} from 'react-native';
@@ -23,8 +23,10 @@ const Detail = ({initiativeToken: iniToken}: Props) => {
   const handleBack = () => navigation.goBack();
 
   const getIniInfo = async () => {
-    const {data} = await api.project.getProjectIni(iniToken);
-    setIniInfo(data);
+    try {
+      const {data} = await api.project.getProjectIni(iniToken);
+      setIniInfo(data);
+    } catch (e) {}
   };
   const init = async () => {
     //todo api 정리
@@ -37,26 +39,31 @@ const Detail = ({initiativeToken: iniToken}: Props) => {
     init();
   }, []);
 
-  return iniInfo ? (
+  return (
     <Background>
-      <Header onBack={handleBack} title={`Ini ${iniInfo.initiativeToken}`} />
-      <ScrollView>
-        <View style={summeryWrap}>
-          <Text style={project}>{`Ini ${iniInfo.initiativeToken}`}</Text>
-          <Text style={iniTitle}>{iniInfo.initiativeName}</Text>
-          <Text style={endDt}>
-            마감일: {iniInfo.endDate} {iniInfo.dDay}
-          </Text>
-        </View>
-        <Description {...iniInfo} wroteFeedback={feedbackEnded} />
-        <Feedbacks
-          initiativeToken={iniInfo.initiativeToken}
-          feedbackList={feedbackList}
-        />
-      </ScrollView>
+      <Header
+        onBack={handleBack}
+        title={`Ini ${iniInfo?.initiativeIndex ?? ''}`}
+      />
+      {iniInfo ? (
+        <ScrollView>
+          <View style={summeryWrap}>
+            <Text style={project}>{`Ini ${iniInfo.initiativeToken}`}</Text>
+            <Text style={iniTitle}>{iniInfo.initiativeName}</Text>
+            <Text style={endDt}>
+              마감일: {iniInfo.endDate} {iniInfo.dDay}
+            </Text>
+          </View>
+          <Description {...iniInfo} wroteFeedback={feedbackEnded} />
+          <Feedbacks
+            initiativeToken={iniInfo.initiativeToken}
+            feedbackList={feedbackList}
+          />
+        </ScrollView>
+      ) : (
+        <></>
+      )}
     </Background>
-  ) : (
-    <></>
   );
 };
 

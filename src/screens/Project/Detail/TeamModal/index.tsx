@@ -42,7 +42,8 @@ const TeamModal = ({
       {...rest}
       style={background}
       animationIn="fadeInRight"
-      animationOut="fadeOutRight">
+      animationOut="fadeOutRight"
+      onBackdropPress={onClickClose}>
       <SafeAreaView style={container}>
         <TouchableOpacity style={menuButton} onPress={onClickClose}>
           <Icons.Menu />
