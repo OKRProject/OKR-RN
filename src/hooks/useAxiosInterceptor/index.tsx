@@ -3,8 +3,8 @@ import {useCallback, useEffect, useMemo, useState} from 'react';
 import Config from 'react-native-config';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import api from '../../api';
-import {TokenType} from '../../api/auth';
 import instance from '../../api/instance';
+import {TokenType} from '../../api/user';
 import userStore from '../../store/userStore';
 import useSignOut, {clearUserSession} from '../useSignOut';
 
@@ -50,9 +50,14 @@ const useAxiosInterceptor = () => {
 
   const initReq = useCallback(async () => {
     const session = await getUserSession();
+
     if (session) {
-      const {data} = await api.user.getUserProfile();
-      setUserProfile(data);
+      try {
+        const {data} = await api.user.getUserProfile();
+        setUserProfile(data);
+      } catch (e) {
+        console.log(e, 'login failed');
+      }
     }
     setIsInitReq(true);
   }, []);
@@ -110,7 +115,7 @@ const useAxiosInterceptor = () => {
           } else signOutUser(true);
           // clearUserSession();
         }
-
+        setIsInitRes(true);
         return Promise.reject(error);
       },
     );

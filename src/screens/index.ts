@@ -10,6 +10,7 @@ import Terms from './Terms';
 import Policy from './Policy';
 import Ini from './Ini';
 import Notification from './Notification';
+import Splash from './Splash';
 
 export default {
   Home,
@@ -24,4 +25,5 @@ export default {
   Policy,
   Ini,
   Notification,
+  Splash,
 };

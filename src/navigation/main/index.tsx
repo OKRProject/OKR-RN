@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Screens from '../../screens';
 import userStore from '../../store/userStore';
@@ -37,9 +37,19 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Main = () => {
+  const [initAnimationTimeout, setInitAnimationTimeout] =
+    useState<boolean>(false);
   const user = userStore(state => state.user);
   const isLoading = useAxiosInterceptor();
+
   // clearUserSession();
+
+  useEffect(() => {
+    setTimeout(() => setInitAnimationTimeout(true), 1000);
+  }, []);
+
+  if (isLoading || !initAnimationTimeout) return <Screens.Splash />;
+
   return user ? (
     <Stack.Navigator
       screenOptions={{
