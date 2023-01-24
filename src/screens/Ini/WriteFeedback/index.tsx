@@ -82,62 +82,56 @@ const WriteFeedback = (data: Props) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <KeyboardAvoidingView behavior="padding">
-        <View style={background}>
-          <View>
-            <Header title="피드백 작성하기" onBack={handleClose} />
-            <View style={infoWrap}>
-              <View style={flex}>
-                <View style={userProfile}>
-                  {user.profileImage && (
-                    <Image
-                      source={{uri: user.profileImage}}
-                      style={{width: '100%', height: '100%'}}
-                    />
-                  )}
-                </View>
-                <Text style={userName}>{user.userName}</Text>
-              </View>
-              <Text style={desc}>{initiativeDetail}</Text>
+      <View style={background}>
+        <Header title="피드백 작성하기" onBack={handleClose} />
+        <View style={infoWrap}>
+          <View style={flex}>
+            <View style={userProfile}>
+              {user.profileImage && (
+                <Image
+                  source={{uri: user.profileImage}}
+                  style={{width: '100%', height: '100%'}}
+                />
+              )}
             </View>
+            <Text style={userName}>{user.userName}</Text>
           </View>
-          <View style={container}>
-            <View style={iconsWrap}>
-              {feedbackIcons.map(({icon, text, feedbackGrade}) => (
-                <TouchableOpacity
-                  onPress={() => handleClickIcon(feedbackGrade)}>
-                  <View
-                    key={`feedback_${feedbackGrade}`}
-                    style={[
-                      iconButton,
-                      feedbackGrade === grade && {opacity: 1},
-                    ]}>
-                    <Image
-                      style={{height: 38, width: 38}}
-                      resizeMode="contain"
-                      source={icon}
-                    />
-                    <Text>{text}</Text>
-                  </View>
-                </TouchableOpacity>
-              ))}
-            </View>
-            <RoundInput
-              multiline
-              value={opinion}
-              style={feedbackInput}
-              onChangeText={handleChangeInput}
-            />
-            <RoundSquareButton
-              type={opinion.length === 0 ? 'secondary' : 'primary'}
-              size="m"
-              disabled={opinion.length === 0}
-              onPress={handleConfirm}>
-              작성 완료
-            </RoundSquareButton>
-          </View>
+          <Text style={desc}>{initiativeDetail}</Text>
         </View>
-      </KeyboardAvoidingView>
+
+        <KeyboardAvoidingView style={container} behavior="padding">
+          <View style={iconsWrap}>
+            {feedbackIcons.map(({icon, text, feedbackGrade}) => (
+              <TouchableOpacity
+                key={`feedback_${feedbackGrade}`}
+                onPress={() => handleClickIcon(feedbackGrade)}>
+                <View
+                  style={[iconButton, feedbackGrade === grade && {opacity: 1}]}>
+                  <Image
+                    style={{height: 38, width: 38}}
+                    resizeMode="contain"
+                    source={icon}
+                  />
+                  <Text>{text}</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+          <RoundInput
+            multiline
+            value={opinion}
+            style={feedbackInput}
+            onChangeText={handleChangeInput}
+          />
+          <RoundSquareButton
+            type={opinion.length === 0 ? 'secondary' : 'primary'}
+            size="m"
+            disabled={opinion.length === 0}
+            onPress={handleConfirm}>
+            작성 완료
+          </RoundSquareButton>
+        </KeyboardAvoidingView>
+      </View>
     </TouchableWithoutFeedback>
   );
 };
@@ -146,7 +140,7 @@ const background = css`
   flex: 1;
   background-color: #18181b;
   padding-top: 40px;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 `;
 
 const infoWrap = css`
