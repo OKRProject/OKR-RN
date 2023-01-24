@@ -33,7 +33,7 @@ const Description = (data: Props) => {
       console.log('project 완료 실패', e);
     }
   };
-  console.log(myInitiative, done, wroteFeedback);
+
   return (
     <View style={container}>
       <View style={flex}>

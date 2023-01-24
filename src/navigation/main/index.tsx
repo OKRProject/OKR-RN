@@ -6,6 +6,7 @@ import BottomTabNavigator from './BottomTab';
 import {useAxiosInterceptor} from '../../hooks';
 import {ProjectIniType} from '../../api/project';
 import {clearUserSession} from '../../hooks/useSignOut';
+import SplashScreen from 'react-native-splash-screen';
 
 export type ProjectParam =
   | {type: 'main'}
@@ -45,6 +46,7 @@ const Main = () => {
   // clearUserSession();
 
   useEffect(() => {
+    setTimeout(() => SplashScreen.hide(), 500);
     setTimeout(() => setInitAnimationTimeout(true), 1000);
   }, []);
 

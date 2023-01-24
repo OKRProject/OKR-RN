@@ -33,7 +33,7 @@ const useSignIn = () => {
         const token = await GoogleSignin.getTokens();
         idToken = token.idToken;
       }
-      console.log(idToken);
+      // console.log(idToken);
       const {data} = await api.user.loginByGoogle(idToken);
 
       if (isLogin(data)) {
@@ -46,7 +46,7 @@ const useSignIn = () => {
         setAuthSession(data);
         signUpCallback();
       }
-      // return GoogleSignin.signOut();
+      return GoogleSignin.signOut();
     } catch (error: any) {
       console.log(error.response.data, error.response.status, 'error');
       if (error.code !== '-5') {
