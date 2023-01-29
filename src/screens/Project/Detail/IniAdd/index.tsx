@@ -6,7 +6,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {css} from '@emotion/native';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
   CalendarModal,
   DefaultModal as Modal,
@@ -45,6 +45,10 @@ const IniAdd = ({keyResultToken, onClose, projectTitle, ...rest}: Props) => {
     keyResultToken,
     ...initial,
   });
+
+  useEffect(() => {
+    setInitiative(prev => ({...prev, keyResultToken}));
+  }, [keyResultToken]);
 
   const handleCompleteNewAdd = async () => {
     const {data} = await api.project.addProjectIni(initiative);
