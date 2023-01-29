@@ -59,7 +59,7 @@ const getFields = (category: string) =>
 const getUserProfile = () => instance.get<UserProfileType>(`v1/user`);
 
 const getNotificationList = () =>
-  instance.get<NotificationType[]>(`v1/user/notification`);
+  instance.get<NotificationType[]>(`v1/notification`);
 
 const confirmNotification = (id: number) =>
   instance.put(`v1/notification/${id}`);
