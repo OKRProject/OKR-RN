@@ -46,11 +46,12 @@ const Main = () => {
   // clearUserSession();
 
   useEffect(() => {
-    setTimeout(() => SplashScreen.hide(), 500);
+    if (isLoading || !initAnimationTimeout) SplashScreen.hide();
+  }, [isLoading, initAnimationTimeout]);
+
+  useEffect(() => {
     setTimeout(() => setInitAnimationTimeout(true), 1000);
   }, []);
-
-  if (isLoading || !initAnimationTimeout) return <Screens.Splash />;
 
   return user ? (
     <Stack.Navigator
