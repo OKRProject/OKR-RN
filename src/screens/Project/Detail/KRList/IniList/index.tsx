@@ -33,6 +33,7 @@ const IniList = ({keyResultToken, projectTitle}: Props) => {
     navigation.navigate('Ini', {
       type: 'detail',
       initiativeToken: iniList[idx].initiativeToken,
+      onGoBack: getIniList,
     });
 
   useEffect(() => {

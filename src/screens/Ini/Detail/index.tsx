@@ -3,12 +3,15 @@ import {ProjectIniType} from '../../../api/project';
 import {css} from '@emotion/native';
 import {View} from 'react-native';
 import {Background, DefaultText as Text, Header} from '../../../components';
-
 import Description from '../Description';
 import Feedbacks from '../Feedbacks';
 import {ScrollView} from 'react-native-gesture-handler';
 import {RootStackParamList} from '../../../navigation/main';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {
+  NavigationProp,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import {FeedbackType} from '../../../api/feedback';
 import api from '../../../api';
 
@@ -17,10 +20,18 @@ type Props = {
 };
 const Detail = ({initiativeToken: iniToken}: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const route = useRoute();
   const [iniInfo, setIniInfo] = useState<ProjectIniType>();
   const [feedbackList, setFeedbackList] = useState<FeedbackType[]>([]);
   const [feedbackEnded, setFeedbackEnded] = useState<boolean>(false);
-  const handleBack = () => navigation.goBack();
+  const handleBack = () => {
+    //@ts-ignore
+    if (route.params?.onGoBack) {
+      //@ts-ignore
+      route.params?.onGoBack();
+    }
+    navigation.goBack();
+  };
 
   const getIniInfo = async () => {
     try {
@@ -48,13 +59,20 @@ const Detail = ({initiativeToken: iniToken}: Props) => {
       {iniInfo ? (
         <ScrollView>
           <View style={summeryWrap}>
-            <Text style={project}>{`Ini ${iniInfo.initiativeToken}`}</Text>
+            <Text
+              style={
+                project
+              }>{`${iniInfo.projectName}-KR${iniInfo.initiativeIndex}`}</Text>
             <Text style={iniTitle}>{iniInfo.initiativeName}</Text>
             <Text style={endDt}>
               마감일: {iniInfo.endDate} {iniInfo.dDay}
             </Text>
           </View>
-          <Description {...iniInfo} wroteFeedback={feedbackEnded} />
+          <Description
+            {...iniInfo}
+            wroteFeedback={feedbackEnded}
+            getIniInfo={getIniInfo}
+          />
           <Feedbacks
             initiativeToken={iniInfo.initiativeToken}
             feedbackList={feedbackList}

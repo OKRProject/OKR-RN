@@ -14,7 +14,7 @@ export type ProjectParam =
   | {type: 'detail'; projectToken: string};
 
 export type IniParam =
-  | {type: 'detail'; initiativeToken: string}
+  | {type: 'detail'; initiativeToken: string; onGoBack?: () => void}
   | {type: 'feedback'; data: ProjectIniType};
 
 export type MyPage = undefined | {type: 'detail'};

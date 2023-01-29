@@ -1,14 +1,16 @@
 import {Image, View} from 'react-native';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {ProjectIniType} from '../../../api/project';
 import {css} from '@emotion/native';
 import {DefaultText as Text, RoundSquareButton} from '../../../components';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../navigation/main';
 import api from '../../../api';
+import IniAdd from '../../Project/Detail/IniAdd';
 
 type Props = ProjectIniType & {
   wroteFeedback: boolean;
+  getIniInfo: () => void;
 };
 const Description = (data: Props) => {
   const {
@@ -19,8 +21,10 @@ const Description = (data: Props) => {
     initiativeToken,
     projectToken,
     wroteFeedback,
+    getIniInfo,
   } = useMemo(() => data, [data]);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const [isEditOpen, setEditOpen] = useState(false);
 
   const handleWriteFeedback = () => {
     navigation.navigate('Ini', {type: 'feedback', data});
@@ -58,7 +62,11 @@ const Description = (data: Props) => {
           </RoundSquareButton>
         ) : myInitiative && !done ? (
           <>
-            <RoundSquareButton type="secondary" size="m" style={halfButton}>
+            <RoundSquareButton
+              type="secondary"
+              size="m"
+              style={halfButton}
+              onPress={() => setEditOpen(true)}>
               수정하기
             </RoundSquareButton>
             <RoundSquareButton
@@ -77,6 +85,18 @@ const Description = (data: Props) => {
           <></>
         )}
       </View>
+      {isEditOpen && (
+        <IniAdd
+          keyResultToken={data.keyResultToken}
+          onClose={() => {
+            setEditOpen(false);
+            getIniInfo();
+          }}
+          isVisible
+          projectTitle={data.projectName}
+          originData={data}
+        />
+      )}
     </View>
   );
 };

@@ -135,6 +135,11 @@ const addProjectIni = (body: AddProjectIniReqType) =>
 const completeProjectIni = (initiativeToken: string) =>
   instance.put(`v1/initiative/${initiativeToken}/done`);
 
+const updateProjectIni = (
+  initiativeToken: string,
+  body: AddProjectIniReqType,
+) => instance.put<string>(`v1/initiative/${initiativeToken}/update`, body);
+
 const getIniListByDate = (date: string) =>
   instance.get<GetIniListByDateResType>(`v1/initiative/date/${date}`);
 
@@ -163,4 +168,5 @@ export default {
   getProjectTeamInfo,
   getIniDatesByMonth,
   getProjectIni,
+  updateProjectIni,
 };

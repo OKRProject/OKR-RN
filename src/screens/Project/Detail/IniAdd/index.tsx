@@ -16,7 +16,7 @@ import {
   RoundSquareButton,
 } from '../../../../components';
 import {DefaultModalProps} from '../../../../components/DefaultModal';
-import {AddProjectIniReqType} from '../../../../api/project';
+import {AddProjectIniReqType, ProjectIniType} from '../../../../api/project';
 import api from '../../../../api';
 import {dateStringToViewText, getDate} from '../../../../utils/calendar';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -31,6 +31,7 @@ type Props = DefaultModalProps & {
   keyResultToken: string;
   projectTitle: string;
   onClose: () => void;
+  originData?: ProjectIniType & {wroteFeedback: boolean};
 };
 const initial = {
   name: '',
@@ -38,12 +39,25 @@ const initial = {
   sdt: getDate(today, 0),
   detail: '',
 };
-const IniAdd = ({keyResultToken, onClose, projectTitle, ...rest}: Props) => {
+const IniAdd = ({
+  keyResultToken,
+  onClose,
+  projectTitle,
+  originData,
+  ...rest
+}: Props) => {
   const navigation = useNavigation<NavigationProps>();
   const [isCalendar, setCalendar] = useState<boolean>(false);
   const [initiative, setInitiative] = useState<AddProjectIniReqType>({
     keyResultToken,
-    ...initial,
+    ...(originData
+      ? {
+          name: originData.initiativeName,
+          detail: originData.initiativeDetail,
+          sdt: originData.startDate,
+          edt: originData.endDate,
+        }
+      : initial),
   });
 
   useEffect(() => {
@@ -51,10 +65,27 @@ const IniAdd = ({keyResultToken, onClose, projectTitle, ...rest}: Props) => {
   }, [keyResultToken]);
 
   const handleCompleteNewAdd = async () => {
-    const {data} = await api.project.addProjectIni(initiative);
+    if (originData) {
+      try {
+        const {data} = await api.project.updateProjectIni(
+          originData.initiativeToken,
+          initiative,
+        );
+        navigation.navigate('Ini', {type: 'detail', initiativeToken: data});
+      } catch (e: any) {
+        console.log(e.response, 'error');
+      }
+    } else {
+      try {
+        const {data} = await api.project.addProjectIni(initiative);
+        navigation.navigate('Ini', {type: 'detail', initiativeToken: data});
+      } catch (e: any) {
+        console.log(e.response, 'error');
+      }
+    }
+
     setInitiative({keyResultToken, ...initial});
     onClose();
-    navigation.navigate('Ini', {type: 'detail', initiativeToken: data});
   };
 
   const handleChangeDate = (sdt: string, edt: string) => {
