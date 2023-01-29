@@ -22,6 +22,7 @@ const TeamModal = ({
   onClickClose,
   onClickAddMember,
   projectToken,
+
   ...rest
 }: Props) => {
   const [teamData, setTeamData] = useState<GetTeamInfoResType>();
@@ -52,7 +53,7 @@ const TeamModal = ({
           <>
             <View style={progressWrap}>
               <Text style={label}>진척도</Text>
-              <Progress percent={30} />
+              <Progress percent={Math.floor(teamData.progress)} />
             </View>
             <View style={teamListWrap}>
               <Text style={label}>팀원</Text>
