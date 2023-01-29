@@ -8,7 +8,7 @@ import {TokenType} from '../../api/user';
 import userStore from '../../store/userStore';
 import useSignOut, {clearUserSession} from '../useSignOut';
 
-const refreshURI = `${Config.API_URL}auth/refresh`;
+const refreshURI = `${Config.API_URL}user/refresh`;
 
 type SessionType = {access: string; refresh: string};
 
@@ -68,7 +68,7 @@ const useAxiosInterceptor = () => {
       if (config.headers && session) {
         const isRefresh =
           config.url === 'user/sign-out' ||
-          config.url === ' auth/refresh' ||
+          config.url === ' user/refresh' ||
           config.url === refreshURI;
 
         config.headers.Authorization = `Bearer ${
@@ -87,7 +87,7 @@ const useAxiosInterceptor = () => {
         console.log(error.config.url, 'url');
         if (error?.response?.status === 401) {
           if (
-            error?.config?.url === 'auth/refresh' ||
+            error?.config?.url === 'user/refresh' ||
             error?.config?.url === refreshURI
           )
             signOutUser();

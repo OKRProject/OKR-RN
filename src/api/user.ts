@@ -51,6 +51,8 @@ export type SignUpResType = TokenType & UserProfileType;
 export type SignInSuccessResType = TokenType & UserProfileType;
 
 export type SignInResType = SessionType | SignInSuccessResType;
+const refresh = async () => await instance.get('user/refresh');
+
 const getCategory = () => instance.get<FieldListType>('v1/user/job/category');
 
 const getFields = (category: string) =>
@@ -86,4 +88,5 @@ export default {
   loginByGoogle,
   loginByApple,
   signUp,
+  refresh,
 };

@@ -1,9 +1,8 @@
 import user from './user';
 import common from './common';
 import project from './project';
-import auth from './auth';
 import feedback from './feedback';
 
-const api = {user, common, project, auth, feedback};
+const api = {user, common, project, feedback};
 
 export default api;
