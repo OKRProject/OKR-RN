@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* okrTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* okrTests.m */; };
-		0C80B921A6F3F58F76C31292 /* libPods-okr.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-okr.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -18,10 +17,11 @@
 		465A49FC63954DC3B7FA1074 /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA96D468652D4416A8FAF82F /* Pretendard-Bold.ttf */; };
 		4A53DD09A4D34E1F856997EB /* Pretendard-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9179D5E88ABF45FD82798A16 /* Pretendard-ExtraLight.ttf */; };
 		75BA334902F34334AB635F39 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7E3AE6E457FC48298784CF87 /* Pretendard-SemiBold.ttf */; };
-		7699B88040F8A987B510C191 /* libPods-okr-okrTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-okr-okrTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		931125BAE0EB4700AEF3942A /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7D7166A46E6E461698052AE4 /* Pretendard-Regular.ttf */; };
+		986183AA87ED466EDC8078B8 /* libPods-Flag.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F5DBC62C60A599AB8D5C87D9 /* libPods-Flag.a */; };
 		A181531E5FAA4F90B64AEA51 /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B86A6F7E9D5543768B581934 /* Pretendard-Medium.ttf */; };
+		A9C3E966D301C5787FC98409 /* libPods-Flag-FlagTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF681EBBEE57B256599B60D /* libPods-Flag-FlagTests.a */; };
 		B065506D28DB6F6A0041811F /* GoogleService-info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B065506C28DB6F6A0041811F /* GoogleService-info.plist */; };
 		B065506E28DB6F6A0041811F /* GoogleService-info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B065506C28DB6F6A0041811F /* GoogleService-info.plist */; };
 		BDFCBA80868B4FBF9A1771D9 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D45D48FF34B145EA9A97C075 /* Pretendard-Thin.ttf */; };
@@ -49,25 +49,31 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = okr/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = okr/main.m; sourceTree = "<group>"; };
 		1599C2025B7A4589A01623B8 /* Pretendard-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-ExtraBold.ttf"; path = "../assets/fonts/Pretendard-ExtraBold.ttf"; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-okr-okrTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-okr-okrTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF681EBBEE57B256599B60D /* libPods-Flag-FlagTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flag-FlagTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-okr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-okr.debug.xcconfig"; path = "Target Support Files/Pods-okr/Pods-okr.debug.xcconfig"; sourceTree = "<group>"; };
 		403D503E54324F33BAFEE1F7 /* Pretendard-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Black.ttf"; path = "../assets/fonts/Pretendard-Black.ttf"; sourceTree = "<group>"; };
+		51F6CF61BB8C13993F4B4A60 /* Pods-Flag-FlagTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flag-FlagTests.staging.xcconfig"; path = "Target Support Files/Pods-Flag-FlagTests/Pods-Flag-FlagTests.staging.xcconfig"; sourceTree = "<group>"; };
 		56FFA09E662847CDB405863D /* Pretendard-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Light.ttf"; path = "../assets/fonts/Pretendard-Light.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-okr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-okr.release.xcconfig"; path = "Target Support Files/Pods-okr/Pods-okr.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-okr-okrTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-okr-okrTests.debug.xcconfig"; path = "Target Support Files/Pods-okr-okrTests/Pods-okr-okrTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5DCACB8F33CDC322A6C60F78 /* libPods-okr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-okr.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D7166A46E6E461698052AE4 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Regular.ttf"; path = "../assets/fonts/Pretendard-Regular.ttf"; sourceTree = "<group>"; };
 		7E3AE6E457FC48298784CF87 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-SemiBold.ttf"; path = "../assets/fonts/Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = okr/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-okr-okrTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-okr-okrTests.release.xcconfig"; path = "Target Support Files/Pods-okr-okrTests/Pods-okr-okrTests.release.xcconfig"; sourceTree = "<group>"; };
 		9179D5E88ABF45FD82798A16 /* Pretendard-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-ExtraLight.ttf"; path = "../assets/fonts/Pretendard-ExtraLight.ttf"; sourceTree = "<group>"; };
+		96D35660D92D7AD80EEE8253 /* Pods-Flag.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flag.debug.xcconfig"; path = "Target Support Files/Pods-Flag/Pods-Flag.debug.xcconfig"; sourceTree = "<group>"; };
 		A95347EF47C89F9967676F31 /* Pods-okr-okrTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-okr-okrTests.staging.xcconfig"; path = "Target Support Files/Pods-okr-okrTests/Pods-okr-okrTests.staging.xcconfig"; sourceTree = "<group>"; };
+		AA902B691C3CEFBE758129FF /* Pods-Flag-FlagTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flag-FlagTests.debug.xcconfig"; path = "Target Support Files/Pods-Flag-FlagTests/Pods-Flag-FlagTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AA96D468652D4416A8FAF82F /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Bold.ttf"; path = "../assets/fonts/Pretendard-Bold.ttf"; sourceTree = "<group>"; };
 		B04860F0294495D900BADF26 /* okr.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = okr.entitlements; path = okr/okr.entitlements; sourceTree = "<group>"; };
 		B065506C28DB6F6A0041811F /* GoogleService-info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-info.plist"; sourceTree = "<group>"; };
 		B86A6F7E9D5543768B581934 /* Pretendard-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Medium.ttf"; path = "../assets/fonts/Pretendard-Medium.ttf"; sourceTree = "<group>"; };
 		D45D48FF34B145EA9A97C075 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Thin.ttf"; path = "../assets/fonts/Pretendard-Thin.ttf"; sourceTree = "<group>"; };
+		E823F04F33831E55213CC394 /* Pods-Flag.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flag.release.xcconfig"; path = "Target Support Files/Pods-Flag/Pods-Flag.release.xcconfig"; sourceTree = "<group>"; };
+		E93C8994FC0136E4B7449FC7 /* Pods-Flag.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flag.staging.xcconfig"; path = "Target Support Files/Pods-Flag/Pods-Flag.staging.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F5DBC62C60A599AB8D5C87D9 /* libPods-Flag.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Flag.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6FD81D097AEC71979C71639 /* Pods-Flag-FlagTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flag-FlagTests.release.xcconfig"; path = "Target Support Files/Pods-Flag-FlagTests/Pods-Flag-FlagTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7699B88040F8A987B510C191 /* libPods-okr-okrTests.a in Frameworks */,
+				A9C3E966D301C5787FC98409 /* libPods-Flag-FlagTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,7 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* libPods-okr.a in Frameworks */,
+				986183AA87ED466EDC8078B8 /* libPods-Flag.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,8 +132,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5DCACB8F33CDC322A6C60F78 /* libPods-okr.a */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-okr-okrTests.a */,
+				F5DBC62C60A599AB8D5C87D9 /* libPods-Flag.a */,
+				1DF681EBBEE57B256599B60D /* libPods-Flag-FlagTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -189,6 +195,12 @@
 				89C6BE57DB24E9ADA2F236DE /* Pods-okr-okrTests.release.xcconfig */,
 				0A897842AE43DDDB45D04192 /* Pods-okr.staging.xcconfig */,
 				A95347EF47C89F9967676F31 /* Pods-okr-okrTests.staging.xcconfig */,
+				96D35660D92D7AD80EEE8253 /* Pods-Flag.debug.xcconfig */,
+				E823F04F33831E55213CC394 /* Pods-Flag.release.xcconfig */,
+				E93C8994FC0136E4B7449FC7 /* Pods-Flag.staging.xcconfig */,
+				AA902B691C3CEFBE758129FF /* Pods-Flag-FlagTests.debug.xcconfig */,
+				F6FD81D097AEC71979C71639 /* Pods-Flag-FlagTests.release.xcconfig */,
+				51F6CF61BB8C13993F4B4A60 /* Pods-Flag-FlagTests.staging.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -328,15 +340,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-okr/Pods-okr-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Flag/Pods-Flag-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-okr/Pods-okr-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Flag/Pods-Flag-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-okr/Pods-okr-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Flag/Pods-Flag-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
@@ -354,7 +366,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-okr-okrTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Flag-FlagTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -376,7 +388,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-okr-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Flag-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -389,15 +401,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-okr-okrTests/Pods-okr-okrTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Flag-FlagTests/Pods-Flag-FlagTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-okr-okrTests/Pods-okr-okrTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Flag-FlagTests/Pods-Flag-FlagTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-okr-okrTests/Pods-okr-okrTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Flag-FlagTests/Pods-Flag-FlagTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
@@ -406,15 +418,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-okr/Pods-okr-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Flag/Pods-Flag-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-okr/Pods-okr-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Flag/Pods-Flag-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-okr/Pods-okr-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Flag/Pods-Flag-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
@@ -423,15 +435,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-okr-okrTests/Pods-okr-okrTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Flag-FlagTests/Pods-Flag-FlagTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-okr-okrTests/Pods-okr-okrTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Flag-FlagTests/Pods-Flag-FlagTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-okr-okrTests/Pods-okr-okrTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Flag-FlagTests/Pods-Flag-FlagTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -486,7 +498,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-okr-okrTests.debug.xcconfig */;
+			baseConfigurationReference = AA902B691C3CEFBE758129FF /* Pods-Flag-FlagTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -514,7 +526,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-okr-okrTests.release.xcconfig */;
+			baseConfigurationReference = F6FD81D097AEC71979C71639 /* Pods-Flag-FlagTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -539,14 +551,14 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-okr.debug.xcconfig */;
+			baseConfigurationReference = 96D35660D92D7AD80EEE8253 /* Pods-Flag.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = okr/okr.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = SNS7FK52T7;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = okr/Info.plist;
@@ -574,14 +586,14 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-okr.release.xcconfig */;
+			baseConfigurationReference = E823F04F33831E55213CC394 /* Pods-Flag.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = okr/okr.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = SNS7FK52T7;
 				INFOPLIST_FILE = okr/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Flag;
@@ -815,14 +827,14 @@
 		};
 		B01A0933297582A100FEB490 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0A897842AE43DDDB45D04192 /* Pods-okr.staging.xcconfig */;
+			baseConfigurationReference = E93C8994FC0136E4B7449FC7 /* Pods-Flag.staging.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = okr/okr.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = SNS7FK52T7;
 				INFOPLIST_FILE = okr/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Flag;
@@ -848,7 +860,7 @@
 		};
 		B01A0934297582A100FEB490 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A95347EF47C89F9967676F31 /* Pods-okr-okrTests.staging.xcconfig */;
+			baseConfigurationReference = 51F6CF61BB8C13993F4B4A60 /* Pods-Flag-FlagTests.staging.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
