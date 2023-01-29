@@ -25,7 +25,6 @@ type Props = {
 
 const TabBar = ({navigation, state, descriptors, ...rest}: Props) => {
   const route = useRoute();
-  console.log(route.name);
   return (
     <View style={container}>
       {state.routes.map((route, index) => (
