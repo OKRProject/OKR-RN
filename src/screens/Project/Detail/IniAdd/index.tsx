@@ -64,28 +64,29 @@ const IniAdd = ({
     setInitiative(prev => ({...prev, keyResultToken}));
   }, [keyResultToken]);
 
-  const handleCompleteNewAdd = async () => {
-    if (originData) {
-      try {
-        const {data} = await api.project.updateProjectIni(
-          originData.initiativeToken,
-          initiative,
-        );
-        navigation.navigate('Ini', {type: 'detail', initiativeToken: data});
-      } catch (e: any) {
-        console.log(e.response, 'error');
-      }
-    } else {
-      try {
-        const {data} = await api.project.addProjectIni(initiative);
-        navigation.navigate('Ini', {type: 'detail', initiativeToken: data});
-      } catch (e: any) {
-        console.log(e.response, 'error');
-      }
+  const handleComplete = async () => {
+    if (!originData) return;
+    try {
+      const {data} = await api.project.updateProjectIni(
+        originData.initiativeToken,
+        initiative,
+      );
+      navigation.navigate('Ini', {type: 'detail', initiativeToken: data});
+      setInitiative({keyResultToken, ...initial});
+      onClose();
+    } catch (e: any) {
+      console.log(e.response, 'error');
     }
-
-    setInitiative({keyResultToken, ...initial});
-    onClose();
+  };
+  const handleCompleteNewAdd = async () => {
+    try {
+      const {data} = await api.project.addProjectIni(initiative);
+      navigation.navigate('Ini', {type: 'detail', initiativeToken: data});
+      setInitiative({keyResultToken, ...initial});
+      onClose();
+    } catch (e: any) {
+      console.log(e.response, 'error');
+    }
   };
 
   const handleChangeDate = (sdt: string, edt: string) => {
@@ -152,7 +153,7 @@ const IniAdd = ({
               style={button}
               type="primary"
               size="xl"
-              onPress={handleCompleteNewAdd}>
+              onPress={originData ? handleComplete : handleCompleteNewAdd}>
               이니셔티브 작성 완료
             </RoundSquareButton>
           </View>
