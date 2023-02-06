@@ -5,6 +5,7 @@ import {
   DefaultText as Text,
   RoundAddButton,
   Background,
+  SortingModal,
 } from '../../../components';
 import {css} from '@emotion/native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -15,6 +16,7 @@ import {RootStackParamList} from '../../../navigation/main';
 import api from '../../../api';
 import {ProjectType, ProjectTypeEnum} from '../../../api/project';
 import EmptyCard from './EmptyCard';
+import {SortStatus} from '../../../components/SortingModal';
 
 const tabList: {[key in ProjectTypeEnum]: string} = {
   WHOLE: '전체',
@@ -26,6 +28,11 @@ interface Props extends NativeStackScreenProps<RootStackParamList, 'Project'> {}
 
 const Main = ({navigation}: Props) => {
   const {name} = userStore(({user}) => ({name: user?.name}));
+  const [sort, setSort] = useState<SortStatus>({
+    includeComplete: true,
+    type: 'newest',
+  });
+  const [openSortModal, setOpenSortModal] = useState<boolean>(false);
   const [originProjectList, setOriginProjectList] = useState<ProjectType[]>([]);
   const [filteredProjectList, setFilteredProjectList] = useState<ProjectType[]>(
     [],
@@ -92,7 +99,9 @@ const Main = ({navigation}: Props) => {
                 </TouchableOpacity>
               ))}
             </View>
-            <TouchableOpacity style={filterButton}>
+            <TouchableOpacity
+              style={filterButton}
+              onPress={() => setOpenSortModal(true)}>
               <Icons.Filter />
             </TouchableOpacity>
           </View>
@@ -113,6 +122,16 @@ const Main = ({navigation}: Props) => {
       <RoundAddButton
         style={floatingAddButton}
         onPress={handleClickAddProject}
+      />
+      <SortingModal
+        isVisible={openSortModal}
+        onClose={() => setOpenSortModal(false)}
+        selected={sort.type}
+        includeComplete={sort.includeComplete}
+        onSelect={type => setSort(prev => ({...prev, type}))}
+        onIncludeSwitch={() =>
+          setSort(prev => ({...prev, includeComplete: !prev.includeComplete}))
+        }
       />
     </Background>
   );

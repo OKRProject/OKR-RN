@@ -14,6 +14,8 @@ import SelectCalendar from './SelectCalendar';
 import Header from './Header';
 import Feedback from './Feedback';
 import Progress from './Progress';
+import SortingModal from './SortingModal';
+import RatioInput from './RatioInput';
 
 export {
   Icons,
@@ -32,4 +34,6 @@ export {
   Header,
   Feedback,
   Progress,
+  SortingModal,
+  RatioInput,
 };
