@@ -1,4 +1,4 @@
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {ProjectIniType} from '../../../api/project';
 import {css} from '@emotion/native';
@@ -33,14 +33,22 @@ const ProjectIniList = ({iniList, onClick, selectedDate}: Props) => {
   }, [selectedDate]);
 
   return (
-    <View style={container}>
-      {iniList.map(ini => {
+    <ScrollView style={container}>
+      {iniList.map((ini, idx) => {
         const onPress = () => handleClickIni(ini);
         const id = `${ini.projectToken}-${ini.keyResultToken}-${ini.initiativeToken}`;
         const isSelected = id === selectedIni;
         return (
           <TouchableOpacity key={ini.initiativeToken} onPress={onPress}>
-            <View style={[card, isSelected && selected]}>
+            <View
+              style={[
+                card,
+                isSelected && selected,
+                idx + 1 === iniList.length &&
+                  css`
+                    margin-bottom: 48px;
+                  `,
+              ]}>
               <View style={contents}>
                 <View style={tag}>
                   <Text style={tagText}>
@@ -55,7 +63,7 @@ const ProjectIniList = ({iniList, onClick, selectedDate}: Props) => {
           </TouchableOpacity>
         );
       })}
-    </View>
+    </ScrollView>
   );
 };
 
@@ -63,6 +71,7 @@ export default ProjectIniList;
 
 const container = css`
   padding: 16px 24px;
+  flex: 1;
 `;
 const card = css`
   background: #27272a;
