@@ -1,7 +1,7 @@
 import {View, TextInputProps} from 'react-native';
 import React, {useRef} from 'react';
 import DefaultInput from '../DefaultInput';
-import {css} from '@emotion/native';
+import {css, ReactNativeStyle} from '@emotion/native';
 import {
   TextInput,
   TouchableOpacity,
@@ -11,8 +11,9 @@ import Icons from '../Icons';
 
 type Props = TextInputProps & {
   onDelete?: () => void;
+  containerStyle?: ReactNativeStyle;
 };
-const RoundInput = ({onDelete, style, ...rest}: Props) => {
+const RoundInput = ({onDelete, containerStyle, style, ...rest}: Props) => {
   const inputRef = useRef<TextInput>(null);
   const handleClickInputParent = () => {
     if (inputRef.current) inputRef.current.focus();
@@ -24,9 +25,9 @@ const RoundInput = ({onDelete, style, ...rest}: Props) => {
         e.stopPropagation();
       }}>
       <TouchableWithoutFeedback
-        style={[container, style]}
+        style={[container, containerStyle]}
         onPress={handleClickInputParent}>
-        <DefaultInput {...rest} style={input} inputRef={inputRef} />
+        <DefaultInput {...rest} style={[input, style]} inputRef={inputRef} />
         {onDelete && (
           <TouchableOpacity onPress={onDelete} style={deleteButton}>
             <Icons.Close color="#535358" />

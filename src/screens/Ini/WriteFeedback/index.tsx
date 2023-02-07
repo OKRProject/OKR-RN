@@ -120,7 +120,7 @@ const WriteFeedback = (data: Props) => {
           <RoundInput
             multiline
             value={opinion}
-            style={feedbackInput}
+            containerStyle={feedbackInput}
             onChangeText={handleChangeInput}
           />
           <RoundSquareButton

@@ -1,5 +1,5 @@
 import {View, Image} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {UserProfileType} from '../../../api/user';
 import {
   Background,
@@ -10,14 +10,17 @@ import {
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../navigation/main';
 import {css} from '@emotion/native';
+import EditName from './EditName';
+import EditField from './EditField';
 
 type Props = UserProfileType;
 const Detail = ({profileImage, jobFieldDetail, name}: Props) => {
+  const [openModal, setOpenModal] = useState<'name' | 'field' | undefined>();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleGoBack = () => navigation.navigate('MyPage');
-  const handleClickEditName = () => {};
-  const handleClickEditField = () => {};
+  const handleClickEditName = () => setOpenModal('name');
+  const handleClickEditField = () => setOpenModal('field');
 
   return (
     <Background>
@@ -52,6 +55,16 @@ const Detail = ({profileImage, jobFieldDetail, name}: Props) => {
           </View>
         </RoundSquareButton>
       </View>
+      <EditName
+        _name={name}
+        isVisible={openModal === 'name'}
+        onClose={() => setOpenModal(undefined)}
+      />
+      <EditField
+        _field={jobFieldDetail}
+        isVisible={openModal === 'field'}
+        onClose={() => setOpenModal(undefined)}
+      />
     </Background>
   );
 };

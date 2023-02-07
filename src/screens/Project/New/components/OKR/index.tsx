@@ -56,7 +56,7 @@ const OKR = ({objective, krList, setProject}: Props) => {
               return (
                 <RoundInput
                   placeholder="1km 당 페이스 5’00으로 늘리기"
-                  style={krInput}
+                  containerStyle={krInput}
                   value={kr}
                   key={`new_project_kr${idx}`}
                   onDelete={onDelete}

@@ -135,7 +135,7 @@ const IniAdd = ({
               <RoundInput
                 multiline
                 value={initiative.detail}
-                style={desc}
+                containerStyle={desc}
                 onChangeText={handleChangeDetail}
               />
             </View>

@@ -1,12 +1,5 @@
 import React, {ReactNode} from 'react';
-import {
-  View,
-  Text,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  TouchableWithoutFeedback,
-  Keyboard,
-} from 'react-native';
+import {View} from 'react-native';
 import {css} from '@emotion/native';
 import Modal from 'react-native-modal';
 import Icons from '../Icons';
@@ -24,7 +17,11 @@ type Props = DefaultModalProps & {
 
 const DefaultModal = ({children, isVisible, onClose, close}: Props) => {
   return (
-    <Modal isVisible={isVisible} style={background} onBackdropPress={onClose}>
+    <Modal
+      isVisible={isVisible}
+      style={background}
+      onBackdropPress={onClose}
+      avoidKeyboard>
       <View
         style={[
           contents,
