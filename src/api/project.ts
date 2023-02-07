@@ -110,12 +110,28 @@ export type GetTeamInfoResType = {
   projectType: string;
   dday: string;
 };
+
+export enum SortTypeEnum {
+  'RECENTLY_CREATE' = 'RECENTLY_CREATE',
+  'DEADLINE_CLOSE' = 'DEADLINE_CLOSE',
+  'PROGRESS_HIGH' = 'PROGRESS_HIGH',
+  'PROGRESS_LOW' = 'PROGRESS_LOW',
+}
+
 const createNewProject = (body: CreateNewProjectReqType) =>
   instance.post('v1/project', body);
 
-const getProjectList = () =>
+const getProjectList = ({
+  sort,
+  includeFinished,
+}: {
+  sort: SortTypeEnum;
+  includeFinished: boolean;
+}) =>
   instance.get<GetProjectListResType>(
-    `v1/project?sortType=RECENTLY_CREATE&includeFinishedProjectYN=Y&page=0&size=10`,
+    `v1/project?sortType=${sort}&includeFinishedProjectYN=${
+      includeFinished ? 'Y' : 'N'
+    }&page=0&size=10`,
   );
 
 const getProjectDetail = ({projectToken}: GetProjectDetailReqType) =>

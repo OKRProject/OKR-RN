@@ -14,7 +14,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import Card from './Card';
 import {RootStackParamList} from '../../../navigation/main';
 import api from '../../../api';
-import {ProjectType, ProjectTypeEnum} from '../../../api/project';
+import {ProjectType, ProjectTypeEnum, SortTypeEnum} from '../../../api/project';
 import EmptyCard from './EmptyCard';
 import {SortStatus} from '../../../components/SortingModal';
 
@@ -29,8 +29,8 @@ interface Props extends NativeStackScreenProps<RootStackParamList, 'Project'> {}
 const Main = ({navigation}: Props) => {
   const {name} = userStore(({user}) => ({name: user?.name}));
   const [sort, setSort] = useState<SortStatus>({
-    includeComplete: true,
-    type: 'newest',
+    includeFinished: true,
+    sort: SortTypeEnum.RECENTLY_CREATE,
   });
   const [openSortModal, setOpenSortModal] = useState<boolean>(false);
   const [originProjectList, setOriginProjectList] = useState<ProjectType[]>([]);
@@ -43,7 +43,7 @@ const Main = ({navigation}: Props) => {
 
   const init = async () => {
     try {
-      const {data} = await api.project.getProjectList();
+      const {data} = await api.project.getProjectList(sort);
       setOriginProjectList(data.content);
     } catch (e: any) {
       console.log(e.response.data);
@@ -52,7 +52,7 @@ const Main = ({navigation}: Props) => {
   };
   useEffect(() => {
     init();
-  }, []);
+  }, [sort]);
 
   useEffect(() => {
     setFilteredProjectList(
@@ -70,6 +70,7 @@ const Main = ({navigation}: Props) => {
     navigation.navigate('Project', {type: 'new'});
 
   const handleClickNotification = () => navigation.navigate('Notification');
+
   return (
     <Background style={container}>
       <View style={header}>
@@ -126,11 +127,11 @@ const Main = ({navigation}: Props) => {
       <SortingModal
         isVisible={openSortModal}
         onClose={() => setOpenSortModal(false)}
-        selected={sort.type}
-        includeComplete={sort.includeComplete}
+        selected={sort.sort}
+        includeComplete={sort.includeFinished}
         onSelect={type => setSort(prev => ({...prev, type}))}
         onIncludeSwitch={() =>
-          setSort(prev => ({...prev, includeComplete: !prev.includeComplete}))
+          setSort(prev => ({...prev, includeFinished: !prev.includeFinished}))
         }
       />
     </Background>

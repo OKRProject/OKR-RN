@@ -16,6 +16,7 @@ import Feedback from './Feedback';
 import Progress from './Progress';
 import SortingModal from './SortingModal';
 import RatioInput from './RatioInput';
+import OnOff from './OnOff';
 
 export {
   Icons,
@@ -36,4 +37,5 @@ export {
   Progress,
   SortingModal,
   RatioInput,
+  OnOff,
 };
