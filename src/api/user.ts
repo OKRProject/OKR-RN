@@ -22,7 +22,7 @@ export enum NotificationEnum {
   NEW_FEEDBACK = 'NEW_FEEDBACK',
 }
 export type NotificationType = {
-  id: number;
+  notiToekn: string;
   notiType: NotificationEnum;
   msg: string;
   checked: boolean;
@@ -63,10 +63,10 @@ const getUserProfile = () => instance.get<UserProfileType>(`v1/user`);
 const getNotificationList = () =>
   instance.get<NotificationType[]>(`v1/notification`);
 
-const confirmNotification = (id: number) =>
+const confirmNotification = (id: string) =>
   instance.put(`v1/notification/${id}`);
 
-const deleteNotification = (id: number) =>
+const deleteNotification = (id: string) =>
   instance.delete(`v1/notification/${id}`);
 
 const loginByGoogle = async (idToken: string) =>

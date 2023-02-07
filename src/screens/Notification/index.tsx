@@ -1,4 +1,4 @@
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, ScrollView} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Background, DefaultText as Text, Header, Icons} from '../../components';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -12,13 +12,16 @@ interface Props
 const Notification = ({navigation}: Props) => {
   const [notiList, setNotiList] = useState<NotificationType[]>([]);
   const handleClickBack = () => navigation.goBack();
-  const handleClickNotification = (id: number, notiType: NotificationEnum) => {
+  const handleClickNotification = (
+    token: string,
+    notiType: NotificationEnum,
+  ) => {
     //noti type별로 다른 행동?
-    api.user.confirmNotification(id);
+    api.user.confirmNotification(token);
   };
 
-  const handleClickDeleteNoti = async (id: number) => {
-    await api.user.deleteNotification(id);
+  const handleClickDeleteNoti = async (token: string) => {
+    await api.user.deleteNotification(token);
   };
 
   const getNotiList = async () => {
@@ -32,13 +35,13 @@ const Notification = ({navigation}: Props) => {
   return (
     <Background>
       <Header title="알림" onBack={handleClickBack} />
-      <View>
-        {notiList.map(({id, notiType, msg, checked}) => (
+      <ScrollView style={_scrollWrap}>
+        {notiList.map(({notiToekn, notiType, msg, checked}, idx) => (
           <TouchableOpacity
-            onPress={() => handleClickNotification(id, notiType)}
-            key={`notification_${id}`}
+            onPress={() => handleClickNotification(notiToekn, notiType)}
+            key={`notification_${notiToekn}_${idx}`}
             style={[
-              notiConatainer,
+              notiContainer,
               checked &&
                 css`
                   opacity: 0.5;
@@ -56,7 +59,7 @@ const Notification = ({navigation}: Props) => {
                 style={closeIcon}
                 onPress={e => {
                   e.stopPropagation();
-                  handleClickDeleteNoti(id);
+                  handleClickDeleteNoti(notiToekn);
                 }}>
                 <Icons.Close color={'#fff'} />
               </TouchableOpacity>
@@ -65,12 +68,15 @@ const Notification = ({navigation}: Props) => {
             <Text style={date}>2022.09.11 (일)</Text>
           </TouchableOpacity>
         ))}
-      </View>
+      </ScrollView>
     </Background>
   );
 };
 
-const notiConatainer = css`
+const _scrollWrap = css`
+  flex: 1;
+`;
+const notiContainer = css`
   width: 100%;
   padding: 16px 24px;
   border: 1px solid transparent;
