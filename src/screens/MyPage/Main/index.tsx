@@ -19,7 +19,7 @@ type Props = UserProfileType;
 const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [openModal, setOpenModal] = useState<
-    undefined | 'edit' | 'logout' | 'withdrawal'
+    undefined | 'logout' | 'withdrawal'
   >();
   const {signOutUser} = useSignOut();
   // console.log(field, name, profileImage, email);
@@ -32,7 +32,7 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
       signOutUser();
     }, 500);
   };
-  const handleClickWithdrawal = () => {};
+  const handleClickWithdrawal = () => setOpenModal('withdrawal');
   const handleClickProfileDetail = () =>
     navigation.navigate('MyPage', {
       type: 'detail',
@@ -108,6 +108,37 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
                 style={[smallButton]}
                 onPress={handleClickLogout}>
                 로그아웃
+              </RoundSquareButton>
+            </View>
+          </View>
+        </Modal>
+      )}
+      {openModal === 'withdrawal' && (
+        <Modal isVisible={true} onClose={() => setOpenModal(undefined)}>
+          <View>
+            <Text style={modalTitle}>회원 탈퇴</Text>
+            <Text style={modalSubtitle}>
+              안내사항을 확인하고 회원탈퇴에 동의
+            </Text>
+            <View style={modalDesc}>
+              <Text>연결된 소셜 계정 정보가 삭제됩니다.</Text>
+              <Text>회원님의 활동 이력, 개인 정보와 설정이 삭제됩니다.</Text>
+              <Text>참여 중인 모든 프로젝트에서 자동 탈퇴됩니다.</Text>
+            </View>
+            <View style={[rowFlex]}>
+              <RoundSquareButton
+                type="dark"
+                size="m"
+                style={[smallButton, firstButton]}
+                onPress={() => setOpenModal(undefined)}>
+                취소
+              </RoundSquareButton>
+              <RoundSquareButton
+                type="primary"
+                size="m"
+                style={[smallButton]}
+                onPress={handleClickLogout}>
+                탈퇴
               </RoundSquareButton>
             </View>
           </View>
@@ -189,5 +220,9 @@ const modalSubtitle = css`
   font-size: 16px;
   line-height: 19px;
   margin: 32px 0 40px;
+`;
+
+const modalDesc = css`
+  margin-bottom: 42px;
 `;
 export default Main;
