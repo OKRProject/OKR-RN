@@ -12,18 +12,30 @@ import {
   RoundSquareButton,
 } from '../../../../components';
 import {css} from '@emotion/native';
+import api from '../../../../api';
+import userStore from '../../../../store/userStore';
 
 type Props = {
   _name: string;
   onClose: () => void;
   isVisible: boolean;
 };
-const EditName = ({_name, ...rest}: Props) => {
+const EditName = ({_name, onClose, ...rest}: Props) => {
+  const {user, setUserProfile} = userStore();
   const [name, setName] = useState<string>(_name);
 
-  const handleClickSave = () => {};
+  const handleClickSave = async () => {
+    try {
+      await api.user.updateUserInfo({userName: name});
+      if (user) {
+        const _user = {...user, name};
+        setUserProfile(_user);
+      }
+      onClose();
+    } catch (e) {}
+  };
   return (
-    <Modal {...rest} close>
+    <Modal {...rest} close onClose={onClose}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View>
           <Text style={_title}>이름을 입력해 주세요</Text>

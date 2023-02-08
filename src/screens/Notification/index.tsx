@@ -20,13 +20,16 @@ const Notification = ({navigation}: Props) => {
     api.user.confirmNotification(token);
   };
 
-  const handleClickDeleteNoti = async (token: string) => {
-    await api.user.deleteNotification(token);
-  };
-
   const getNotiList = async () => {
     const {data} = await api.user.getNotificationList();
     setNotiList(data);
+  };
+
+  const handleClickDeleteNoti = async (token: string) => {
+    try {
+      await api.user.deleteNotification(token);
+      getNotiList();
+    } catch (e) {}
   };
   useEffect(() => {
     getNotiList();

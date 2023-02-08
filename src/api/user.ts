@@ -51,7 +51,7 @@ export type SignUpResType = TokenType & UserProfileType;
 export type SignInSuccessResType = TokenType & UserProfileType;
 
 export type SignInResType = SessionType | SignInSuccessResType;
-const refresh = async () => await instance.get('user/refresh');
+const refresh = () => instance.get('user/refresh');
 
 const getCategory = () => instance.get<FieldListType>('v1/user/job/category');
 
@@ -69,15 +69,22 @@ const confirmNotification = (id: string) =>
 const deleteNotification = (id: string) =>
   instance.delete(`v1/notification/${id}`);
 
-const loginByGoogle = async (idToken: string) =>
-  await instance.post<SignInResType>(`v1/user/login/GOOGLE/${idToken}`);
+const loginByGoogle = (idToken: string) =>
+  instance.post<SignInResType>(`v1/user/login/GOOGLE/${idToken}`);
 
-const loginByApple = async (idToken: string) =>
-  await instance.post<SignInResType>(`v1/user/login/APPLE/${idToken}`);
+const loginByApple = (idToken: string) =>
+  instance.post<SignInResType>(`v1/user/login/APPLE/${idToken}`);
 
-const signUp = async (body: SingUpReqType) =>
-  await instance.post<SignUpResType>('v1/user/join', body);
+const signUp = (body: SingUpReqType) =>
+  instance.post<SignUpResType>('v1/user/join', body);
 
+const updateUserInfo = (
+  body: Partial<{
+    userName: string;
+    profileImage: string;
+    jobField: string;
+  }>,
+) => instance.put('v1/user', body);
 export default {
   getCategory,
   getFields,
@@ -89,4 +96,5 @@ export default {
   loginByApple,
   signUp,
   refresh,
+  updateUserInfo,
 };
