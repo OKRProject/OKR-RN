@@ -1,4 +1,4 @@
-import {Image, TouchableOpacity, View} from 'react-native';
+import {Image, Pressable, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
 import {
   Background,
@@ -22,6 +22,11 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
     undefined | 'logout' | 'withdrawal'
   >();
   const {signOutUser} = useSignOut();
+  const [check, setCheck] = useState<{0: boolean; 1: boolean; 2: boolean}>({
+    0: false,
+    1: false,
+    2: false,
+  });
   // console.log(field, name, profileImage, email);
 
   const handleClickPolicy = () => navigation.navigate('Policy');
@@ -117,13 +122,67 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
         <Modal isVisible={true} onClose={() => setOpenModal(undefined)}>
           <View>
             <Text style={modalTitle}>회원 탈퇴</Text>
-            <Text style={modalSubtitle}>
-              안내사항을 확인하고 회원탈퇴에 동의
-            </Text>
+            <Pressable
+              style={[
+                _row,
+                css`
+                  margin: 32px 0 26px;
+                `,
+              ]}
+              onPress={() => {
+                const allTrue = Object.values(check).every(item => item);
+                if (allTrue) setCheck({0: false, 1: false, 2: false});
+                else setCheck({0: true, 1: true, 2: true});
+              }}>
+              <View
+                style={[
+                  _checkIcon,
+                  css`
+                    margin-right: 10px;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 10px;
+                    background-color: #a9a9a9;
+                    align-items: center;
+                    justify-content: center;
+                  `,
+                  ,
+                  Object.values(check).every(item => item) &&
+                    css`
+                      background-color: #1f92f2;
+                    `,
+                ]}>
+                <Icons.Check color={'#1E1E22'} />
+              </View>
+              <Text style={modalSubtitle}>
+                안내사항을 확인하고 회원탈퇴에 동의
+              </Text>
+            </Pressable>
             <View style={modalDesc}>
-              <Text>연결된 소셜 계정 정보가 삭제됩니다.</Text>
-              <Text>회원님의 활동 이력, 개인 정보와 설정이 삭제됩니다.</Text>
-              <Text>참여 중인 모든 프로젝트에서 자동 탈퇴됩니다.</Text>
+              <Pressable
+                onPress={() => setCheck(prev => ({...prev, 0: !prev[0]}))}
+                style={_row}>
+                <View style={_checkIcon}>
+                  <Icons.Check color={check[0] ? '#1F92F2' : '#a9a9a9'} />
+                </View>
+                <Text>연결된 소셜 계정 정보가 삭제됩니다.</Text>
+              </Pressable>
+              <Pressable
+                style={_row}
+                onPress={() => setCheck(prev => ({...prev, 1: !prev[1]}))}>
+                <View style={_checkIcon}>
+                  <Icons.Check color={check[1] ? '#1F92F2' : '#a9a9a9'} />
+                </View>
+                <Text>회원님의 활동 이력, 개인 정보와 설정이 삭제됩니다.</Text>
+              </Pressable>
+              <Pressable
+                style={_row}
+                onPress={() => setCheck(prev => ({...prev, 2: !prev[2]}))}>
+                <View style={_checkIcon}>
+                  <Icons.Check color={check[2] ? '#1F92F2' : '#a9a9a9'} />
+                </View>
+                <Text>참여 중인 모든 프로젝트에서 자동 탈퇴됩니다.</Text>
+              </Pressable>
             </View>
             <View style={[rowFlex]}>
               <RoundSquareButton
@@ -218,11 +277,19 @@ const modalTitle = css`
 const modalSubtitle = css`
   font-weight: 500;
   font-size: 16px;
-  line-height: 19px;
-  margin: 32px 0 40px;
 `;
 
 const modalDesc = css`
   margin-bottom: 42px;
+`;
+
+const _row = css`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const _checkIcon = css`
+  color: red;
+  margin-right: 4px;
 `;
 export default Main;

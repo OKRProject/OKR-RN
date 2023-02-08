@@ -12,6 +12,7 @@ import Back from './Back';
 import Google from './Google';
 import Apple from './Apple';
 import Menu from './Menu';
+import Check from './Check';
 
 export default {
   Project,
@@ -28,4 +29,5 @@ export default {
   Google,
   Apple,
   Menu,
+  Check,
 };
