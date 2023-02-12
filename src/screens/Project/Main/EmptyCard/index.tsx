@@ -35,6 +35,7 @@ const emptyCard = css`
 const emptyDesc = css`
   color: #a9a9a9;
   text-align: center;
+  font-size: 18px;
 `;
 
 const emptyButton = css`

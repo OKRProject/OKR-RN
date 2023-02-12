@@ -23,7 +23,7 @@ const Card = ({project, ...rest}: Props) => {
   const {
     projectToken,
     name,
-    object,
+    objective,
     teamMembers,
     progress,
     sdt,
@@ -54,16 +54,15 @@ const Card = ({project, ...rest}: Props) => {
     <TouchableOpacity onPress={handleClickProject}>
       <RoundCard style={container} {...rest}>
         <View style={titleWrap}>
-          <Text style={projectTitle}>{name}</Text>
+          <Text style={projectTitle}>{objective}</Text>
           {newProject && <Text style={newHighlight}>NEW</Text>}
-        </View>
-        <Text style={objectDesc}>목표:{object}</Text>
-        <Progress percent={percent} style={progressWrap} />
-        <View style={bottom}>
           <View style={people}>
             <Icons.People />
             <Text style={peopleText}>{teamMembers.length}</Text>
           </View>
+        </View>
+        <Progress percent={percent} style={progressWrap} figure={false} />
+        <View style={bottom}>
           <Text style={period}>
             {startDate} - {endDate}
           </Text>
@@ -81,12 +80,13 @@ const container = css`
 const titleWrap = css`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 9px;
 `;
 const projectTitle = css`
   color: #ffffff;
-  font-size: 16px;
+  font-size: 18px;
+  /* line-height: 1.2; */
   font-weight: 600;
 `;
 const newHighlight = css`
@@ -95,18 +95,14 @@ const newHighlight = css`
   color: #fdbd40;
   margin-left: 6px;
 `;
-const objectDesc = css`
-  color: #a9a9a9;
-  font-weight: 400;
-  font-size: 14px;
-`;
+
 const progressWrap = css`
-  margin: 24px 0;
+  margin: 16px 0;
 `;
 
 const bottom = css`
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
 `;
 const people = css`
@@ -115,7 +111,7 @@ const people = css`
 `;
 
 const peopleText = css`
-  color: #a9a9a9;
+  color: #616166;
   font-size: 14px;
   margin-left: 2px;
 `;

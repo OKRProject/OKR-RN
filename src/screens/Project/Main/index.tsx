@@ -90,7 +90,7 @@ const Main = ({navigation}: Props) => {
             <View style={tabs}>
               {(Object.keys(tabList) as [keyof typeof tabList]).map(tabKey => (
                 <TouchableOpacity
-                  style={selectedTab === tabKey && highlightBorder}
+                  style={[tabWrap, selectedTab === tabKey && highlightBorder]}
                   key={`project_tab_${tabKey}`}
                   onPress={() => handleClickTab(tabKey)}>
                   <Text
@@ -100,11 +100,11 @@ const Main = ({navigation}: Props) => {
                 </TouchableOpacity>
               ))}
             </View>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={filterButton}
               onPress={() => setOpenSortModal(true)}>
               <Icons.Filter />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
           <ScrollView style={projectWrapper}>
             {filteredProjectList.length > 0 ? (
@@ -168,8 +168,8 @@ const wrapper = css`
 
 const user = css`
   color: #fff;
-  font-weight: 600;
-  font-size: 24px;
+  font-weight: 700;
+  font-size: 26px;
 `;
 
 const menu = css`
@@ -181,24 +181,31 @@ const menu = css`
 
 const tabs = css`
   flex-direction: row;
-  width: 118px;
+  flex: 1;
   justify-content: space-between;
+  height: 35px;
+  border-bottom-width: 1px;
+  border-color: #26262a;
 `;
 
+const tabWrap = css`
+  flex: 1;
+`;
 const tab = css`
-  color: #ffffff;
+  color: #616166;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 20px;
   padding-bottom: 6px;
+  text-align: center;
 `;
 
 const highlightBorder = css`
   border-bottom-width: 2px;
-  border-color: #1f92f2;
+  border-color: #fff;
 `;
 
 const highlight = css`
-  color: #1f92f2;
+  color: #fff;
   font-weight: 700;
 `;
 

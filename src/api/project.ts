@@ -17,7 +17,7 @@ export type NewProjectType = {
 export type ProjectType = {
   projectToken: string;
   name: string;
-  object: string;
+  objective: string;
   progress: number;
   sdt: string;
   edt: string;
