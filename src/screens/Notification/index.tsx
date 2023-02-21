@@ -1,4 +1,4 @@
-import {View, TouchableOpacity, ScrollView} from 'react-native';
+import {View, TouchableOpacity, ScrollView, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Background, DefaultText as Text, Header, Icons} from '../../components';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -38,40 +38,50 @@ const Notification = ({navigation}: Props) => {
   return (
     <Background>
       <Header title="알림" onBack={handleClickBack} />
-      <ScrollView style={_scrollWrap}>
-        {notiList.map(({notiToekn, notiType, msg, checked}, idx) => (
-          <TouchableOpacity
-            onPress={() => handleClickNotification(notiToekn, notiType)}
-            key={`notification_${notiToekn}_${idx}`}
-            style={[
-              notiContainer,
-              checked &&
-                css`
-                  opacity: 0.5;
-                `,
-            ]}>
-            <View style={header}>
-              <Text style={notiTypeHighlight}>
-                {notiType === NotificationEnum.NEW_TEAM_MATE
-                  ? '팀원 합류'
-                  : notiType === NotificationEnum.NEW_FEEDBACK
-                  ? '동료 피드백'
-                  : '프로젝트'}
-              </Text>
-              <TouchableOpacity
-                style={closeIcon}
-                onPress={e => {
-                  e.stopPropagation();
-                  handleClickDeleteNoti(notiToekn);
-                }}>
-                <Icons.Close color={'#fff'} />
-              </TouchableOpacity>
-            </View>
-            <Text style={message}>{msg}</Text>
-            <Text style={date}>2022.09.11 (일)</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      {notiList.length > 0 ? (
+        <ScrollView style={_scrollWrap}>
+          {notiList.map(({notiToekn, notiType, msg, checked}, idx) => (
+            <TouchableOpacity
+              onPress={() => handleClickNotification(notiToekn, notiType)}
+              key={`notification_${notiToekn}_${idx}`}
+              style={[
+                notiContainer,
+                checked &&
+                  css`
+                    opacity: 0.5;
+                  `,
+              ]}>
+              <View style={header}>
+                <Text style={notiTypeHighlight}>
+                  {notiType === NotificationEnum.NEW_TEAM_MATE
+                    ? '팀원 합류'
+                    : notiType === NotificationEnum.NEW_FEEDBACK
+                    ? '동료 피드백'
+                    : '진행 상황'}
+                </Text>
+                <TouchableOpacity
+                  style={closeIcon}
+                  onPress={e => {
+                    e.stopPropagation();
+                    handleClickDeleteNoti(notiToekn);
+                  }}>
+                  <Icons.Close color={'#fff'} />
+                </TouchableOpacity>
+              </View>
+              <Text style={message}>{msg}</Text>
+              <Text style={date}>2022.09.11 (일)</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      ) : (
+        <View style={_emptyWrap}>
+          <Image
+            style={{width: 100, height: 100}}
+            source={require('../../img/icn-empty-noti.png')}
+          />
+          <Text style={_emptyText}>새로운 알림이 없어요</Text>
+        </View>
+      )}
     </Background>
   );
 };
@@ -94,7 +104,6 @@ const header = css`
 
 const notiTypeHighlight = css`
   font-weight: 600;
-  font-size: 14px;
   color: #1f92f2;
 `;
 const closeIcon = css`
@@ -103,11 +112,25 @@ const closeIcon = css`
 `;
 
 const message = css`
-  margin: 16px 0;
+  margin: 16px 16px 16px 0;
 `;
 
 const date = css`
   color: #a9a9a9;
-  font-size: 12px;
+  font-size: 14px;
+`;
+
+const _emptyWrap = css`
+  width: 100%;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+const _emptyText = css`
+  color: #a9a9a9;
+  margin-top: 16px;
+  margin-bottom: 150px;
+  font-weight: 500;
 `;
 export default Notification;
