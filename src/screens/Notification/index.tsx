@@ -40,13 +40,13 @@ const Notification = ({navigation}: Props) => {
       <Header title="알림" onBack={handleClickBack} />
       {notiList.length > 0 ? (
         <ScrollView style={_scrollWrap}>
-          {notiList.map(({notiToekn, notiType, msg, checked}, idx) => (
+          {notiList.map(({notiToekn, notiType, msg, status}, idx) => (
             <TouchableOpacity
               onPress={() => handleClickNotification(notiToekn, notiType)}
               key={`notification_${notiToekn}_${idx}`}
               style={[
                 notiContainer,
-                checked &&
+                status === 'CHECKED' &&
                   css`
                     opacity: 0.5;
                   `,

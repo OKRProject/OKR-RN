@@ -25,7 +25,7 @@ export type NotificationType = {
   notiToekn: string;
   notiType: NotificationEnum;
   msg: string;
-  checked: boolean;
+  status: 'NEW' | 'CHECKED';
 };
 
 export type TokenType = {

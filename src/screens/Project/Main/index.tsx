@@ -40,6 +40,7 @@ const Main = ({navigation}: Props) => {
   const [selectedTab, setSelectedTab] = useState<keyof typeof tabList>(
     ProjectTypeEnum.whole,
   );
+  const [newNoti, setNewNoti] = useState<boolean>(false);
 
   const init = async () => {
     try {
@@ -50,6 +51,11 @@ const Main = ({navigation}: Props) => {
     }
     //todo api
   };
+
+  useEffect(() => {
+    getNotiList();
+  }, []);
+
   useEffect(() => {
     init();
   }, [sort]);
@@ -63,6 +69,11 @@ const Main = ({navigation}: Props) => {
           ),
     );
   }, [selectedTab, originProjectList]);
+
+  const getNotiList = async () => {
+    const {data} = await api.user.getNotificationList();
+    if (data?.some(item => item.status === 'NEW')) setNewNoti(true);
+  };
 
   const handleClickTab = (tab: keyof typeof tabList) => setSelectedTab(tab);
 
@@ -80,12 +91,12 @@ const Main = ({navigation}: Props) => {
           source={require('../../../img/icn-logo-row.png')}
         />
         <TouchableOpacity onPress={handleClickNotification}>
-          <Icons.Alarm color="#fff" />
+          <Icons.Alarm color={newNoti ? '#fff' : '#616166'} />
         </TouchableOpacity>
       </View>
       <View style={bodyContainer}>
         <View style={wrapper}>
-          <Text style={user}>{name}님의 프로젝트</Text>
+          <Text style={user}>{name}님의 OKR</Text>
           <View style={menu}>
             <View style={tabs}>
               {(Object.keys(tabList) as [keyof typeof tabList]).map(tabKey => (
@@ -144,14 +155,14 @@ const container = css`
 
 const floatingAddButton = css`
   position: absolute;
-  right: 17px;
+  right: 24px;
   bottom: 19px;
   z-index: 999;
 `;
 
 const header = css`
   width: 100%;
-  padding: 0 20px;
+  padding: 0 24px;
   height: 52px;
   flex-direction: row;
   justify-content: space-between;
@@ -159,7 +170,7 @@ const header = css`
 
 const bodyContainer = css`
   flex: 1;
-  padding: 39px 19px 0 19px;
+  padding: 39px 24px 0 24px;
 `;
 
 const wrapper = css`

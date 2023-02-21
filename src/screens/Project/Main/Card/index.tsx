@@ -119,6 +119,6 @@ const peopleText = css`
 const period = css`
   font-weight: 500;
   font-size: 12px;
-  color: #636363;
+  color: #616166;
 `;
 export default Card;
