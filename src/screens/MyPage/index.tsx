@@ -1,15 +1,5 @@
-import {Image, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {
-  Background,
-  Header,
-  DefaultText as Text,
-  RoundSquareButton,
-  Icons,
-} from '../../components';
 import userStore from '../../store/userStore';
-import {css} from '@emotion/native';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../navigation/main';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import Main from './Main';

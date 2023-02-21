@@ -7,6 +7,7 @@ import {useAxiosInterceptor} from '../../hooks';
 import {ProjectIniType} from '../../api/project';
 import {clearUserSession} from '../../hooks/useSignOut';
 import SplashScreen from 'react-native-splash-screen';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 export type ProjectParam =
   | {type: 'main'}
@@ -40,19 +41,28 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Main = () => {
   const [initAnimationTimeout, setInitAnimationTimeout] =
     useState<boolean>(false);
+  const [firstScreen, setFirstScreen] = useState<keyof RootStackParamList>();
+
   const user = userStore(state => state.user);
   const isLoading = useAxiosInterceptor();
 
-  // clearUserSession();
+  const getOnBoardPassed = async () => {
+    const passed = await EncryptedStorage.getItem('onboard');
+
+    if (passed) setFirstScreen('SignIn');
+    else setFirstScreen('Onboard');
+  };
 
   useEffect(() => {
-    if (isLoading || !initAnimationTimeout) SplashScreen.hide();
-  }, [isLoading, initAnimationTimeout]);
+    if (!isLoading && initAnimationTimeout && firstScreen) SplashScreen.hide();
+  }, [isLoading, initAnimationTimeout, firstScreen]);
 
   useEffect(() => {
     setTimeout(() => setInitAnimationTimeout(true), 1000);
+    getOnBoardPassed();
   }, []);
 
+  if (!firstScreen) return <></>;
   return user ? (
     <Stack.Navigator
       screenOptions={{
@@ -67,7 +77,8 @@ const Main = () => {
     </Stack.Navigator>
   ) : (
     <Stack.Navigator
-      initialRouteName="SignIn"
+      // {...{initialRouteName: passedOnboard === 'pass' ? 'SignIn' : 'Onboard'}}
+      initialRouteName={firstScreen}
       screenOptions={{
         headerShown: false,
       }}>
@@ -75,6 +86,7 @@ const Main = () => {
       <Stack.Screen name="SignUp" component={Screens.SignUp} />
       <Stack.Screen name="Terms" component={Screens.Terms} />
       <Stack.Screen name="Policy" component={Screens.Policy} />
+      <Stack.Screen name="Onboard" component={Screens.Onboard} />
     </Stack.Navigator>
   );
 };
