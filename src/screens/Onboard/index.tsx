@@ -135,7 +135,6 @@ const _wrapper = css`
   flex: 1;
   align-items: center;
   justify-content: flex-start;
-  border: 1px solid red;
 `;
 
 const _button = css`
