@@ -6,7 +6,7 @@ import {DefaultText as Text, RoundSquareButton} from '../../../components';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../navigation/main';
 import api from '../../../api';
-import IniAdd from '../../Project/Detail/IniAdd';
+import IniAdd from '../../ProjectDetail/IniAdd';
 
 type Props = ProjectIniType & {
   wroteFeedback: boolean;
@@ -32,7 +32,7 @@ const Description = (data: Props) => {
   const handleClickDone = async () => {
     try {
       await api.project.completeProjectIni(initiativeToken);
-      navigation.navigate('Project', {type: 'detail', projectToken});
+      // navigation.navigate('Project', {type: 'detail', projectToken});
     } catch (e) {
       console.log('project 완료 실패', e);
     }

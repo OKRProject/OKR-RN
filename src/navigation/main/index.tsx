@@ -9,11 +9,6 @@ import {clearUserSession} from '../../hooks/useSignOut';
 import SplashScreen from 'react-native-splash-screen';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
-export type ProjectParam =
-  | {type: 'main'}
-  | {type: 'new'}
-  | {type: 'detail'; projectToken: string};
-
 export type IniParam =
   | {type: 'detail'; initiativeToken: string; onGoBack?: () => void}
   | {type: 'feedback'; data: ProjectIniType};
@@ -21,13 +16,14 @@ export type IniParam =
 export type MyPage = undefined | {type: 'detail'};
 
 export type RootStackParamList = {
-  Home: undefined;
   SignIn: undefined;
   SignUp: undefined;
   Calendar: undefined;
   MyPage: MyPage;
   Onboard: undefined;
-  Project: ProjectParam;
+  Project: undefined;
+  ProjectNew: undefined;
+  ProjectDetail: {projectToken: string};
   Feedback: undefined;
   Bottom: undefined;
   Terms: undefined;
@@ -70,6 +66,8 @@ const Main = () => {
       }}>
       <Stack.Screen name="Bottom" component={BottomTabNavigator} />
       <Stack.Screen name="Project" component={Screens.Project} />
+      <Stack.Screen name="ProjectDetail" component={Screens.ProjectDetail} />
+      <Stack.Screen name="ProjectNew" component={Screens.ProjectNew} />
       <Stack.Screen name="Ini" component={Screens.Ini} />
       <Stack.Screen name="Terms" component={Screens.Terms} />
       <Stack.Screen name="Policy" component={Screens.Policy} />

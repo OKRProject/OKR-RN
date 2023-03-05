@@ -1,10 +1,11 @@
-import Home from './Home';
+import Project from './Project';
+import ProjectNew from './ProjectNew';
+import ProjectDetail from './ProjectDetail';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import Calendar from './Calendar';
 import MyPage from './MyPage';
 import Onboard from './Onboard';
-import Project from './Project';
 import Feedback from './Feedback';
 import Terms from './Terms';
 import Policy from './Policy';
@@ -13,7 +14,7 @@ import Notification from './Notification';
 import Splash from './Splash';
 
 export default {
-  Home,
+  ProjectDetail,
   SignIn,
   SignUp,
   Calendar,
@@ -26,4 +27,5 @@ export default {
   Ini,
   Notification,
   Splash,
+  ProjectNew,
 };
