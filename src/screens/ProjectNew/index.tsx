@@ -1,17 +1,18 @@
 import {css} from '@emotion/native';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import {Background, CalendarModal} from '../../components';
 import {RootStackParamList} from '../../navigation/main';
 import {getDate} from '../../utils/calendar';
-import Main from './Main';
+import Step1 from './Step1';
+import Step2 from './Step2';
+import Step3 from './Step3';
 
 export type NewProjectType = {
   title: string;
   startDt: string;
   endDt: string;
-  objective: string;
-  krList: string[];
 };
 
 const today = new Date().toDateString();
@@ -20,13 +21,13 @@ const initProject: NewProjectType = {
   title: '',
   startDt: getDate(today, 0),
   endDt: getDate(today, 6),
-  objective: '',
-  krList: [''],
 };
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'ProjectNew'> {}
 const New = ({}: Props) => {
+  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
   const [project, setProject] = useState<NewProjectType>(initProject);
+  const [step, setStep] = useState<1 | 2 | 3>(1);
   const [isPeriodPage, setPeriodPage] = useState<boolean>(false);
 
   const handleTitle = (title: string) => setProject(prev => ({...prev, title}));
@@ -35,14 +36,33 @@ const New = ({}: Props) => {
     setPeriodPage(false);
   };
   const handleCancelSelectPeriod = () => setPeriodPage(false);
+  const handleNavigateProjectMain = () => navigate('Project');
   return (
     <Background>
-      <Main
-        {...project}
-        onChangeTitle={handleTitle}
-        setPeriodPage={setPeriodPage}
-        setProject={setProject}
-      />
+      {step === 1 && (
+        <Step1
+          onChangeTitle={handleTitle}
+          title={project.title}
+          onNext={() => setStep(2)}
+          onPrev={handleNavigateProjectMain}
+        />
+      )}
+      {step === 2 && (
+        <Step2
+          onChangeTitle={handleTitle}
+          startDt={project.startDt}
+          endDt={project.endDt}
+          onNext={() => setStep(3)}
+          onPrev={handleNavigateProjectMain}
+        />
+      )}
+      {step === 3 && (
+        <Step3
+          onChangeTitle={handleTitle}
+          onNext={() => setStep(3)}
+          onPrev={handleNavigateProjectMain}
+        />
+      )}
       <CalendarModal
         isVisible={isPeriodPage}
         startDt={project.startDt}
