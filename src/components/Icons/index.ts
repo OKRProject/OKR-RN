@@ -13,6 +13,7 @@ import Google from './Google';
 import Apple from './Apple';
 import Menu from './Menu';
 import Check from './Check';
+import AddPerson from './AddPerson';
 
 export default {
   Project,
@@ -30,4 +31,5 @@ export default {
   Apple,
   Menu,
   Check,
+  AddPerson,
 };

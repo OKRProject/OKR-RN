@@ -20,7 +20,7 @@ const Header = ({name, sdt, edt, onClickBack, onClickMenu}: Props) => {
           <Icons.Back />
         </TouchableOpacity>
         <TouchableOpacity style={button} onPress={onClickMenu}>
-          <Icons.Menu />
+          <Icons.AddPerson />
         </TouchableOpacity>
       </View>
       <View>

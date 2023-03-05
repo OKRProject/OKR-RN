@@ -47,7 +47,7 @@ const TeamModal = ({
       onBackdropPress={onClickClose}>
       <SafeAreaView style={container}>
         <TouchableOpacity style={menuButton} onPress={onClickClose}>
-          <Icons.Menu />
+          <Icons.Close color="#fff" />
         </TouchableOpacity>
         {teamData && (
           <>
@@ -68,7 +68,7 @@ const TeamModal = ({
               size="m"
               type="primary"
               onPress={onClickAddMember}>
-              + 팀원 추가하기
+              <Text style={_addButtonText}>+ 팀원 추가하기</Text>
             </RoundSquareButton>
           </>
         )}
@@ -112,4 +112,9 @@ const teamListWrap = css``;
 const addButton = css`
   margin-top: 18px;
   width: 244px;
+`;
+
+const _addButtonText = css`
+  font-size: 18px;
+  font-weight: 700;
 `;

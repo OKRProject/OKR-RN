@@ -22,7 +22,7 @@ const Member = ({profileImage, userName, jobField}: Props) => {
         <Text style={name}>{userName}</Text>
       </View>
       <View>
-        <Text style={field}>({jobField})</Text>
+        <Text style={field}>{jobField}</Text>
       </View>
     </View>
   );
