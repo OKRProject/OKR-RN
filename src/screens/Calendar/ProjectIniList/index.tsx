@@ -115,11 +115,11 @@ const _emptyCard = css`
 const _emptyTitle = css`
   font-weight: 500;
   font-size: 16px;
-  line-height: 150%;
+  line-height: 24px;
 `;
 
 const _emptyDesc = css`
-  line-height: 150%;
+  line-height: 20px;
   font-weight: 500;
   font-size: 13px;
   color: #a9a9a9;
