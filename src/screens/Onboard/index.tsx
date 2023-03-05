@@ -67,10 +67,7 @@ const Onboard = () => {
     <SafeAreaView edges={['right', 'top', 'left']} style={_container}>
       <View style={_wrapper}>
         <FlatList
-          contentContainerStyle={css`
-            align-items: center;
-            flex-direction: row;
-          `}
+          contentContainerStyle={_roundContainer}
           horizontal
           data={[0, 1, 2, 3]}
           keyExtractor={item => item.toString()}
@@ -82,9 +79,7 @@ const Onboard = () => {
           horizontal
           pagingEnabled
           data={data}
-          contentContainerStyle={css`
-            flex-direction: row;
-          `}
+          contentContainerStyle={_contentContainer}
           keyExtractor={item => item.title}
           showsHorizontalScrollIndicator={false}
           viewabilityConfigCallbackPairs={
@@ -94,15 +89,16 @@ const Onboard = () => {
             return (
               <View
                 style={[
-                  {width, padding: 20},
+                  {width},
                   css`
-                    padding-top: 0;
+                    padding: 20px;
+                    padding-top: 0px;
                   `,
                 ]}>
                 <Text style={_title}>{item.title}</Text>
                 <Text style={_desc}>{item.desc}</Text>
                 <Image
-                  style={[{width: '100%', height: 254}]}
+                  style={[{width: '100%', height: 184, marginTop: 99}]}
                   resizeMode="contain"
                   source={item.image}
                 />
@@ -138,7 +134,8 @@ const _container = css`
 const _wrapper = css`
   flex: 1;
   align-items: center;
-  padding-top: 40px;
+  justify-content: flex-start;
+  border: 1px solid red;
 `;
 
 const _button = css`
@@ -154,6 +151,13 @@ const _buttonText = css`
   font-weight: 700;
 `;
 
+const _roundContainer = css`
+  align-items: center;
+  flex-direction: row;
+  height: 24px;
+  margin-top: 87px;
+`;
+
 const _active = css`
   background-color: #1f92f2;
 `;
@@ -164,6 +168,12 @@ const _round = css`
   border-radius: 4px;
   margin: 0 4px;
   background-color: #636363;
+`;
+
+const _contentContainer = css`
+  flex-direction: row;
+  height: 580px;
+  padding-top: 40px;
 `;
 
 const _title = css`
