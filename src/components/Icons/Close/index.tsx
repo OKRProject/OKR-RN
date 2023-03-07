@@ -6,7 +6,7 @@ type Props = {
 };
 const Close = ({color}: Props) => {
   return (
-    <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <Svg width="100%" height="100%" viewBox="0 0 24 24" fill="none">
       <Path
         fill-rule="evenodd"
         clip-rule="evenodd"

@@ -3,25 +3,33 @@ import React from 'react';
 import {css} from '@emotion/native';
 import {Header} from '../components';
 import {NewProjectType} from '..';
-import {RoundSquareButton} from '../../../components';
+import {Calendar, RoundSquareButton} from '../../../components';
 
 type Props = Pick<NewProjectType, 'startDt' | 'endDt'> & {
   onChangeTitle: (title: string) => void;
   onNext: () => void;
   onPrev: () => void;
+  onSelectDates: ({start, end}: {start: string; end: string}) => void;
 };
 const Step2 = ({onPrev, onNext, startDt, endDt}: Props) => {
   return (
     <>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={_container}>
-          <Header
-            onClickPrev={onPrev}
-            title="목표 날짜를 정하세요"
-            desc="꾸준히 실천했을때 목표 달성이 가능한
+          <View style={_headerWrap}>
+            <Header
+              onClickPrev={onPrev}
+              title="목표 날짜를 정하세요"
+              desc="꾸준히 실천했을때 목표 달성이 가능한
             실현 가능한 날짜가 좋아요!"
-          />
-          <View>
+            />
+          </View>
+          <View style={_wrapper}>
+            <Calendar
+              start="2023-03-07"
+              end={'2023-03-09'}
+              setDate={() => {}}
+            />
             <RoundSquareButton
               disabled={!startDt || !endDt}
               onPress={onNext}
@@ -39,15 +47,20 @@ const Step2 = ({onPrev, onNext, startDt, endDt}: Props) => {
 export default Step2;
 
 const _container = css`
-  padding: 0 24px;
   width: 100%;
   flex: 1;
-  justify-content: flex-start;
+`;
+
+const _headerWrap = css`
+  width: 100%;
+  padding: 0 24px;
 `;
 
 const _wrapper = css`
   flex: 1;
   margin-top: 79px;
+  padding: 36px 24px 46px;
   justify-content: space-between;
-  margin-bottom: 10px;
+  background-color: #202227;
+  width: 100%;
 `;

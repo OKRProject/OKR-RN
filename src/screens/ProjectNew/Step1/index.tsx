@@ -59,7 +59,7 @@ const Step1 = ({title, onChangeTitle, onPrev, onNext}: Props) => {
 };
 
 const _container = css`
-  padding: 0 24px;
+  padding: 0 24px 36px 24px;
   width: 100%;
   flex: 1;
   justify-content: flex-start;
