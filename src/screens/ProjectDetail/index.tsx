@@ -36,7 +36,6 @@ const Detail = ({route, navigation}: Props) => {
       {project ? (
         <>
           <Header
-            {...project}
             onClickBack={handleGoBack}
             onClickMenu={handleClickModalOpen}
           />

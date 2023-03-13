@@ -2,62 +2,49 @@ import {View, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {css} from '@emotion/native';
 import {Icons, DefaultText as Text} from '../../../components';
-import {dateStringToViewText} from '../../../utils/calendar';
 
 type Props = {
-  name: string;
-  sdt: string;
-  edt: string;
   onClickBack: () => void;
   onClickMenu: () => void;
 };
 
-const Header = ({name, sdt, edt, onClickBack, onClickMenu}: Props) => {
+const Header = ({onClickBack, onClickMenu}: Props) => {
   return (
-    <View style={container}>
-      <View style={buttonWrap}>
-        <TouchableOpacity style={button} onPress={onClickBack}>
+    <View style={_container}>
+      <View style={_buttonWrap}>
+        <TouchableOpacity style={_button} onPress={onClickBack}>
           <Icons.Back />
         </TouchableOpacity>
-        <TouchableOpacity style={button} onPress={onClickMenu}>
+        <Text style={_title}>OKR</Text>
+        <TouchableOpacity style={_button} onPress={onClickMenu}>
           <Icons.AddPerson />
         </TouchableOpacity>
-      </View>
-      <View>
-        <Text style={titleText}>{name}</Text>
-        <Text style={periodText}>
-          {dateStringToViewText(sdt)} - {dateStringToViewText(edt)}
-        </Text>
       </View>
     </View>
   );
 };
 
-const container = css`
+const _container = css`
   padding: 7px 24px 3px 24px;
 `;
-const buttonWrap = css`
+
+const _buttonWrap = css`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-
   margin-bottom: 12px;
 `;
-const button = css`
+
+const _button = css`
   width: 24px;
   height: 24px;
 `;
 
-const titleText = css`
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 29px;
-`;
-const periodText = css`
-  font-weight: 500;
-  font-size: 12px;
-  color: #636363;
-  line-height: 18px;
+const _title = css`
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: #616166;
 `;
 
 export default Header;
