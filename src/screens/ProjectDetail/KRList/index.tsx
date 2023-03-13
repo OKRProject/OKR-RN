@@ -5,6 +5,7 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {DefaultText as Text, Icons} from '../../../components';
 import {KeyResultType} from '../../../api/project';
 import IniList from './IniList';
+import AddKRModal from '../AddKRModal';
 
 type Props = {
   KRList: KeyResultType[];
@@ -14,44 +15,40 @@ const KRList = ({KRList, projectTitle}: Props) => {
   const [selectedKrToken, setSelected] = useState<string>(
     KRList[0].keyResultToken,
   );
-  const selectedKR = useMemo(
-    () => KRList.find(kr => kr.keyResultToken === selectedKrToken)!,
-    [selectedKrToken],
-  );
-  // const selectedKR = useMemo(() => KRList[selected - 1], [selected]);
 
   return KRList[0] ? (
-    <View style={container}>
-      <View style={[_title]}>
-        <View style={_flex}>
-          <Text style={_tag}>핵심 결과</Text>
+    <>
+      <View style={container}>
+        <View style={[_title]}>
+          <View style={_flex}>
+            <Text style={_tag}>핵심 결과</Text>
+          </View>
+          <View style={_addButton}>
+            <Icons.Plus />
+          </View>
         </View>
-        <View style={_addButton}>
-          <Icons.Plus />
-        </View>
-      </View>
-      {KRList.length === 0 ? (
-        <View style={[_item, _empty]}>
-          <Text style={_emptyText}>
-            + 버튼을 눌러 핵심 결과를 추가해 보세요!
-          </Text>
-        </View>
-      ) : (
-        <View style={_itemContainer}>
-          {KRList.map((kr, idx) => (
-            <View
-              style={[_item, _krItem]}
-              key={`key_result_${kr.keyResultToken}`}>
-              <Text style={_index}>{idx + 1}</Text>
-              <Text style={_krName}>{kr.keyResultName}</Text>
-              <View style={_arrow}>
-                <Icons.Back />
+        {KRList.length === 0 ? (
+          <View style={[_item, _empty]}>
+            <Text style={_emptyText}>
+              + 버튼을 눌러 핵심 결과를 추가해 보세요!
+            </Text>
+          </View>
+        ) : (
+          <View style={_itemContainer}>
+            {KRList.map((kr, idx) => (
+              <View
+                style={[_item, _krItem]}
+                key={`key_result_${kr.keyResultToken}`}>
+                <Text style={_index}>{idx + 1}</Text>
+                <Text style={_krName}>{kr.keyResultName}</Text>
+                <View style={_arrow}>
+                  <Icons.Back />
+                </View>
               </View>
-            </View>
-          ))}
-        </View>
-      )}
-      {/*  <View style={tabWrap}>
+            ))}
+          </View>
+        )}
+        {/*  <View style={tabWrap}>
         {KRList.map((kr, idx) => (
           <TouchableWithoutFeedback
             key={`project_detail_${kr.keyResultToken}`}
@@ -74,7 +71,9 @@ const KRList = ({KRList, projectTitle}: Props) => {
           projectTitle={projectTitle}
         />
       </View> */}
-    </View>
+      </View>
+      <AddKRModal isVisible projectToken="test" onClickClose={() => {}} />
+    </>
   ) : (
     <></>
   );
