@@ -8,34 +8,39 @@ import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import query from '../../query';
+import {NewProjectType} from '../../api/project';
 
-export type NewProjectType = {
-  title: string;
-  startDt: string;
-  endDt: string;
-};
+export type NewProjectTypeInput = Pick<
+  NewProjectType,
+  'objective' | 'edt' | 'sdt'
+>;
 
 const today = new Date().toDateString();
 
-const initProject: NewProjectType = {
-  title: '',
-  startDt: getDate(today, 0),
-  endDt: getDate(today, 6),
+const initProject: NewProjectTypeInput = {
+  objective: '',
+  sdt: getDate(today, 0),
+  edt: getDate(today, 6),
 };
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'ProjectNew'> {}
 const New = ({}: Props) => {
   const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
-  const [project, setProject] = useState<NewProjectType>(initProject);
+  const [project, setProject] = useState<NewProjectTypeInput>(initProject);
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
-  const handleTitle = (title: string) => setProject(prev => ({...prev, title}));
+  const handleTitle = (objective: string) =>
+    setProject(prev => ({...prev, objective}));
   const handleNavigateProjectMain = () => navigate('Project');
-  const handleSelectDates = ({start, end}: {start: string; end: string}) =>
-    setProject(prev => ({...prev, startDt: start, endDt: end}));
+  const handleSelectDates = ({start, end}: {start: string; end: string}) => {
+    setProject(prev => ({...prev, sdt: start, edt: end}));
+  };
+
+  const {mutate} = query.project.useAddProject();
 
   const handleComplete = (members: string[]) => {
-    //todo API
+    mutate({keyResults: [], teamMembers: members, ...project});
     handleNavigateProjectMain();
   };
   return (
@@ -43,27 +48,22 @@ const New = ({}: Props) => {
       {step === 1 && (
         <Step1
           onChangeTitle={handleTitle}
-          title={project.title}
+          objective={project.objective}
           onNext={() => setStep(2)}
           onPrev={handleNavigateProjectMain}
         />
       )}
       {step === 2 && (
         <Step2
-          onChangeTitle={handleTitle}
-          startDt={project.startDt}
-          endDt={project.endDt}
+          sdt={project.sdt}
+          edt={project.edt}
           onNext={() => setStep(3)}
           onPrev={() => setStep(1)}
           onSelectDates={handleSelectDates}
         />
       )}
       {step === 3 && (
-        <Step3
-          onChangeTitle={handleTitle}
-          onPrev={() => setStep(2)}
-          onComplete={handleComplete}
-        />
+        <Step3 onPrev={() => setStep(2)} onComplete={handleComplete} />
       )}
     </SafeAreaView>
   );

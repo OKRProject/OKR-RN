@@ -6,17 +6,17 @@ import {
   View,
 } from 'react-native';
 import {Header} from '../components';
-import {NewProjectType} from '..';
+import {NewProjectTypeInput} from '..';
 import {css} from '@emotion/native';
 import {DefaultInput, RoundSquareButton} from '../../../components';
 
-type Props = Pick<NewProjectType, 'title'> & {
+type Props = Pick<NewProjectTypeInput, 'objective'> & {
   onChangeTitle: (title: string) => void;
   onNext: () => void;
   onPrev: () => void;
 };
 
-const Step1 = ({title, onChangeTitle, onPrev, onNext}: Props) => {
+const Step1 = ({objective, onChangeTitle, onPrev, onNext}: Props) => {
   const [keyboardFocused, setKeyboardFocused] = useState<boolean>(false);
 
   return (
@@ -34,14 +34,14 @@ const Step1 = ({title, onChangeTitle, onPrev, onNext}: Props) => {
               style={_input}
               onFocus={() => setKeyboardFocused(true)}
               onBlur={() => setKeyboardFocused(false)}
-              value={title}
+              value={objective}
               onChangeText={onChangeTitle}
             />
             <RoundSquareButton
-              disabled={title.length === 0}
+              disabled={objective.length === 0}
               onPress={onNext}
               size="m"
-              type={title.length === 0 ? 'disable' : 'primary'}
+              type={objective.length === 0 ? 'disable' : 'primary'}
               style={[
                 css``,
                 keyboardFocused &&

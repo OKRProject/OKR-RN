@@ -2,16 +2,15 @@ import {View, Text, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import React from 'react';
 import {css} from '@emotion/native';
 import {Header} from '../components';
-import {NewProjectType} from '..';
+import {NewProjectTypeInput} from '..';
 import {Calendar, RoundSquareButton} from '../../../components';
 
-type Props = Pick<NewProjectType, 'startDt' | 'endDt'> & {
-  onChangeTitle: (title: string) => void;
+type Props = Pick<NewProjectTypeInput, 'sdt' | 'edt'> & {
   onNext: () => void;
   onPrev: () => void;
   onSelectDates: ({start, end}: {start: string; end: string}) => void;
 };
-const Step2 = ({onPrev, onNext, startDt, endDt}: Props) => {
+const Step2 = ({onPrev, onNext, sdt, edt, onSelectDates}: Props) => {
   return (
     <>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -25,16 +24,12 @@ const Step2 = ({onPrev, onNext, startDt, endDt}: Props) => {
             />
           </View>
           <View style={_wrapper}>
-            <Calendar
-              start="2023-03-07"
-              end={'2023-03-09'}
-              setDate={() => {}}
-            />
+            <Calendar start={sdt} end={edt} setDate={onSelectDates} />
             <RoundSquareButton
-              disabled={!startDt || !endDt}
+              disabled={!sdt || !edt}
               onPress={onNext}
               size="m"
-              type={!startDt || !endDt ? 'disable' : 'primary'}>
+              type={!sdt || !edt ? 'disable' : 'primary'}>
               계속하기 (2/3)
             </RoundSquareButton>
           </View>

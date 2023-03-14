@@ -17,6 +17,7 @@ import api from '../../api';
 import {ProjectType, ProjectTypeEnum, SortTypeEnum} from '../../api/project';
 import EmptyCard from './EmptyCard';
 import {SortStatus} from '../../components/SortingModal';
+import query from '../../query';
 
 const tabList: {[key in ProjectTypeEnum]: string} = {
   WHOLE: '전체',
@@ -41,24 +42,17 @@ const Main = ({navigation}: Props) => {
     ProjectTypeEnum.whole,
   );
   const [newNoti, setNewNoti] = useState<boolean>(false);
-
-  const init = async () => {
-    try {
-      const {data} = await api.project.getProjectList(sort);
-      setOriginProjectList(data.content);
-    } catch (e: any) {
-      console.log(e.response.data);
-    }
-    //todo api
-  };
+  const {data: projectList} = query.project.useGetProjectList({
+    projectType: 'ALL',
+  });
 
   useEffect(() => {
     getNotiList();
   }, []);
 
   useEffect(() => {
-    init();
-  }, [sort]);
+    projectList && setOriginProjectList(projectList?.data.content);
+  }, [projectList]);
 
   useEffect(() => {
     setFilteredProjectList(

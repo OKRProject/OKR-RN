@@ -6,12 +6,11 @@ export enum ProjectTypeEnum {
   single = 'SINGLE',
 }
 export type NewProjectType = {
-  name: string;
+  objective: string;
   sdt: string;
   edt: string;
-  type: ProjectTypeEnum;
-  objective: string;
   keyResults: string[];
+  teamMembers: string[];
 };
 
 export type ProjectType = {
@@ -131,7 +130,7 @@ const getProjectList = ({
   instance.get<GetProjectListResType>(
     `v1/project?sortType=${sort}&includeFinishedProjectYN=${
       includeFinished ? 'Y' : 'N'
-    }&page=0&size=10`,
+    }&page=0&size=10&projectType=ALL`,
   );
 
 const getProjectDetail = ({projectToken}: GetProjectDetailReqType) =>

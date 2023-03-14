@@ -18,8 +18,6 @@ import {debounce} from 'lodash';
 import api from '../../../api';
 
 type Props = {
-  onChangeTitle: (title: string) => void;
-
   onPrev: () => void;
   onComplete: (members: string[]) => void;
 };
