@@ -4,17 +4,19 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {config} from './config';
 import Navigation from './navigation';
 import CodePush from 'react-native-code-push';
+import {QueryClient, QueryClientProvider} from 'react-query';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
+  const queryClient = new QueryClient();
   config();
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <GestureHandlerRootView style={{flex: 1, backgroundColor: '#F9EFFD'}}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
         <Navigation />
       </GestureHandlerRootView>
-    </>
+    </QueryClientProvider>
   );
 };
 
