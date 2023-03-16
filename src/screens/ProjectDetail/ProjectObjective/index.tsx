@@ -6,22 +6,27 @@ import {dateStringToViewText} from '../../../utils/calendar';
 
 type Props = {
   objective: string;
-  name: string;
-  sdt: string;
-  edt: string;
+  startDate: string;
+  endDate: string;
+  teamMembersCount: number;
 };
-const ProjectObjective = ({objective, name, sdt, edt}: Props) => {
+const ProjectObjective = ({
+  objective,
+  startDate,
+  endDate,
+  teamMembersCount,
+}: Props) => {
   return (
     <View style={_container}>
       <Text style={_tag}>목표</Text>
-      <Text style={_title}>{objective || name}</Text>
+      <Text style={_title}>{objective}</Text>
       <View style={_flex}>
         <Image
           style={{width: 20, height: 20}}
           source={require('../../../img/icn-calendar.png')}
         />
         <Text style={_text}>
-          {dateStringToViewText(sdt)} - {dateStringToViewText(edt)}
+          {dateStringToViewText(startDate)} - {dateStringToViewText(endDate)}
         </Text>
       </View>
       <View style={_flex}>
@@ -29,7 +34,7 @@ const ProjectObjective = ({objective, name, sdt, edt}: Props) => {
           style={{width: 20, height: 20}}
           source={require('../../../img/icn-people.png')}
         />
-        <Text style={_text}>4명 참여</Text>
+        <Text style={_text}>{teamMembersCount}명 참여</Text>
       </View>
     </View>
   );

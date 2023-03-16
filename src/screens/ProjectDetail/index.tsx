@@ -6,9 +6,9 @@ import {ProjectDetailType} from '../../api/project';
 import Header from './Header';
 import KRList from './KRList';
 import ProjectObjective from './ProjectObjective';
-import api from '../../api';
 import TeamModal from './TeamModal';
 import TeamMemberAddModal from './TeamMemberAddModal';
+import query from '../../query';
 
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'ProjectDetail'> {}
@@ -19,17 +19,15 @@ const Detail = ({route, navigation}: Props) => {
     'addMember' | 'menu' | undefined
   >();
 
-  const init = async () => {
-    const {data} = await api.project.getProjectDetail({projectToken});
-    setProject(data);
-  };
+  const {data} = query.project.useGetProjectDetail({projectToken});
+
   const handleGoBack = () => navigation.navigate('Project');
   const handleClickModalClose = () => setOpenModal(undefined);
   const handleClickModalOpen = () => setOpenModal('menu');
 
   useEffect(() => {
-    init();
-  }, []);
+    if (data) setProject(data.data);
+  }, [data]);
 
   return (
     <Background>
@@ -40,7 +38,10 @@ const Detail = ({route, navigation}: Props) => {
             onClickMenu={handleClickModalOpen}
           />
           <ProjectObjective {...project} />
-          <KRList KRList={project.keyResults} projectTitle={project.name} />
+          <KRList
+            KRList={project.keyResults}
+            projectToken={project.projectToken}
+          />
           {openModal === 'menu' && (
             <TeamModal
               projectToken={project.projectToken}

@@ -22,12 +22,11 @@ const Card = ({project, ...rest}: Props) => {
   const navigation = useNavigation<NavigationProps>();
   const {
     projectToken,
-    name,
     objective,
-    teamMembers,
+    teamMembersCount,
     progress,
-    sdt,
-    edt,
+    startDate: sdt,
+    endDate: edt,
     newProject,
   } = useMemo(() => project, [project]);
   const percent = useMemo(() => Math.floor(progress), [progress]);
@@ -53,11 +52,11 @@ const Card = ({project, ...rest}: Props) => {
     <TouchableOpacity onPress={handleClickProject}>
       <RoundCard style={container} {...rest}>
         <View style={titleWrap}>
-          <Text style={projectTitle}>{name}</Text>
+          <Text style={projectTitle}>{objective}</Text>
           {newProject && <Text style={newHighlight}>NEW</Text>}
           <View style={people}>
             <Icons.People />
-            <Text style={peopleText}>{teamMembers.length}</Text>
+            <Text style={peopleText}>{teamMembersCount}</Text>
           </View>
         </View>
         <Progress percent={percent} style={progressWrap} figure={false} />

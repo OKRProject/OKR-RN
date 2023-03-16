@@ -12,6 +12,8 @@ import Policy from './Policy';
 import Ini from './Ini';
 import Notification from './Notification';
 import Splash from './Splash';
+import AddKR from './AddKR';
+import AddIni from './AddIni';
 
 export default {
   ProjectDetail,
@@ -28,4 +30,6 @@ export default {
   Notification,
   Splash,
   ProjectNew,
+  AddKR,
+  AddIni,
 };

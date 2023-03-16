@@ -13,15 +13,15 @@ import {NewProjectType} from '../../api/project';
 
 export type NewProjectTypeInput = Pick<
   NewProjectType,
-  'objective' | 'edt' | 'sdt'
+  'objective' | 'endDate' | 'startDate'
 >;
 
 const today = new Date().toDateString();
 
 const initProject: NewProjectTypeInput = {
   objective: '',
-  sdt: getDate(today, 0),
-  edt: getDate(today, 6),
+  startDate: getDate(today, 0),
+  endDate: getDate(today, 6),
 };
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'ProjectNew'> {}
@@ -34,13 +34,13 @@ const New = ({}: Props) => {
     setProject(prev => ({...prev, objective}));
   const handleNavigateProjectMain = () => navigate('Project');
   const handleSelectDates = ({start, end}: {start: string; end: string}) => {
-    setProject(prev => ({...prev, sdt: start, edt: end}));
+    setProject(prev => ({...prev, startDate: start, endDate: end}));
   };
 
   const {mutate} = query.project.useAddProject();
 
   const handleComplete = (members: string[]) => {
-    mutate({keyResults: [], teamMembers: members, ...project});
+    mutate({teamMembers: members, ...project});
     handleNavigateProjectMain();
   };
   return (
@@ -55,8 +55,8 @@ const New = ({}: Props) => {
       )}
       {step === 2 && (
         <Step2
-          sdt={project.sdt}
-          edt={project.edt}
+          startDate={project.startDate}
+          endDate={project.endDate}
           onNext={() => setStep(3)}
           onPrev={() => setStep(1)}
           onSelectDates={handleSelectDates}

@@ -5,12 +5,18 @@ import {Header} from '../components';
 import {NewProjectTypeInput} from '..';
 import {Calendar, RoundSquareButton} from '../../../components';
 
-type Props = Pick<NewProjectTypeInput, 'sdt' | 'edt'> & {
+type Props = Pick<NewProjectTypeInput, 'startDate' | 'endDate'> & {
   onNext: () => void;
   onPrev: () => void;
   onSelectDates: ({start, end}: {start: string; end: string}) => void;
 };
-const Step2 = ({onPrev, onNext, sdt, edt, onSelectDates}: Props) => {
+const Step2 = ({
+  onPrev,
+  onNext,
+  startDate: sdt,
+  endDate: edt,
+  onSelectDates,
+}: Props) => {
   return (
     <>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

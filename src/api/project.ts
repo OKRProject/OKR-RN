@@ -7,25 +7,18 @@ export enum ProjectTypeEnum {
 }
 export type NewProjectType = {
   objective: string;
-  sdt: string;
-  edt: string;
-  keyResults: string[];
+  startDate: string;
+  endDate: string;
   teamMembers: string[];
 };
 
 export type ProjectType = {
   projectToken: string;
-  name: string;
   objective: string;
   progress: number;
-  sdt: string;
-  edt: string;
-  teamMembers: {
-    email: string;
-    name: string;
-    profileImage: string;
-    jobFieldDetail: string;
-  }[];
+  startDate: string;
+  endDate: string;
+  teamMembersCount: number;
   newProject: boolean;
   projectType: ProjectTypeEnum;
 };
@@ -40,12 +33,10 @@ export type TeamMemberType = {
   profileImage: string;
   jobField: string;
 };
-export type ProjectDetailType = {
-  name: string;
-  projectToken: string;
-  objective: string;
-  sdt: string;
-  edt: string;
+export type ProjectDetailType = Pick<
+  ProjectType,
+  'endDate' | 'startDate' | 'objective' | 'projectToken' | 'teamMembersCount'
+> & {
   keyResults: KeyResultType[];
   projectType: ProjectTypeEnum;
 };
@@ -67,6 +58,9 @@ export type ProjectIniType = {
   keyResultToken: string;
   keyResultIndex: number;
 };
+
+export type AddProjectKRReqType = Pick<ProjectDetailType, 'projectToken'> &
+  Pick<KeyResultType, 'keyResultName'>;
 
 export type AddProjectIniReqType = {
   keyResultToken: string;
@@ -136,6 +130,9 @@ const getProjectList = ({
 const getProjectDetail = ({projectToken}: GetProjectDetailReqType) =>
   instance.get<GetProjectDetailResType>(`v1/project/${projectToken}`);
 
+const addKR = (body: AddProjectKRReqType) =>
+  instance.post(`v1/keyresult`, body);
+
 const getIniList = ({keyResultToken}: GetProjectIniListReqType) =>
   instance.get<GetProjectIniListResType>(
     `v1/initiative/list/${keyResultToken}`,
@@ -184,4 +181,5 @@ export default {
   getIniDatesByMonth,
   getProjectIni,
   updateProjectIni,
+  addKR,
 };
