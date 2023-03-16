@@ -7,7 +7,7 @@ const useAddProject = () => {
   const queryClient = useQueryClient();
   return useMutation(api.project.createNewProject, {
     onSuccess: () => {
-      queryClient.invalidateQueries(keys.ADD_PROJECT);
+      queryClient.invalidateQueries(keys.GET_PROJECT_LIST);
     },
   });
 };
