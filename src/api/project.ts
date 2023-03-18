@@ -52,11 +52,6 @@ export type ProjectIniType = {
   startDate: string;
   email: string;
   myInitiative: boolean;
-  dDay: string;
-  projectToken: string;
-  projectName: string;
-  keyResultToken: string;
-  keyResultIndex: number;
 };
 
 export type AddProjectKRReqType = Pick<ProjectDetailType, 'projectToken'> &

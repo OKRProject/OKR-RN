@@ -29,7 +29,11 @@ const IniList = ({KRToken, KRTitle, projectToken}: Props) => {
   return (
     <View style={_container}>
       {iniList?.data?.content.map((ini, idx) => (
-        <InitiativeCard {...ini} key={`KR${KRToken}_${ini.initiativeToken}`} />
+        <InitiativeCard
+          {...ini}
+          key={`KR${KRToken}_${ini.initiativeToken}`}
+          keyResultToken={KRToken}
+        />
       ))}
       <TouchableOpacity onPress={handleAddIni}>
         <Text style={_addButtonText}>+ 행동전략 추가</Text>

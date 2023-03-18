@@ -9,7 +9,10 @@ import {clearUserSession} from '../../hooks/useSignOut';
 import SplashScreen from 'react-native-splash-screen';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
-export type IniParam = {initiativeToken: string};
+export type IniParam = {initiativeToken: string} & Pick<
+  KeyResultType,
+  'keyResultToken'
+>;
 
 export type AddKRParam = Pick<ProjectType, 'projectToken'>;
 

@@ -11,6 +11,7 @@ const buttonColor = {
 };
 
 const buttonSize = {
+  xs: '36px',
   s: '42px',
   m: '52px',
   l: '60px',

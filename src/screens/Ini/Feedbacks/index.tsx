@@ -4,25 +4,21 @@ import {DefaultText as Text, Feedback} from '../../../components';
 import {css} from '@emotion/native';
 import {FeedbackEnum, FeedbackType} from '../../../api/feedback';
 import api from '../../../api';
+
 type Props = {
   initiativeToken: string;
   feedbackList: FeedbackType[];
 };
 const Feedbacks = ({initiativeToken, feedbackList}: Props) => {
   return (
-    <View>
-      {feedbackList.length > 0 && (
-        <>
-          <Text style={title}>팀원들의 피드백 ({feedbackList.length})</Text>
-          {feedbackList.map(feedback => (
-            <Feedback
-              key={`ini_${initiativeToken}_feedback${feedback.feedbackId}`}
-              {...feedback}
-            />
-          ))}
-        </>
-      )}
-    </View>
+    <>
+      {feedbackList.map(feedback => (
+        <Feedback
+          key={`ini_${initiativeToken}_feedback${feedback.feedbackId}`}
+          {...feedback}
+        />
+      ))}
+    </>
   );
 };
 
@@ -32,4 +28,5 @@ const title = css`
   font-weight: 600;
   font-size: 20px;
 `;
+
 export default Feedbacks;

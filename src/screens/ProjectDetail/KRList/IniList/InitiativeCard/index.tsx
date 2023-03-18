@@ -2,24 +2,27 @@ import {View, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import {DefaultText as Text} from '../../../../../components';
 import {css} from '@emotion/native';
-import {ProjectIniType} from '../../../../../api/project';
+import {KeyResultType, ProjectIniType} from '../../../../../api/project';
 import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../../../navigation/main';
 
 type NavigationProps = StackNavigationProp<RootStackParamList>;
-type Props = ProjectIniType;
+type Props = ProjectIniType & Pick<KeyResultType, 'keyResultToken'>;
 const InitiativeCard = ({
   initiativeName,
   user,
   done,
   initiativeToken,
+  keyResultToken,
 }: Props) => {
   const navigation = useNavigation<NavigationProps>();
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('Ini', {initiativeToken})}>
+      onPress={() =>
+        navigation.navigate('Ini', {initiativeToken, keyResultToken})
+      }>
       <View style={_container}>
         <Text style={_title}>{initiativeName}</Text>
         <View style={_contents}>
