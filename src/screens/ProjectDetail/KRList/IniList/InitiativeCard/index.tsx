@@ -1,70 +1,105 @@
-import {View, TouchableOpacity} from 'react-native';
+import {View, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
-import {RoundCard, DefaultText as Text} from '../../../../../components';
+import {DefaultText as Text} from '../../../../../components';
 import {css} from '@emotion/native';
 import {ProjectIniType} from '../../../../../api/project';
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from '../../../../../navigation/main';
 
-type Props = ProjectIniType & {
-  onPress: () => void;
-};
+type NavigationProps = StackNavigationProp<RootStackParamList>;
+type Props = ProjectIniType;
 const InitiativeCard = ({
-  initiativeIndex,
   initiativeName,
   user,
-  dDay,
-  onPress,
+  done,
+  initiativeToken,
 }: Props) => {
+  const navigation = useNavigation<NavigationProps>();
+
   return (
-    <TouchableOpacity onPress={onPress}>
-      <RoundCard style={card}>
-        <View style={left}>
-          <Text style={[tag, tagHighlight]}>ini {initiativeIndex}</Text>
-          <Text style={title}>{initiativeName}</Text>
+    <TouchableOpacity
+      onPress={() => navigation.navigate('Ini', {initiativeToken})}>
+      <View style={_container}>
+        <Text style={_title}>{initiativeName}</Text>
+        <View style={_contents}>
+          <View
+            style={css`
+              flex-direction: row;
+              align-items: center;
+            `}>
+            <View style={_imgWrap}>
+              <Image
+                source={{uri: user.profileImage}}
+                style={{width: '100%', height: '100%'}}
+              />
+            </View>
+            <View>
+              <Text style={_name}>{user.userName}</Text>
+              <Text style={_field}>{user.userName}</Text>
+            </View>
+          </View>
+          <View style={_tagWrap}>
+            <Text style={_tag}>{done ? '완료됨' : '진행중'}</Text>
+          </View>
         </View>
-        <View style={right}>
-          <Text style={tag}>{user.userName}</Text>
-          <Text style={tag}>{dDay}</Text>
-        </View>
-      </RoundCard>
+      </View>
     </TouchableOpacity>
   );
 };
 
-const card = css`
+const _container = css`
+  padding-bottom: 20px;
+  margin-bottom: 14px;
+  border: 0px solid #35353a;
+  border-bottom-width: 1px;
+  width: 100%;
+`;
+
+const _title = css`
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 26px;
+`;
+
+const _contents = css`
+  margin-top: 12px;
+  width: 100%;
   flex-direction: row;
-  padding: 15px 19px;
-  background: #363639;
-  margin-bottom: 16px;
+  align-items: center;
+  justify-content: space-between;
 `;
 
-const left = css`
-  flex: 1;
-  margin-right: 12px;
+const _name = css`
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
 `;
 
-const right = css`
-  align-items: flex-end;
+const _field = css`
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  color: #616166;
 `;
 
-const tag = css`
+const _tagWrap = css`
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: #616166;
+`;
+
+const _tag = css`
   font-size: 12px;
   line-height: 14px;
-  color: #a9a9a9;
   font-weight: 500;
-  margin-bottom: 4px;
 `;
 
-const tagHighlight = css`
-  color: #1f92f2;
-  font-weight: 700;
+const _imgWrap = css`
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-right: 6px;
 `;
-const dayHighlight = css``;
-
-const title = css`
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  margin-top: 9px;
-`;
-
 export default InitiativeCard;

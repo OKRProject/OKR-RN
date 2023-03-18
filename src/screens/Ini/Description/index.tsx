@@ -6,7 +6,6 @@ import {DefaultText as Text, RoundSquareButton} from '../../../components';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../navigation/main';
 import api from '../../../api';
-import IniAdd from '../../ProjectDetail/IniAdd';
 
 type Props = ProjectIniType & {
   wroteFeedback: boolean;
@@ -85,18 +84,6 @@ const Description = (data: Props) => {
           <></>
         )}
       </View>
-      {isEditOpen && (
-        <IniAdd
-          keyResultToken={data.keyResultToken}
-          onClose={() => {
-            setEditOpen(false);
-            getIniInfo();
-          }}
-          isVisible
-          projectTitle={data.projectName}
-          originData={data}
-        />
-      )}
     </View>
   );
 };

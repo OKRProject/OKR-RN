@@ -4,15 +4,20 @@ import Screens from '../../screens';
 import userStore from '../../store/userStore';
 import BottomTabNavigator from './BottomTab';
 import {useAxiosInterceptor} from '../../hooks';
-import {ProjectIniType} from '../../api/project';
+import {KeyResultType, ProjectIniType, ProjectType} from '../../api/project';
 import {clearUserSession} from '../../hooks/useSignOut';
 import SplashScreen from 'react-native-splash-screen';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
-export type IniParam =
-  | {type: 'detail'; initiativeToken: string; onGoBack?: () => void}
-  | {type: 'feedback'; data: ProjectIniType};
+export type IniParam = {initiativeToken: string};
 
+export type AddKRParam = Pick<ProjectType, 'projectToken'>;
+
+export type AddIniParam = Pick<
+  KeyResultType,
+  'keyResultToken' | 'keyResultName'
+> &
+  Pick<ProjectType, 'projectToken'>;
 export type MyPage = undefined | {type: 'detail'};
 
 export type RootStackParamList = {
@@ -30,6 +35,8 @@ export type RootStackParamList = {
   Policy: undefined;
   Ini: IniParam;
   Notification: undefined;
+  AddKR: AddKRParam;
+  AddIni: AddIniParam;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -72,6 +79,8 @@ const Main = () => {
       <Stack.Screen name="Terms" component={Screens.Terms} />
       <Stack.Screen name="Policy" component={Screens.Policy} />
       <Stack.Screen name="Notification" component={Screens.Notification} />
+      <Stack.Screen name="AddKR" component={Screens.AddKR} />
+      <Stack.Screen name="AddIni" component={Screens.AddIni} />
     </Stack.Navigator>
   ) : (
     <Stack.Navigator

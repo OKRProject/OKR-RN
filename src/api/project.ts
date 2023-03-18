@@ -47,7 +47,7 @@ export type ProjectIniType = {
   initiativeName: string;
   initiativeDetail: string;
   done: boolean;
-  user: {userName: string; profileImage: string};
+  user: {userName: string; profileImage: string; jobField: string};
   endDate: string;
   startDate: string;
   email: string;
@@ -65,8 +65,8 @@ export type AddProjectKRReqType = Pick<ProjectDetailType, 'projectToken'> &
 export type AddProjectIniReqType = {
   keyResultToken: string;
   name: string;
-  edt: string;
-  sdt: string;
+  endDate: string;
+  startDate: string;
   detail: string;
 };
 

@@ -1,65 +1,53 @@
-import {ScrollView, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import api from '../../../../api';
-import {ProjectIniType} from '../../../../api/project';
-import {RoundSquareButton} from '../../../../components';
+import {TouchableOpacity, View} from 'react-native';
+import React from 'react';
+import {DefaultText as Text} from '../../../../components';
 import InitiativeCard from './InitiativeCard';
-import IniAdd from '../../IniAdd';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../../../navigation/main';
 import {useNavigation} from '@react-navigation/native';
+import {css} from '@emotion/native';
+import useGetIniList from '../../../../query/project/useGetIniList';
 
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 type Props = {
-  keyResultToken: string;
-  projectTitle: string;
+  KRToken: string;
+  KRTitle: string;
+  projectToken: string;
 };
-const IniList = ({keyResultToken, projectTitle}: Props) => {
+const IniList = ({KRToken, KRTitle, projectToken}: Props) => {
   const navigation = useNavigation<NavigationProps>();
-  const [iniList, setIniList] = useState<ProjectIniType[]>([]);
-  const [openAdd, setOpenAdd] = useState<boolean>(false);
 
-  const getIniList = async () => {
-    const {data} = await api.project.getIniList({keyResultToken});
-    setIniList(data.content);
-  };
+  const {data: iniList} = useGetIniList({keyResultToken: KRToken});
 
-  const handleAddIni = () => setOpenAdd(true);
-  const handleCloseIni = () => {
-    setOpenAdd(false);
-    getIniList();
-  };
-  const handleMoveIniDetail = (idx: number) =>
-    navigation.navigate('Ini', {
-      type: 'detail',
-      initiativeToken: iniList[idx].initiativeToken,
-      onGoBack: getIniList,
+  const handleAddIni = () =>
+    navigation.navigate('AddIni', {
+      keyResultName: KRTitle,
+      keyResultToken: KRToken,
+      projectToken,
     });
 
-  useEffect(() => {
-    getIniList();
-  }, [keyResultToken]);
-
   return (
-    <ScrollView>
-      {iniList.map((ini, idx) => (
-        <InitiativeCard
-          {...ini}
-          key={`KR${keyResultToken}_${ini.initiativeToken}`}
-          onPress={() => handleMoveIniDetail(idx)}
-        />
+    <View style={_container}>
+      {iniList?.data?.content.map((ini, idx) => (
+        <InitiativeCard {...ini} key={`KR${KRToken}_${ini.initiativeToken}`} />
       ))}
-      <RoundSquareButton type="primary" size="xl" onPress={handleAddIni}>
-        이니셔티브 추가하기
-      </RoundSquareButton>
-      <IniAdd
-        keyResultToken={keyResultToken}
-        isVisible={openAdd}
-        onClose={handleCloseIni}
-        projectTitle={projectTitle}
-      />
-    </ScrollView>
+      <TouchableOpacity onPress={handleAddIni}>
+        <Text style={_addButtonText}>+ 행동전략 추가</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
+
+const _container = css`
+  padding: 24px 24px 34px;
+`;
+
+const _addButtonText = css`
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: #1f92f2;
+`;
 
 export default IniList;

@@ -1,31 +1,36 @@
-import {View} from 'react-native';
+import {TouchableOpacity, View, TouchableWithoutFeedback} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import {css} from '@emotion/native';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+
 import {DefaultText as Text, Icons} from '../../../components';
 import {KeyResultType} from '../../../api/project';
 import IniList from './IniList';
-import AddKRModal from '../AddKRModal';
+import {ScrollView} from 'react-native-gesture-handler';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../../../navigation/main';
 
 type Props = {
   KRList: KeyResultType[];
-  projectTitle: string;
+  projectToken: string;
 };
-const KRList = ({KRList, projectTitle}: Props) => {
-  const [selectedKrToken, setSelected] = useState<string>(
-    KRList[0].keyResultToken,
-  );
+const KRList = ({KRList, projectToken}: Props) => {
+  const [selectedKRToken, setSelected] = useState<string | null>(null);
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
-  return KRList[0] ? (
+  return (
     <>
-      <View style={container}>
+      <ScrollView style={container}>
         <View style={[_title]}>
           <View style={_flex}>
             <Text style={_tag}>핵심 결과</Text>
           </View>
-          <View style={_addButton}>
+          <TouchableOpacity
+            style={_addButton}
+            onPress={() =>
+              KRList.length < 3 && navigation.navigate('AddKR', {projectToken})
+            }>
             <Icons.Plus />
-          </View>
+          </TouchableOpacity>
         </View>
         {KRList.length === 0 ? (
           <View style={[_item, _empty]}>
@@ -35,47 +40,45 @@ const KRList = ({KRList, projectTitle}: Props) => {
           </View>
         ) : (
           <View style={_itemContainer}>
-            {KRList.map((kr, idx) => (
-              <View
-                style={[_item, _krItem]}
-                key={`key_result_${kr.keyResultToken}`}>
-                <Text style={_index}>{idx + 1}</Text>
-                <Text style={_krName}>{kr.keyResultName}</Text>
-                <View style={_arrow}>
-                  <Icons.Back />
-                </View>
-              </View>
-            ))}
+            {KRList.map((kr, idx) => {
+              const opened = kr.keyResultToken === selectedKRToken;
+              return (
+                <>
+                  <View
+                    style={[_item, _krItem]}
+                    key={`key_result_${kr.keyResultToken}_${idx}`}>
+                    <Text style={_index}>{idx + 1}</Text>
+                    <Text style={_krName}>{kr.keyResultName}</Text>
+                    <TouchableWithoutFeedback
+                      onPress={() =>
+                        setSelected(opened ? null : kr.keyResultToken)
+                      }>
+                      <View
+                        style={[
+                          _arrow,
+                          opened &&
+                            css`
+                              transform: rotate(90deg);
+                            `,
+                        ]}>
+                        <Icons.Back />
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                  {opened && (
+                    <IniList
+                      KRTitle={kr.keyResultName}
+                      KRToken={kr.keyResultToken}
+                      projectToken={projectToken}
+                    />
+                  )}
+                </>
+              );
+            })}
           </View>
         )}
-        {/*  <View style={tabWrap}>
-        {KRList.map((kr, idx) => (
-          <TouchableWithoutFeedback
-            key={`project_detail_${kr.keyResultToken}`}
-            style={[tab, selectedKrToken === kr.keyResultToken && tabSelected]}
-            onPress={() => setSelected(kr.keyResultToken)}>
-            <Text
-              style={[
-                tabText,
-                selectedKrToken === kr.keyResultToken && tabTextSelected,
-              ]}>
-              {`KR${kr.keyResultIndex}`}
-            </Text>
-          </TouchableWithoutFeedback>
-        ))}
-      </View>
-      <View style={contentWrap}>
-        <Text style={keyTitle}>{selectedKR?.keyResultName}</Text>
-        <IniList
-          keyResultToken={selectedKR?.keyResultToken}
-          projectTitle={projectTitle}
-        />
-      </View> */}
-      </View>
-      <AddKRModal isVisible projectToken="test" onClickClose={() => {}} />
+      </ScrollView>
     </>
-  ) : (
-    <></>
   );
 };
 
