@@ -85,7 +85,7 @@ export type GetProjectIniListResType = {
 export type GetIniListByDateResType = ProjectIniType[];
 export type GetIniResType = ProjectIniType;
 
-export type AddMemberToTeamReqType = {projectToken: string; emails: string[]};
+export type AddMemberToTeamReqType = {projectToken: string; email: string};
 export type AddMemberToTeamResType = {
   failedEmailList: string[];
   addedEmailList: string[];

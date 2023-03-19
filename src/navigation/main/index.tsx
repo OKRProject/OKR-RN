@@ -9,10 +9,8 @@ import {clearUserSession} from '../../hooks/useSignOut';
 import SplashScreen from 'react-native-splash-screen';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
-export type IniParam = {initiativeToken: string} & Pick<
-  KeyResultType,
-  'keyResultToken'
->;
+export type IniParam = Pick<ProjectIniType, 'initiativeToken'> &
+  Pick<KeyResultType, 'keyResultToken'>;
 
 export type AddKRParam = Pick<ProjectType, 'projectToken'>;
 
@@ -40,6 +38,7 @@ export type RootStackParamList = {
   Notification: undefined;
   AddKR: AddKRParam;
   AddIni: AddIniParam;
+  WriteFeedback: IniParam;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -84,6 +83,7 @@ const Main = () => {
       <Stack.Screen name="Notification" component={Screens.Notification} />
       <Stack.Screen name="AddKR" component={Screens.AddKR} />
       <Stack.Screen name="AddIni" component={Screens.AddIni} />
+      <Stack.Screen name="WriteFeedback" component={Screens.WriteFeedback} />
     </Stack.Navigator>
   ) : (
     <Stack.Navigator

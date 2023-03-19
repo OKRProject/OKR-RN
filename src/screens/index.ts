@@ -14,6 +14,7 @@ import Notification from './Notification';
 import Splash from './Splash';
 import AddKR from './AddKR';
 import AddIni from './AddIni';
+import WriteFeedback from './WriteFeedback';
 
 export default {
   ProjectDetail,
@@ -32,4 +33,5 @@ export default {
   ProjectNew,
   AddKR,
   AddIni,
+  WriteFeedback,
 };

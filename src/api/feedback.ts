@@ -19,7 +19,6 @@ export type FeedbackType = {
 type AddFeedbackReqType = {
   opinion: string;
   grade: FeedbackEnum;
-  projectToken: string;
   initiativeToken: string;
 };
 

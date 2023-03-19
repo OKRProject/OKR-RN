@@ -34,7 +34,7 @@ const container = css`
 
 const noButtonHeader = css`
   justify-content: flex-start;
-  padding: 14px 20px;
+  padding: 14px 24px;
 `;
 const button = css`
   width: 24px;

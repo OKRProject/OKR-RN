@@ -16,20 +16,21 @@ import {dateStringToViewText} from '../../utils/calendar';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useGetFeedbacks from '../../query/feedback/useGetFeedbacks';
 import useCompleteIni from '../../query/project/useCompleteIni';
-import {FeedbackEnum} from '../../api/feedback';
 
 interface Props extends NativeStackScreenProps<RootStackParamList, 'Ini'> {}
-const Detail = ({route, navigation}: Props) => {
+const Ini = ({route, navigation}: Props) => {
+  const initiativeToken = route.params.initiativeToken;
+  const keyResultToken = route.params.keyResultToken;
   const {data: initiative} = query.project.useGetIniInfo({
-    initiativeToken: route.params.initiativeToken,
+    initiativeToken,
   });
 
   const {data: feedbacks} = useGetFeedbacks({
-    initiativeToken: route.params.initiativeToken,
+    initiativeToken,
   });
 
   const {mutateAsync: asyncComplete} = useCompleteIni({
-    keyResultToken: route.params.keyResultToken,
+    keyResultToken,
   });
   const handleBack = () => {
     //@ts-ignore
@@ -51,7 +52,7 @@ const Detail = ({route, navigation}: Props) => {
 
   const handleFeedback = () => {
     if (initiative?.data.done && !feedbacks?.data.wroteFeedback) {
-      navigation.navigate('Feedback');
+      navigation.navigate('WriteFeedback', {initiativeToken, keyResultToken});
     }
   };
 
@@ -123,7 +124,7 @@ const Detail = ({route, navigation}: Props) => {
           background-color: #18181b;
           padding: 30px 24px;
         `}>
-        {/* {feedbacks.data.feedback.length > 0 ? (
+        {feedbacks.data.feedback.length > 0 ? (
           <Feedbacks
             initiativeToken={route.params.initiativeToken}
             feedbackList={feedbacks.data.feedback}
@@ -137,8 +138,8 @@ const Detail = ({route, navigation}: Props) => {
               </Text>
             </View>
           )
-        )} */}
-        <Feedback
+        )}
+        {/* <Feedback
           opinion="askjdklasd dajkasldjksajdklas asdjklasdasdasd asjdlaksjdklasjdklsajkldjaskljdlkasd 넘나 넘나 넘나 넘나"
           grade={FeedbackEnum.BEST_RESULT}
           feedbackId={1}
@@ -146,7 +147,7 @@ const Detail = ({route, navigation}: Props) => {
           writerJob={initiative.data.user.jobField}
           profileImage={initiative.data.user.profileImage}
           writerName={initiative.data.user.userName}
-        />
+        /> */}
       </ScrollView>
     </SafeAreaView>
   );
@@ -226,4 +227,4 @@ const _emptyDesc = css`
   line-height: 20px;
   color: #a9a9a9;
 `;
-export default Detail;
+export default Ini;

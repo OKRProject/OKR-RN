@@ -51,9 +51,9 @@ const TeamMemberAddModal = ({
     try {
       const {data} = await api.project.inviteMember({
         projectToken,
-        emails: [email],
+        email,
       });
-      if (data.addedEmailList.length > 0) onComplete();
+      onComplete();
     } catch (e: any) {
       console.log(e);
     }
