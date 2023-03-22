@@ -15,7 +15,7 @@ import {
   DefaultText as Text,
 } from '../../../components';
 import {debounce} from 'lodash';
-import api from '../../../api';
+import useValidateEmail from '../../../query/user/useValidateEmail';
 
 type Props = {
   onPrev: () => void;
@@ -25,6 +25,8 @@ const Step3 = ({onPrev, onComplete}: Props) => {
   const [inputValue, setInputValue] = useState<string>('');
   const [keyboardFocused, setKeyboardFocused] = useState<boolean>(false);
   const [members, setMembers] = useState<string[]>([]);
+  const [error, setError] = useState<boolean>(false);
+  const {mutateAsync: validate} = useValidateEmail();
 
   const validateEmail = debounce(async (email: string) => {
     const email_format =
@@ -32,10 +34,12 @@ const Step3 = ({onPrev, onComplete}: Props) => {
     if (email_format.test(email)) {
       try {
         //todo api
+        await validate(email);
         setMembers(prev => [...prev, inputValue]);
         setInputValue('');
       } catch (e: any) {
         console.log(e);
+        setError(true);
       }
     }
   }, 500);
@@ -56,24 +60,57 @@ const Step3 = ({onPrev, onComplete}: Props) => {
           />
           <KeyboardAvoidingView style={_wrapper} behavior="padding">
             <View>
-              <View style={_inputWrap}>
+              <View
+                style={[
+                  _inputWrap,
+                  error &&
+                    css`
+                      border-color: #ed4337;
+                    `,
+                ]}>
                 <DefaultInput
                   placeholder=" OKRexample@example.com"
-                  style={_input}
+                  style={[
+                    _input,
+                    error &&
+                      css`
+                        color: #ed4337;
+                      `,
+                  ]}
                   onFocus={() => setKeyboardFocused(true)}
                   onBlur={() => setKeyboardFocused(false)}
                   value={inputValue}
-                  onChangeText={value => setInputValue(value)}
+                  onChangeText={value => {
+                    setInputValue(value);
+                    if (error) setError(false);
+                  }}
                 />
                 <TouchableOpacity
+                  disabled={error}
                   onPress={handleAddMember}
                   style={css`
                     width: 20px;
                     height: 20px;
                   `}>
-                  <Icons.Plus color={inputValue ? '#1F92F2' : '#616166'} />
+                  <Icons.Plus
+                    color={
+                      error ? '#616166' : inputValue ? '#1F92F2' : '#616166'
+                    }
+                  />
                 </TouchableOpacity>
               </View>
+              <Text
+                style={[
+                  css`
+                    top: 4px;
+                    opacity: 0;
+                  `,
+                  error && {
+                    opacity: 1,
+                  },
+                ]}>
+                잘못된 이메일입니다.
+              </Text>
               <View style={_membersWrap}>
                 {members.map((email, idx) => (
                   <View key={`member_${email}_${idx}`} style={_member}>

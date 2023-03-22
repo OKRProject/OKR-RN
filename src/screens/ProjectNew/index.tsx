@@ -26,13 +26,13 @@ const initProject: NewProjectTypeInput = {
 interface Props
   extends NativeStackScreenProps<RootStackParamList, 'ProjectNew'> {}
 const New = ({}: Props) => {
-  const {navigate} = useNavigation<NavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [project, setProject] = useState<NewProjectTypeInput>(initProject);
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
   const handleTitle = (objective: string) =>
     setProject(prev => ({...prev, objective}));
-  const handleNavigateProjectMain = () => navigate('Project');
+  const handleNavigateProjectMain = () => navigation.goBack();
   const handleSelectDates = ({start, end}: {start: string; end: string}) => {
     setProject(prev => ({...prev, startDate: start, endDate: end}));
   };

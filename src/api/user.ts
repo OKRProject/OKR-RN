@@ -85,6 +85,9 @@ const updateUserInfo = (
     jobField: string;
   }>,
 ) => instance.put('v1/user', body);
+
+const validateEmail = (email: string) =>
+  instance.get(`v1/user/validate/${email}`);
 export default {
   getCategory,
   getFields,
@@ -97,4 +100,5 @@ export default {
   signUp,
   refresh,
   updateUserInfo,
+  validateEmail,
 };
