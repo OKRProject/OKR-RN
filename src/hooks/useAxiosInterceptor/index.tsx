@@ -54,12 +54,15 @@ const useAxiosInterceptor = () => {
     if (session) {
       try {
         const {data} = await api.user.getUserProfile();
+        setIsInitReq(true);
+
         setUserProfile(data);
       } catch (e) {
+        setIsInitReq(true);
+
         console.log(e, 'login failed');
       }
-    }
-    setIsInitReq(true);
+    } else setIsInitReq(true);
   }, []);
 
   useEffect(() => {
@@ -81,6 +84,9 @@ const useAxiosInterceptor = () => {
 
   useEffect(() => {
     initReq();
+  }, []);
+
+  useEffect(() => {
     instance.interceptors.response.use(
       response => response,
       async error => {

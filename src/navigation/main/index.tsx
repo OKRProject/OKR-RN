@@ -63,7 +63,8 @@ const Main = () => {
   };
 
   useEffect(() => {
-    if (!isLoading && initAnimationTimeout && firstScreen) SplashScreen.hide();
+    if (!isLoading && initAnimationTimeout && !!firstScreen)
+      SplashScreen.hide();
   }, [isLoading, initAnimationTimeout, firstScreen]);
 
   useEffect(() => {
