@@ -52,8 +52,14 @@ const Card = ({project, ...rest}: Props) => {
     <TouchableOpacity onPress={handleClickProject}>
       <RoundCard style={container} {...rest}>
         <View style={titleWrap}>
-          <Text style={projectTitle}>{objective}</Text>
-          {newProject && <Text style={newHighlight}>NEW</Text>}
+          <View
+            style={css`
+              flex-direction: row;
+              align-items: center;
+            `}>
+            <Text style={projectTitle}>{objective}</Text>
+            {newProject && <Text style={newHighlight}>NEW</Text>}
+          </View>
           <View style={people}>
             <Icons.People />
             <Text style={peopleText}>{teamMembersCount}</Text>
