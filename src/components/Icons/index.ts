@@ -14,6 +14,7 @@ import Apple from './Apple';
 import Menu from './Menu';
 import Check from './Check';
 import AddPerson from './AddPerson';
+import Edit from './Edit';
 
 export default {
   Project,
@@ -32,4 +33,5 @@ export default {
   Menu,
   Check,
   AddPerson,
+  Edit,
 };

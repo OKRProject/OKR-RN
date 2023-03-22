@@ -10,6 +10,9 @@ import SplashScreen from 'react-native-splash-screen';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 export type IniParam = Pick<ProjectIniType, 'initiativeToken'> &
+  Pick<KeyResultType, 'keyResultToken'>;
+
+export type WriteFeedbackParam = Pick<ProjectIniType, 'initiativeToken'> &
   Partial<Pick<KeyResultType, 'keyResultToken'>>;
 
 export type AddKRParam = Pick<ProjectType, 'projectToken'>;
@@ -38,7 +41,7 @@ export type RootStackParamList = {
   Notification: undefined;
   AddKR: AddKRParam;
   AddIni: AddIniParam;
-  WriteFeedback: IniParam;
+  WriteFeedback: WriteFeedbackParam;
   RequireFeedback: undefined;
 };
 

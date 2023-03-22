@@ -64,7 +64,7 @@ const Ini = ({route, navigation}: Props) => {
         flex: 1;
         background-color: #202227;
       `}>
-      <Header onBack={handleBack} />
+      <Header onBack={handleBack} onEdit={() => {}} />
       <View style={_container}>
         <View style={_tagWrap}>
           <Text style={_tag}>{initiative.data.done ? '완료' : '진행중'}</Text>

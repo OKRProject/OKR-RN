@@ -86,12 +86,20 @@ const Step1 = ({onChange, onPrev, onNext, route, initial}: Props) => {
                   `,
                 ]}>
                 <DefaultInput
-                  style={_label}
+                  style={[
+                    _label,
+                    css`
+                      min-height: 107px;
+                    `,
+                  ]}
                   value={detail}
                   placeholder="세부적인 행동전략 실행 방법을 입력해 주세요."
                   onFocus={() => setKeyboardFocused(true)}
                   onBlur={() => setKeyboardFocused(false)}
-                  onChangeText={t => setDetail(t)}></DefaultInput>
+                  onChangeText={t => setDetail(t)}
+                  maxLength={200}
+                  multiline
+                />
               </View>
               <RoundSquareButton
                 disabled={name.length === 0 || detail.length === 0}
