@@ -88,6 +88,8 @@ const updateUserInfo = (
 
 const validateEmail = (email: string) =>
   instance.get(`v1/user/validate/${email}`);
+
+const deleteUser = () => instance.delete('v1/user');
 export default {
   getCategory,
   getFields,
@@ -101,4 +103,5 @@ export default {
   refresh,
   updateUserInfo,
   validateEmail,
+  deleteUser,
 };

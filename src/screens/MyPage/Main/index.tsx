@@ -13,7 +13,7 @@ import {css} from '@emotion/native';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../navigation/main';
 import {UserProfileType} from '../../../api/user';
-import {useSignOut} from '../../../hooks';
+import query from '../../../query';
 
 type Props = UserProfileType;
 const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
@@ -21,7 +21,7 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
   const [openModal, setOpenModal] = useState<
     undefined | 'logout' | 'withdrawal'
   >();
-  const {signOutUser} = useSignOut();
+  const {mutateAsync: deleteUser} = query.user.useDeleteUser();
   const [check, setCheck] = useState<{0: boolean; 1: boolean; 2: boolean}>({
     0: false,
     1: false,
@@ -31,11 +31,9 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
 
   const handleClickPolicy = () => navigation.navigate('Policy');
   const handleClickTerms = () => navigation.navigate('Terms');
-  const handleClickLogout = () => {
+  const handleClickLogout = async () => {
     setOpenModal(undefined);
-    setTimeout(() => {
-      signOutUser();
-    }, 500);
+    await deleteUser();
   };
   const handleClickWithdrawal = () => setOpenModal('withdrawal');
   const handleClickProfileDetail = () =>
