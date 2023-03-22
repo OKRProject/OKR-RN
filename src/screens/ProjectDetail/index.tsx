@@ -21,7 +21,7 @@ const Detail = ({route, navigation}: Props) => {
 
   const {data} = query.project.useGetProjectDetail({projectToken});
 
-  const handleGoBack = () => navigation.navigate('Project');
+  const handleGoBack = () => navigation.goBack();
   const handleClickModalClose = () => setOpenModal(undefined);
   const handleClickModalOpen = () => setOpenModal('menu');
 
