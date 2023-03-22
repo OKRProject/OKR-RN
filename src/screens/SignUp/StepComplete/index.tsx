@@ -41,7 +41,7 @@ export default StepComplete;
 const container = css`
   flex: 1;
   justify-content: space-between;
-  padding: 52px 20px 40px;
+  padding: 52px 20px 24px;
 `;
 const nameTitle = css`
   font-weight: 600;

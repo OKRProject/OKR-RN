@@ -1,8 +1,8 @@
 import {TouchableOpacity, View, TouchableWithoutFeedback} from 'react-native';
-import React, {useMemo, useState} from 'react';
+import React, {Fragment, useMemo, useState} from 'react';
 import {css} from '@emotion/native';
 
-import {DefaultText as Text, Icons} from '../../../components';
+import {DefaultText as Text, Icons, InfoToolTip} from '../../../components';
 import {KeyResultType} from '../../../api/project';
 import IniList from './IniList';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -23,6 +23,19 @@ const KRList = ({KRList, projectToken}: Props) => {
         <View style={[_title]}>
           <View style={_flex}>
             <Text style={_tag}>핵심 결과</Text>
+            <InfoToolTip>
+              <View
+                style={css`
+                  width: 306px;
+                  height: 75px;
+                `}>
+                <Text>
+                  목표를 이루기위해 얻어야하는 결과를 떠올리면 간단해요
+                  달성하고자 하는 목표가 어떤것을 의미하는지 측정 가능한 숫자로
+                  표현해 보세요
+                </Text>
+              </View>
+            </InfoToolTip>
           </View>
           <TouchableOpacity
             style={_addButton}
@@ -43,7 +56,7 @@ const KRList = ({KRList, projectToken}: Props) => {
             {KRList.map((kr, idx) => {
               const opened = kr.keyResultToken === selectedKRToken;
               return (
-                <>
+                <Fragment key={`key_result_${kr.keyResultToken}_${idx}`}>
                   <View
                     style={[_item, _krItem]}
                     key={`key_result_${kr.keyResultToken}_${idx}`}>
@@ -67,12 +80,13 @@ const KRList = ({KRList, projectToken}: Props) => {
                   </View>
                   {opened && (
                     <IniList
+                      key={`key_result_${kr.keyResultToken}_${idx}`}
                       KRTitle={kr.keyResultName}
                       KRToken={kr.keyResultToken}
                       projectToken={projectToken}
                     />
                   )}
-                </>
+                </Fragment>
               );
             })}
           </View>
@@ -93,6 +107,7 @@ const _title = css`
   width: 100%;
   justify-content: space-between;
   margin-bottom: 10px;
+  z-index: 9999;
 `;
 
 const _tag = css`
@@ -100,10 +115,14 @@ const _tag = css`
   font-size: 20px;
   line-height: 24px;
   color: #616166;
+  margin-right: 8px;
 `;
 
 const _flex = css`
   flex-direction: row;
+  align-items: center;
+  position: relative;
+  z-index: 9;
 `;
 const _addButton = css`
   width: 24px;
@@ -114,6 +133,7 @@ const _item = css`
   width: 100%;
   background: #202227;
   padding: 24px;
+  z-index: 1;
 `;
 
 const _empty = css`

@@ -1,17 +1,19 @@
 import {css} from '@emotion/native';
-import {ReactNode, useEffect, useState} from 'react';
+import {ReactNode, useEffect, useRef, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import useClickOutside from '../../hooks/useClickOutside';
 import DefaultText from '../DefaultText';
 import Icons from '../Icons';
 type Props = {children: ReactNode};
 const InfoToolTip = ({children}: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
+  const ref = useRef(null);
+  useClickOutside(ref, () => setIsOpen(false));
   useEffect(() => {}, []);
 
   return (
     <TouchableOpacity onPress={() => setIsOpen(true)}>
-      <View style={_container}>
+      <View style={_container} ref={ref}>
         <DefaultText style={_mark}>?</DefaultText>
         <View
           style={[
@@ -56,6 +58,10 @@ const _content = css`
   background-color: #1f92f2;
   border-radius: 8px;
   display: none;
+  position: absolute;
+  top: 100%;
+  z-index: 999;
+  left: -80px;
 `;
 
 const _closeButton = css`

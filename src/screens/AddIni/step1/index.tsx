@@ -12,6 +12,7 @@ import {
   Icons,
   RoundSquareButton,
   DefaultText as Text,
+  InfoToolTip,
 } from '../../../components';
 import {css} from '@emotion/native';
 import {RouteProp, useNavigation} from '@react-navigation/native';
@@ -50,8 +51,22 @@ const Step1 = ({onChange, onPrev, onNext, route, initial}: Props) => {
                 style={css`
                   flex-direction: row;
                   margin-bottom: 8px;
+                  align-items: center;
+                  z-index: 999;
                 `}>
                 <Text style={_title}>행동 전략</Text>
+                <InfoToolTip>
+                  <View
+                    style={css`
+                      width: 233px;
+                      height: 60px;
+                    `}>
+                    <Text>
+                      목표를 이루기위해 해야하는 핵심적인 행동입니다. 개인이
+                      제어할 수 있는 일들을 적어주세요!
+                    </Text>
+                  </View>
+                </InfoToolTip>
               </View>
               <DefaultInput
                 placeholder="1분기 까지 서비스 이용자 10만명"
@@ -149,6 +164,7 @@ const _title = css`
   font-size: 20px;
   line-height: 24px;
   color: #616166;
+  margin-right: 8px;
 `;
 
 const _wrapper = css`
