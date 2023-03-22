@@ -11,6 +11,7 @@ const buttonColor = {
 };
 
 const buttonSize = {
+  xs: '36px',
   s: '42px',
   m: '52px',
   l: '60px',
@@ -33,7 +34,6 @@ const RoundSquareButton = ({
 }: Props) => {
   return (
     <TouchableOpacity
-      {...rest}
       disabled={type === 'disable' || disabled}
       style={[
         container,
@@ -43,7 +43,8 @@ const RoundSquareButton = ({
         `,
         style,
         isSelected && selected,
-      ]}>
+      ]}
+      {...rest}>
       {typeof children === 'string' ? (
         <Text style={[text, isSelected ? selectedText : css``]}>
           {children}

@@ -8,10 +8,14 @@ type Props = {
   title?: string;
   onMenu?: () => void;
   onBack?: () => void;
+  onEdit?: () => void;
 };
 
-const Header = ({title, onBack, onMenu}: Props) => {
-  const onlyTitle = useMemo(() => !onMenu && !onBack, [onBack, onMenu]);
+const Header = ({title, onBack, onMenu, onEdit}: Props) => {
+  const onlyTitle = useMemo(
+    () => !onMenu && !onBack && !onEdit,
+    [onBack, onMenu, onEdit],
+  );
   return (
     <View style={[container, onlyTitle && noButtonHeader]}>
       <TouchableOpacity style={[button, onlyTitle && hide]} onPress={onBack}>
@@ -20,6 +24,9 @@ const Header = ({title, onBack, onMenu}: Props) => {
       <Text style={titleText}>{title}</Text>
       <TouchableOpacity style={[button, onlyTitle && hide]} onPress={onMenu}>
         {onMenu && <Icons.Menu />}
+      </TouchableOpacity>
+      <TouchableOpacity style={[button, onlyTitle && hide]} onPress={onEdit}>
+        {onEdit && <Icons.Edit />}
       </TouchableOpacity>
     </View>
   );
@@ -34,7 +41,7 @@ const container = css`
 
 const noButtonHeader = css`
   justify-content: flex-start;
-  padding: 14px 20px;
+  padding: 14px 24px;
 `;
 const button = css`
   width: 24px;

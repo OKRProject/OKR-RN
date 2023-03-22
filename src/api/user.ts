@@ -25,7 +25,7 @@ export type NotificationType = {
   notiToekn: string;
   notiType: NotificationEnum;
   msg: string;
-  checked: boolean;
+  status: 'NEW' | 'CHECKED';
 };
 
 export type TokenType = {
@@ -85,6 +85,11 @@ const updateUserInfo = (
     jobField: string;
   }>,
 ) => instance.put('v1/user', body);
+
+const validateEmail = (email: string) =>
+  instance.get(`v1/user/validate/${email}`);
+
+const deleteUser = () => instance.delete('v1/user');
 export default {
   getCategory,
   getFields,
@@ -97,4 +102,6 @@ export default {
   signUp,
   refresh,
   updateUserInfo,
+  validateEmail,
+  deleteUser,
 };

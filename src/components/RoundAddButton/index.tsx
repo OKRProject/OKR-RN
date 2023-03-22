@@ -23,13 +23,13 @@ const container = css`
   border-radius: 100px;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
+  width: 72px;
+  height: 72px;
 `;
 
 const icon = css`
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
 `;
 
 export default RoundAddButton;

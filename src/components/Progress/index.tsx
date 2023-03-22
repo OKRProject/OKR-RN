@@ -35,8 +35,9 @@ const highlight = css`
 type Props = {
   percent: number;
   style?: StyleProp<ViewStyle>;
+  figure?: boolean;
 };
-const Progress = ({percent, style}: Props) => {
+const Progress = ({percent, style, figure = true}: Props) => {
   return (
     <View style={[progressWrap, style]}>
       <View style={progressBack}>
@@ -47,9 +48,11 @@ const Progress = ({percent, style}: Props) => {
           style={[progressGauge, {width: `${percent}%`}]}
         />
       </View>
-      <Text style={progressText}>
-        <Text style={highlight}>{percent}%</Text>/100%
-      </Text>
+      {figure && (
+        <Text style={progressText}>
+          <Text style={highlight}>{percent}%</Text>/100%
+        </Text>
+      )}
     </View>
   );
 };

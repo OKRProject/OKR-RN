@@ -6,27 +6,19 @@ export enum ProjectTypeEnum {
   single = 'SINGLE',
 }
 export type NewProjectType = {
-  name: string;
-  sdt: string;
-  edt: string;
-  type: ProjectTypeEnum;
   objective: string;
-  keyResults: string[];
+  startDate: string;
+  endDate: string;
+  teamMembers: string[];
 };
 
 export type ProjectType = {
   projectToken: string;
-  name: string;
-  object: string;
+  objective: string;
   progress: number;
-  sdt: string;
-  edt: string;
-  teamMembers: {
-    email: string;
-    name: string;
-    profileImage: string;
-    jobFieldDetail: string;
-  }[];
+  startDate: string;
+  endDate: string;
+  teamMembersCount: number;
   newProject: boolean;
   projectType: ProjectTypeEnum;
 };
@@ -41,39 +33,34 @@ export type TeamMemberType = {
   profileImage: string;
   jobField: string;
 };
-export type ProjectDetailType = {
-  name: string;
-  projectToken: string;
-  objective: string;
-  sdt: string;
-  edt: string;
+export type ProjectDetailType = Pick<
+  ProjectType,
+  'endDate' | 'startDate' | 'objective' | 'projectToken' | 'teamMembersCount'
+> & {
   keyResults: KeyResultType[];
   projectType: ProjectTypeEnum;
 };
 
 export type ProjectIniType = {
-  initiativeIndex: number;
   initiativeToken: string;
   initiativeName: string;
   initiativeDetail: string;
   done: boolean;
-  user: {userName: string; profileImage: string};
+  user: {userName: string; profileImage: string; jobField: string};
   endDate: string;
   startDate: string;
   email: string;
   myInitiative: boolean;
-  dDay: string;
-  projectToken: string;
-  projectName: string;
-  keyResultToken: string;
-  keyResultIndex: number;
 };
+
+export type AddProjectKRReqType = Pick<ProjectDetailType, 'projectToken'> &
+  Pick<KeyResultType, 'keyResultName'>;
 
 export type AddProjectIniReqType = {
   keyResultToken: string;
   name: string;
-  edt: string;
-  sdt: string;
+  endDate: string;
+  startDate: string;
   detail: string;
 };
 
@@ -97,7 +84,7 @@ export type GetProjectIniListResType = {
 export type GetIniListByDateResType = ProjectIniType[];
 export type GetIniResType = ProjectIniType;
 
-export type AddMemberToTeamReqType = {projectToken: string; emails: string[]};
+export type AddMemberToTeamReqType = {projectToken: string; email: string};
 export type AddMemberToTeamResType = {
   failedEmailList: string[];
   addedEmailList: string[];
@@ -131,11 +118,14 @@ const getProjectList = ({
   instance.get<GetProjectListResType>(
     `v1/project?sortType=${sort}&includeFinishedProjectYN=${
       includeFinished ? 'Y' : 'N'
-    }&page=0&size=10`,
+    }&page=0&size=10&projectType=ALL`,
   );
 
 const getProjectDetail = ({projectToken}: GetProjectDetailReqType) =>
   instance.get<GetProjectDetailResType>(`v1/project/${projectToken}`);
+
+const addKR = (body: AddProjectKRReqType) =>
+  instance.post(`v1/keyresult`, body);
 
 const getIniList = ({keyResultToken}: GetProjectIniListReqType) =>
   instance.get<GetProjectIniListResType>(
@@ -185,4 +175,5 @@ export default {
   getIniDatesByMonth,
   getProjectIni,
   updateProjectIni,
+  addKR,
 };

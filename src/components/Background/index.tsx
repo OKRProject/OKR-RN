@@ -12,7 +12,7 @@ const Background = ({children, style}: Props) => {
 const container = css`
   width: 100%;
   flex: 1;
-  background-color: #18181b;
+  background-color: #181818;
   min-height: 0;
 `;
 export default Background;
