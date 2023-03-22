@@ -10,7 +10,7 @@ import SplashScreen from 'react-native-splash-screen';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 export type IniParam = Pick<ProjectIniType, 'initiativeToken'> &
-  Pick<KeyResultType, 'keyResultToken'>;
+  Partial<Pick<KeyResultType, 'keyResultToken'>>;
 
 export type AddKRParam = Pick<ProjectType, 'projectToken'>;
 
@@ -39,6 +39,7 @@ export type RootStackParamList = {
   AddKR: AddKRParam;
   AddIni: AddIniParam;
   WriteFeedback: IniParam;
+  RequireFeedback: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

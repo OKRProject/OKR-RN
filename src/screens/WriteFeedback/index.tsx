@@ -24,7 +24,9 @@ const WriteFeedback = ({route, navigation}: Props) => {
   }>({opinion: ''});
 
   const handleClose = () =>
-    navigation.navigate('Ini', {initiativeToken, keyResultToken});
+    keyResultToken
+      ? navigation.navigate('Ini', {initiativeToken, keyResultToken})
+      : navigation.goBack();
 
   const handleClickIcon = (grade: FeedbackEnum) =>
     setFeedback(prev => ({...prev, grade}));

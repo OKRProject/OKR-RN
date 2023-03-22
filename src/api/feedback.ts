@@ -1,4 +1,5 @@
 import instance from './instance';
+import {ProjectIniType} from './project';
 export enum FeedbackEnum {
   'GOOD_IDEA' = 'GOOD_IDEA',
   'BEST_RESULT' = 'BEST_RESULT',
@@ -39,5 +40,16 @@ const getIniFeedbacks = (initiativeToken: string) =>
   instance.get<GetIniFeedbackInfoResType>(`v1/feedback/${initiativeToken}`);
 
 const getMyFeedbackList = () =>
-  instance.get<GetMyFeedbacksResType>(`v1/feedback?page=0&size=10`);
-export default {addFeedback, getIniFeedbacks, getMyFeedbackList};
+  instance.get<GetMyFeedbacksResType>(
+    `v1/feedback?page=0&size=10&searchRange=ALL`,
+  );
+
+const getFeedbackRequiredList = () =>
+  instance.get<ProjectIniType[]>(`v1/feedback/required`);
+
+export default {
+  addFeedback,
+  getIniFeedbacks,
+  getMyFeedbackList,
+  getFeedbackRequiredList,
+};

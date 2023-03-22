@@ -42,7 +42,6 @@ export type ProjectDetailType = Pick<
 };
 
 export type ProjectIniType = {
-  initiativeIndex: number;
   initiativeToken: string;
   initiativeName: string;
   initiativeDetail: string;
