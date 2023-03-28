@@ -14,6 +14,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../navigation/main';
 import {UserProfileType} from '../../../api/user';
 import query from '../../../query';
+import {useSignOut} from '../../../hooks';
 
 type Props = UserProfileType;
 const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
@@ -22,6 +23,7 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
     undefined | 'logout' | 'withdrawal'
   >();
   const {mutateAsync: deleteUser} = query.user.useDeleteUser();
+  const {signOutUser} = useSignOut();
   const [check, setCheck] = useState<{0: boolean; 1: boolean; 2: boolean}>({
     0: false,
     1: false,
@@ -32,6 +34,11 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
   const handleClickPolicy = () => navigation.navigate('Policy');
   const handleClickTerms = () => navigation.navigate('Terms');
   const handleClickLogout = async () => {
+    setOpenModal(undefined);
+    signOutUser();
+  };
+
+  const handleClickWithdrawalConfirm = async () => {
     setOpenModal(undefined);
     await deleteUser();
   };
@@ -194,7 +201,7 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
                 type="primary"
                 size="m"
                 style={[smallButton]}
-                onPress={handleClickLogout}>
+                onPress={handleClickWithdrawalConfirm}>
                 탈퇴
               </RoundSquareButton>
             </View>
