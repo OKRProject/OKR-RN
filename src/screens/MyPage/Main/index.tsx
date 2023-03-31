@@ -29,19 +29,19 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
     1: false,
     2: false,
   });
-  // console.log(field, name, profileImage, email);
 
   const handleClickPolicy = () => navigation.navigate('Policy');
   const handleClickTerms = () => navigation.navigate('Terms');
-  const handleClickLogout = async () => {
+  const handleClickLogout = () => {
     setOpenModal(undefined);
-    signOutUser();
+    setTimeout(signOutUser, 100);
   };
 
-  const handleClickWithdrawalConfirm = async () => {
+  const handleClickWithdrawalConfirm = () => {
     setOpenModal(undefined);
-    await deleteUser();
+    setTimeout(deleteUser, 100);
   };
+
   const handleClickWithdrawal = () => setOpenModal('withdrawal');
   const handleClickProfileDetail = () =>
     navigation.navigate('MyPage', {
@@ -103,7 +103,15 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
         <Modal isVisible={true} onClose={() => setOpenModal(undefined)}>
           <View>
             <Text style={modalTitle}>로그아웃</Text>
-            <Text style={modalSubtitle}>로그아웃 하시겠어요?</Text>
+            <Text
+              style={[
+                modalSubtitle,
+                css`
+                  margin: 32px 0 40px;
+                `,
+              ]}>
+              로그아웃 하시겠어요?
+            </Text>
             <View style={[rowFlex]}>
               <RoundSquareButton
                 type="dark"
@@ -261,7 +269,6 @@ const rowFlex = css`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 8px;
 `;
 
 const smallButton = css`
