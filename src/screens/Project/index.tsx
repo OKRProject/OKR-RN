@@ -83,7 +83,7 @@ const Main = ({navigation}: Props) => {
         <Image
           style={{height: 26, width: 84}}
           resizeMode="contain"
-          source={require('../../img/icn-logo-row.png')}
+          source={require('../../img/icn-logo-gray.png')}
         />
         <TouchableOpacity onPress={handleClickNotification}>
           <Icons.Alarm color={newNoti ? '#fff' : '#616166'} />
