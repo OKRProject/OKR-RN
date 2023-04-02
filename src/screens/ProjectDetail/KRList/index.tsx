@@ -57,9 +57,7 @@ const KRList = ({KRList, projectToken}: Props) => {
               const opened = kr.keyResultToken === selectedKRToken;
               return (
                 <Fragment key={`key_result_${kr.keyResultToken}_${idx}`}>
-                  <View
-                    style={[_item, _krItem]}
-                    key={`key_result_${kr.keyResultToken}_${idx}`}>
+                  <View style={[_item, _krItem]}>
                     <Text style={_index}>{idx + 1}</Text>
                     <Text style={_krName}>{kr.keyResultName}</Text>
                     <TouchableWithoutFeedback
@@ -80,7 +78,6 @@ const KRList = ({KRList, projectToken}: Props) => {
                   </View>
                   {opened && (
                     <IniList
-                      key={`key_result_${kr.keyResultToken}_${idx}`}
                       KRTitle={kr.keyResultName}
                       KRToken={kr.keyResultToken}
                       projectToken={projectToken}

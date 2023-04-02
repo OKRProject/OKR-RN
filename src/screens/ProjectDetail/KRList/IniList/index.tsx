@@ -43,7 +43,7 @@ const IniList = ({KRToken, KRTitle, projectToken}: Props) => {
 };
 
 const _container = css`
-  padding: 24px 24px 34px;
+  padding: 14px 24px 24px;
 `;
 
 const _addButtonText = css`
