@@ -22,12 +22,17 @@ const Header = ({title, onBack, onMenu, onEdit}: Props) => {
         {onBack && <Icons.Back />}
       </TouchableOpacity>
       <Text style={titleText}>{title}</Text>
-      <TouchableOpacity style={[button, onlyTitle && hide]} onPress={onMenu}>
-        {onMenu && <Icons.Menu />}
-      </TouchableOpacity>
-      <TouchableOpacity style={[button, onlyTitle && hide]} onPress={onEdit}>
-        {onEdit && <Icons.Edit />}
-      </TouchableOpacity>
+      {onMenu ? (
+        <TouchableOpacity style={[button, onlyTitle && hide]} onPress={onMenu}>
+          <Icons.Menu />
+        </TouchableOpacity>
+      ) : onEdit ? (
+        <TouchableOpacity style={[button, onlyTitle && hide]} onPress={onEdit}>
+          <Icons.Edit />
+        </TouchableOpacity>
+      ) : (
+        <View style={button}></View>
+      )}
     </View>
   );
 };
