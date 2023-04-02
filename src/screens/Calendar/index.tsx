@@ -8,6 +8,7 @@ import {getDate} from '../../utils/calendar';
 import {ProjectIniType} from '../../api/project';
 import api from '../../api';
 import ProjectIniList from './ProjectIniList';
+import {css} from '@emotion/native';
 
 const today = new Date().toDateString();
 
@@ -59,7 +60,12 @@ const Calendar = () => {
   };
   return (
     <Background>
-      <Header title="캘린더" />
+      <Header
+        title="캘린더"
+        titleStyle={css`
+          font-size: 28px;
+        `}
+      />
       <DefaultCalendar
         start={start}
         end={end}

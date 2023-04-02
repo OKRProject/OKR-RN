@@ -50,7 +50,12 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
 
   return (
     <Background>
-      <Header title="My" />
+      <Header
+        title="My"
+        titleStyle={css`
+          font-size: 28px;
+        `}
+      />
       <View style={container}>
         <TouchableOpacity style={profile} onPress={handleClickProfileDetail}>
           <View style={img}>

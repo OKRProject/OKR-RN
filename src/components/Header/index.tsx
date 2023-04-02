@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {TextStyle, View} from 'react-native';
 import React, {useMemo} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Icons, DefaultText as Text} from '..';
@@ -9,9 +9,10 @@ type Props = {
   onMenu?: () => void;
   onBack?: () => void;
   onEdit?: () => void;
+  titleStyle?: TextStyle;
 };
 
-const Header = ({title, onBack, onMenu, onEdit}: Props) => {
+const Header = ({title, titleStyle, onBack, onMenu, onEdit}: Props) => {
   const onlyTitle = useMemo(
     () => !onMenu && !onBack && !onEdit,
     [onBack, onMenu, onEdit],
@@ -21,7 +22,7 @@ const Header = ({title, onBack, onMenu, onEdit}: Props) => {
       <TouchableOpacity style={[button, onlyTitle && hide]} onPress={onBack}>
         {onBack && <Icons.Back />}
       </TouchableOpacity>
-      <Text style={titleText}>{title}</Text>
+      <Text style={[titleText, titleStyle]}>{title}</Text>
       {onMenu ? (
         <TouchableOpacity style={[button, onlyTitle && hide]} onPress={onMenu}>
           <Icons.Menu />

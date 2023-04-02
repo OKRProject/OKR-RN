@@ -158,14 +158,13 @@ const floatingAddButton = css`
 const header = css`
   width: 100%;
   padding: 0 24px;
-  height: 52px;
   flex-direction: row;
   justify-content: space-between;
 `;
 
 const bodyContainer = css`
   flex: 1;
-  padding: 39px 24px 0 24px;
+  padding: 32px 24px 0 24px;
 `;
 
 const wrapper = css`
