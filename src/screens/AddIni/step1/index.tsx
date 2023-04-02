@@ -69,7 +69,7 @@ const Step1 = ({onChange, onPrev, onNext, route, initial}: Props) => {
                 </InfoToolTip>
               </View>
               <DefaultInput
-                placeholder="1분기 까지 서비스 이용자 10만명"
+                placeholder=""
                 style={_input}
                 onFocus={() => setKeyboardFocused(true)}
                 onBlur={() => setKeyboardFocused(false)}
@@ -116,7 +116,7 @@ const Step1 = ({onChange, onPrev, onNext, route, initial}: Props) => {
                   `,
                   keyboardFocused &&
                     css`
-                      margin-bottom: 16px;
+                      margin-bottom: 120px;
                     `,
                 ]}>
                 계속하기
