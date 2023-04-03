@@ -41,7 +41,10 @@ export type ProjectDetailType = Pick<
   projectType: ProjectTypeEnum;
 };
 
-export type ProjectIniType = {
+export type ProjectIniType = Pick<
+  KeyResultType,
+  'keyResultName' | 'keyResultToken'
+> & {
   initiativeToken: string;
   initiativeName: string;
   initiativeDetail: string;
@@ -62,6 +65,14 @@ export type AddProjectIniReqType = {
   endDate: string;
   startDate: string;
   detail: string;
+};
+
+export type EditProjectIniReqType = {
+  name: string;
+  endDate: string;
+  startDate: string;
+  detail: string;
+  initiativeToken: string;
 };
 
 export type GetProjectListResType = {
@@ -138,6 +149,9 @@ const getProjectIni = (iniToken: string) =>
 const addProjectIni = (body: AddProjectIniReqType) =>
   instance.post<string>(`v1/initiative`, body);
 
+const editProjectIni = ({initiativeToken, ...rest}: EditProjectIniReqType) =>
+  instance.put(`v1/initiative/${initiativeToken}/update`, rest);
+
 const completeProjectIni = (initiativeToken: string) =>
   instance.put(`v1/initiative/${initiativeToken}/done`);
 
@@ -176,4 +190,5 @@ export default {
   getProjectIni,
   updateProjectIni,
   addKR,
+  editProjectIni,
 };

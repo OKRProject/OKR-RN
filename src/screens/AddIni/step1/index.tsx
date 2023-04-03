@@ -36,6 +36,12 @@ const Step1 = ({onChange, onPrev, onNext, route, initial}: Props) => {
     onChange({name, detail});
     onNext();
   };
+
+  useEffect(() => {
+    setName(initial.name);
+    setDetail(initial.detail);
+  }, [initial]);
+
   return (
     <Background>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>

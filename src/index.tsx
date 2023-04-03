@@ -25,7 +25,17 @@ const toastConfig = {
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: true,
+        staleTime: 5000,
+        cacheTime: 10000,
+        retry: 1,
+        retryDelay: 500,
+      },
+    },
+  });
   config();
   return (
     <>

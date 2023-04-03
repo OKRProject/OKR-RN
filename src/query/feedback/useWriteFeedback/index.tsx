@@ -1,11 +1,7 @@
 import React from 'react';
 import {useMutation, useQueryClient} from 'react-query';
 import api from '../../../api';
-import {
-  KeyResultType,
-  ProjectDetailType,
-  ProjectIniType,
-} from '../../../api/project';
+import {ProjectIniType} from '../../../api/project';
 import keys from '../../keys';
 
 const useWriteFeedback = ({
@@ -15,6 +11,7 @@ const useWriteFeedback = ({
   return useMutation(api.feedback.addFeedback, {
     onSuccess: () => {
       queryClient.invalidateQueries([keys.GET_INI_INFO, initiativeToken]);
+      queryClient.invalidateQueries([keys.GET_REQUIRED_FEEDBACKS]);
     },
   });
 };

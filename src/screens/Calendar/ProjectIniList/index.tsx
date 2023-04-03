@@ -25,10 +25,9 @@ const ProjectIniList = ({iniList, onClick, selectedDate}: Props) => {
   );
 
   const handleClickIni = (iniInfo: ProjectIniType) => {
-    const id = `${iniInfo.projectToken}-${iniInfo.keyResultToken}-${iniInfo.initiativeToken}`;
+    const id = iniInfo.initiativeToken;
     if (selectedIni === id)
       return navigation.navigate('Ini', {
-        type: 'detail',
         initiativeToken: iniInfo.initiativeToken,
       });
 
@@ -46,7 +45,7 @@ const ProjectIniList = ({iniList, onClick, selectedDate}: Props) => {
       {iniList.length > 0 ? (
         iniList.map((ini, idx) => {
           const onPress = () => handleClickIni(ini);
-          const id = `${ini.projectToken}-${ini.keyResultToken}-${ini.initiativeToken}`;
+          const id = ini.initiativeToken;
           const isSelected = id === selectedIni;
           return (
             <TouchableOpacity key={ini.initiativeToken} onPress={onPress}>

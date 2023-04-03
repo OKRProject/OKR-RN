@@ -1,6 +1,6 @@
 import {Image, View} from 'react-native';
 import React from 'react';
-import {DefaultText as Text, RatioInput} from '../../../components';
+import {DefaultText as Text} from '../../../components';
 import {css} from '@emotion/native';
 import {FeedbackType} from '../../../api/feedback';
 import Modal from 'react-native-modal';

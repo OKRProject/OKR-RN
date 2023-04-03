@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import {Header, DefaultText as Text} from '../../components';
 import {css} from '@emotion/native';
 import {FeedbackEnum} from '../../api/feedback';
-import api from '../../api';
 import {RootStackParamList} from '../../navigation/main';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import query from '../../query';

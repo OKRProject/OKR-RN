@@ -6,6 +6,7 @@ import useGetIniList from './useGetIniList';
 import useAddIni from './useAddIni';
 import useGetIniInfo from './useGetIniInfo';
 import useCompleteIni from './useCompleteIni';
+import useEditIni from './useEditIni';
 
 export default {
   useGetProjectList,
@@ -16,4 +17,5 @@ export default {
   useAddIni,
   useGetIniInfo,
   useCompleteIni,
+  useEditIni,
 };

@@ -1,12 +1,7 @@
 import React from 'react';
 import {css} from '@emotion/native';
 import {Image, View} from 'react-native';
-import {
-  DefaultText as Text,
-  Feedback,
-  Header,
-  RoundSquareButton,
-} from '../../components';
+import {DefaultText as Text, Header, RoundSquareButton} from '../../components';
 import {ScrollView} from 'react-native-gesture-handler';
 import Feedbacks from './Feedbacks';
 import {RootStackParamList} from '../../navigation/main';
@@ -16,11 +11,13 @@ import {dateStringToViewText} from '../../utils/calendar';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import useGetFeedbacks from '../../query/feedback/useGetFeedbacks';
 import useCompleteIni from '../../query/project/useCompleteIni';
+import {useQueryClient} from 'react-query';
+import keys from '../../query/keys';
 
 interface Props extends NativeStackScreenProps<RootStackParamList, 'Ini'> {}
 const Ini = ({route, navigation}: Props) => {
   const initiativeToken = route.params.initiativeToken;
-  const keyResultToken = route.params.keyResultToken;
+  const queryClient = useQueryClient();
   const {data: initiative} = query.project.useGetIniInfo({
     initiativeToken,
   });
@@ -29,9 +26,7 @@ const Ini = ({route, navigation}: Props) => {
     initiativeToken,
   });
 
-  const {mutateAsync: asyncComplete} = useCompleteIni({
-    keyResultToken,
-  });
+  const {mutateAsync: asyncComplete} = useCompleteIni();
   const handleBack = () => {
     //@ts-ignore
     if (route.params?.onGoBack) {
@@ -41,18 +36,30 @@ const Ini = ({route, navigation}: Props) => {
     navigation.goBack();
   };
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     if (initiative?.data.myInitiative && !initiative.data.done) {
       try {
-        asyncComplete(route.params.initiativeToken);
+        await asyncComplete(route.params.initiativeToken);
+
+        queryClient.invalidateQueries([
+          keys.GET_INITIATIVE_LIST,
+          initiative.data.keyResultToken,
+        ]);
         navigation.goBack();
       } catch (e) {}
     }
   };
 
   const handleFeedback = () => {
-    if (initiative?.data.done && !feedbacks?.data.wroteFeedback) {
-      navigation.navigate('WriteFeedback', {initiativeToken, keyResultToken});
+    if (
+      initiative?.data.done &&
+      !feedbacks?.data.wroteFeedback &&
+      initiative.data.keyResultToken
+    ) {
+      navigation.navigate('WriteFeedback', {
+        initiativeToken,
+        keyResultToken: initiative.data.keyResultToken,
+      });
     }
   };
 
@@ -64,7 +71,17 @@ const Ini = ({route, navigation}: Props) => {
         flex: 1;
         background-color: #202227;
       `}>
-      <Header onBack={handleBack} onEdit={() => {}} />
+      <Header
+        onBack={handleBack}
+        onEdit={() => {
+          const {keyResultName, keyResultToken} = initiative.data;
+          navigation.navigate('AddIni', {
+            initiativeToken,
+            keyResultName,
+            keyResultToken,
+          });
+        }}
+      />
       <View style={_container}>
         <View style={_tagWrap}>
           <Text style={_tag}>{initiative.data.done ? '완료' : '진행중'}</Text>

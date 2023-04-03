@@ -23,7 +23,6 @@ const IniList = ({KRToken, KRTitle, projectToken}: Props) => {
     navigation.navigate('AddIni', {
       keyResultName: KRTitle,
       keyResultToken: KRToken,
-      projectToken,
     });
 
   return (

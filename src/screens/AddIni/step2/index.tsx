@@ -15,6 +15,7 @@ type Props = {
   startDate: string;
   endDate: string;
   onComplete: () => void;
+  isEdit: boolean;
 };
 const Step2 = ({
   onPrev,
@@ -22,6 +23,7 @@ const Step2 = ({
   startDate,
   endDate,
   onComplete,
+  isEdit,
 }: Props) => {
   return (
     <SafeAreaView edges={['right', 'top', 'left']} style={_container}>
@@ -42,7 +44,7 @@ const Step2 = ({
               padding: 0 24px;
             `}>
             <RoundSquareButton onPress={onComplete} size="m" type={'primary'}>
-              추가하기
+              {isEdit ? '수정하기' : '추가하기'}
             </RoundSquareButton>
           </View>
         </View>

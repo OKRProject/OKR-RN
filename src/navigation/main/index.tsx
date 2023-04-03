@@ -9,8 +9,7 @@ import {clearUserSession} from '../../hooks/useSignOut';
 import SplashScreen from 'react-native-splash-screen';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
-export type IniParam = Pick<ProjectIniType, 'initiativeToken'> &
-  Pick<KeyResultType, 'keyResultToken'>;
+export type IniParam = Pick<ProjectIniType, 'initiativeToken'>;
 
 export type WriteFeedbackParam = Pick<ProjectIniType, 'initiativeToken'> &
   Partial<Pick<KeyResultType, 'keyResultToken'>>;
@@ -20,8 +19,9 @@ export type AddKRParam = Pick<ProjectType, 'projectToken'>;
 export type AddIniParam = Pick<
   KeyResultType,
   'keyResultToken' | 'keyResultName'
-> &
-  Pick<ProjectType, 'projectToken'>;
+> & {
+  initiativeToken?: string;
+};
 export type MyPage = undefined | {type: 'detail'};
 
 export type RootStackParamList = {
