@@ -45,6 +45,7 @@ const Ini = ({route, navigation}: Props) => {
           keys.GET_INITIATIVE_LIST,
           initiative.data.keyResultToken,
         ]);
+
         navigation.goBack();
       } catch (e) {}
     }

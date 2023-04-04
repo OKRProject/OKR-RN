@@ -6,7 +6,11 @@ import keys from '../../keys';
 
 const useCompleteIni = () => {
   const queryClient = useQueryClient();
-  return useMutation(api.project.completeProjectIni, {});
+  return useMutation(api.project.completeProjectIni, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(keys.GET_PROJECT_LIST);
+    },
+  });
 };
 
 export default useCompleteIni;
