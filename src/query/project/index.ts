@@ -7,6 +7,9 @@ import useAddIni from './useAddIni';
 import useGetIniInfo from './useGetIniInfo';
 import useCompleteIni from './useCompleteIni';
 import useEditIni from './useEditIni';
+import useDeleteKR from './useDeleteKR';
+import useDeleteProject from './useDeleteProject';
+import useCompleteProject from './useCompleteProject';
 
 export default {
   useGetProjectList,
@@ -18,4 +21,7 @@ export default {
   useGetIniInfo,
   useCompleteIni,
   useEditIni,
+  useDeleteKR,
+  useDeleteProject,
+  useCompleteProject,
 };

@@ -16,9 +16,10 @@ type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 type Props = {
   project: ProjectType;
+  onLongPressCard: () => void;
 };
 
-const Card = ({project, ...rest}: Props) => {
+const Card = ({project, onLongPressCard, ...rest}: Props) => {
   const navigation = useNavigation<NavigationProps>();
   const {
     projectToken,
@@ -49,7 +50,9 @@ const Card = ({project, ...rest}: Props) => {
     });
 
   return (
-    <TouchableOpacity onPress={handleClickProject}>
+    <TouchableOpacity
+      onPress={handleClickProject}
+      onLongPress={onLongPressCard}>
       <RoundCard style={container} {...rest}>
         <View style={titleWrap}>
           <View

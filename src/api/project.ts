@@ -1,5 +1,9 @@
 import instance from './instance';
 
+export enum RoleTypeEnum {
+  leader = 'LEADER',
+  member = 'MEMBER',
+}
 export enum ProjectTypeEnum {
   whole = 'WHOLE',
   team = 'TEAM',
@@ -21,6 +25,7 @@ export type ProjectType = {
   teamMembersCount: number;
   newProject: boolean;
   projectType: ProjectTypeEnum;
+  roleType: RoleTypeEnum;
 };
 
 export type KeyResultType = {
@@ -175,6 +180,17 @@ const inviteMemberEmailValidate = (email: string, projectToken: string) =>
 const getIniDatesByMonth = (yyyymm: string) =>
   instance.get<string[]>(`v1/initiative/yearmonth/${yyyymm}`);
 
+const completeProject = (projectToken: string) =>
+  instance.put(`v1/project/${projectToken}/done`);
+const deleteProject = (projectToken: string) =>
+  instance.delete(`v1/project/${projectToken}`);
+
+const deleteKeyResult = (keyResultToken: string) =>
+  instance.delete(`v1/keyresult/${keyResultToken}`);
+
+const deleteIni = (initiativeToken: string) =>
+  instance.delete(`v1/initiative/${initiativeToken}`);
+
 export default {
   createNewProject,
   getProjectList,
@@ -191,4 +207,8 @@ export default {
   updateProjectIni,
   addKR,
   editProjectIni,
+  completeProject,
+  deleteProject,
+  deleteKeyResult,
+  deleteIni,
 };

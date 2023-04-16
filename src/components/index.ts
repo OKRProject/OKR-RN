@@ -18,6 +18,7 @@ import SortingModal from './SortingModal';
 import RatioInput from './RatioInput';
 import OnOff from './OnOff';
 import InfoToolTip from './InfoTooltip';
+import ProjectModal from './ProjectModal';
 
 export {
   Icons,
@@ -40,4 +41,5 @@ export {
   RatioInput,
   OnOff,
   InfoToolTip,
+  ProjectModal,
 };

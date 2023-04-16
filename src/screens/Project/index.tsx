@@ -6,6 +6,7 @@ import {
   RoundAddButton,
   Background,
   SortingModal,
+  ProjectModal,
 } from '../../components';
 import {css} from '@emotion/native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -14,7 +15,12 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import Card from './Card';
 import {RootStackParamList} from '../../navigation/main';
 import api from '../../api';
-import {ProjectType, ProjectTypeEnum, SortTypeEnum} from '../../api/project';
+import {
+  ProjectType,
+  ProjectTypeEnum,
+  RoleTypeEnum,
+  SortTypeEnum,
+} from '../../api/project';
 import EmptyCard from './EmptyCard';
 import {SortStatus} from '../../components/SortingModal';
 import query from '../../query';
@@ -41,6 +47,7 @@ const Main = ({navigation}: Props) => {
   const [selectedTab, setSelectedTab] = useState<keyof typeof tabList>(
     ProjectTypeEnum.whole,
   );
+  const [selectedProject, setSelectedProject] = useState<ProjectType>();
   const [newNoti, setNewNoti] = useState<boolean>(false);
   const {data: projectList} = query.project.useGetProjectList({
     projectType: 'ALL',
@@ -116,8 +123,11 @@ const Main = ({navigation}: Props) => {
             {filteredProjectList.length > 0 ? (
               filteredProjectList.map(project => (
                 <Card
-                  key={`project_card_${project.projectToken}`}
                   project={project}
+                  key={`project_card_${project.projectToken}`}
+                  onLongPressCard={() => {
+                    setSelectedProject(project);
+                  }}
                 />
               ))
             ) : (
@@ -139,6 +149,13 @@ const Main = ({navigation}: Props) => {
         onIncludeSwitch={() =>
           setSort(prev => ({...prev, includeFinished: !prev.includeFinished}))
         }
+      />
+      <ProjectModal
+        onClose={() => setSelectedProject(undefined)}
+        isVisible={
+          !!selectedProject && selectedProject.roleType === RoleTypeEnum.leader
+        }
+        projectToken={selectedProject?.projectToken!}
       />
     </Background>
   );
