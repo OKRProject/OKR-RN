@@ -5,7 +5,7 @@ import {Icons, DefaultText as Text} from '../../../components';
 
 type Props = {
   onClickBack: () => void;
-  onClickMenu: () => void;
+  onClickMenu?: () => void;
 };
 
 const Header = ({onClickBack, onClickMenu}: Props) => {
@@ -16,8 +16,11 @@ const Header = ({onClickBack, onClickMenu}: Props) => {
           <Icons.Back />
         </TouchableOpacity>
         <Text style={_title}>OKR</Text>
-        <TouchableOpacity style={_button} onPress={onClickMenu}>
-          <Icons.AddPerson />
+        <TouchableOpacity
+          style={_button}
+          onPress={onClickMenu}
+          disabled={!onClickMenu}>
+          {onClickMenu && <Icons.AddPerson />}
         </TouchableOpacity>
       </View>
     </View>

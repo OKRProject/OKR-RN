@@ -36,15 +36,16 @@ type Props = {
   percent: number;
   style?: StyleProp<ViewStyle>;
   figure?: boolean;
+  isCompleted?: boolean;
 };
-const Progress = ({percent, style, figure = true}: Props) => {
+const Progress = ({percent, style, figure = true, isCompleted}: Props) => {
   return (
     <View style={[progressWrap, style]}>
       <View style={progressBack}>
         <LinearGradient
           start={{x: 0, y: 0}}
           end={{x: 1, y: 0}}
-          colors={['#43D2FF', '#1F92F2']}
+          colors={isCompleted ? ['#616166', '#616166'] : ['#43D2FF', '#1F92F2']}
           style={[progressGauge, {width: `${percent}%`}]}
         />
       </View>

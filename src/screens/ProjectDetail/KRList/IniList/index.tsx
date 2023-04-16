@@ -13,8 +13,14 @@ type Props = {
   KRToken: string;
   KRTitle: string;
   projectToken: string;
+  isProjectCompleted: boolean;
 };
-const IniList = ({KRToken, KRTitle, projectToken}: Props) => {
+const IniList = ({
+  KRToken,
+  KRTitle,
+  projectToken,
+  isProjectCompleted,
+}: Props) => {
   const navigation = useNavigation<NavigationProps>();
 
   const {data: iniList} = useGetIniList({keyResultToken: KRToken});
@@ -34,9 +40,11 @@ const IniList = ({KRToken, KRTitle, projectToken}: Props) => {
           keyResultToken={KRToken}
         />
       ))}
-      <TouchableOpacity onPress={handleAddIni}>
-        <Text style={_addButtonText}>+ 행동전략 추가</Text>
-      </TouchableOpacity>
+      {!isProjectCompleted && (
+        <TouchableOpacity onPress={handleAddIni}>
+          <Text style={_addButtonText}>+ 행동전략 추가</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

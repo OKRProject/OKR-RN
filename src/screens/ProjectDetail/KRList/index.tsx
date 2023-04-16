@@ -13,8 +13,9 @@ import Delete from './Delete';
 type Props = {
   KRList: KeyResultType[];
   projectToken: string;
+  isProjectCompleted: boolean;
 };
-const KRList = ({KRList, projectToken}: Props) => {
+const KRList = ({KRList, projectToken, isProjectCompleted}: Props) => {
   const [selectedKRToken, setSelected] = useState<string | null>(null);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const swipeableRef = useRef<Swipeable>(null);
@@ -38,15 +39,18 @@ const KRList = ({KRList, projectToken}: Props) => {
               </View>
             </InfoToolTip>
           </View>
-          <TouchableOpacity
-            style={_addButton}
-            onPress={() =>
-              KRList.length < 3 && navigation.navigate('AddKR', {projectToken})
-            }>
-            <Icons.Plus />
-          </TouchableOpacity>
+          {!isProjectCompleted && (
+            <TouchableOpacity
+              style={_addButton}
+              onPress={() =>
+                KRList.length < 3 &&
+                navigation.navigate('AddKR', {projectToken})
+              }>
+              <Icons.Plus />
+            </TouchableOpacity>
+          )}
         </View>
-        {KRList.length === 0 ? (
+        {KRList.length === 0 && !isProjectCompleted ? (
           <View style={[_item, _empty]}>
             <Text style={_emptyText}>
               + 버튼을 눌러 핵심 결과를 추가해 보세요!
@@ -92,6 +96,7 @@ const KRList = ({KRList, projectToken}: Props) => {
                       KRTitle={kr.keyResultName}
                       KRToken={kr.keyResultToken}
                       projectToken={projectToken}
+                      isProjectCompleted={isProjectCompleted}
                     />
                   )}
                 </Fragment>

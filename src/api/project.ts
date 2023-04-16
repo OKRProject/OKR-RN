@@ -26,6 +26,7 @@ export type ProjectType = {
   newProject: boolean;
   projectType: ProjectTypeEnum;
   roleType: RoleTypeEnum;
+  completed: boolean;
 };
 
 export type KeyResultType = {
@@ -40,10 +41,16 @@ export type TeamMemberType = {
 };
 export type ProjectDetailType = Pick<
   ProjectType,
-  'endDate' | 'startDate' | 'objective' | 'projectToken' | 'teamMembersCount'
+  | 'endDate'
+  | 'startDate'
+  | 'objective'
+  | 'projectToken'
+  | 'teamMembersCount'
+  | 'completed'
+  | 'roleType'
+  | 'projectType'
 > & {
   keyResults: KeyResultType[];
-  projectType: ProjectTypeEnum;
 };
 
 export type ProjectIniType = Pick<

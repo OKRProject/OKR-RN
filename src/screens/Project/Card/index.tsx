@@ -29,6 +29,7 @@ const Card = ({project, onLongPressCard, ...rest}: Props) => {
     startDate: sdt,
     endDate: edt,
     newProject,
+    completed,
   } = useMemo(() => project, [project]);
   const percent = useMemo(() => Math.floor(progress), [progress]);
 
@@ -60,15 +61,40 @@ const Card = ({project, onLongPressCard, ...rest}: Props) => {
               flex-direction: row;
               align-items: center;
             `}>
-            <Text style={projectTitle}>{objective}</Text>
+            <Text
+              style={[
+                projectTitle,
+                completed &&
+                  css`
+                    color: #616166;
+                  `,
+              ]}>
+              {objective}
+            </Text>
             {newProject && <Text style={newHighlight}>NEW</Text>}
+            {completed && (
+              <Text
+                style={[
+                  newHighlight,
+                  css`
+                    color: #1f92f2;
+                  `,
+                ]}>
+                완료됨
+              </Text>
+            )}
           </View>
           <View style={people}>
             <Icons.People />
             <Text style={peopleText}>{teamMembersCount}</Text>
           </View>
         </View>
-        <Progress percent={percent} style={progressWrap} figure={false} />
+        <Progress
+          percent={percent}
+          style={progressWrap}
+          figure={false}
+          isCompleted={completed}
+        />
         <View style={bottom}>
           <Text style={period}>
             {startDate} - {endDate}

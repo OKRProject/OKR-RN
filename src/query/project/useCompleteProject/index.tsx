@@ -8,7 +8,7 @@ const useCompleteProject = ({
   projectToken,
 }: Pick<ProjectType, 'projectToken'>) => {
   const queryClient = useQueryClient();
-  return useMutation(api.project.deleteProject, {
+  return useMutation(api.project.completeProject, {
     onSuccess: () => {
       queryClient.invalidateQueries([keys.GET_PROJECT_LIST]);
     },
