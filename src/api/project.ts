@@ -59,6 +59,7 @@ export type ProjectIniType = Pick<
   startDate: string;
   email: string;
   myInitiative: boolean;
+  roleType: RoleTypeEnum;
 };
 
 export type AddProjectKRReqType = Pick<ProjectDetailType, 'projectToken'> &
