@@ -1,7 +1,11 @@
 import instance from './instance';
 
+export enum RoleTypeEnum {
+  leader = 'LEADER',
+  member = 'MEMBER',
+}
 export enum ProjectTypeEnum {
-  whole = 'WHOLE',
+  all = 'ALL',
   team = 'TEAM',
   single = 'SINGLE',
 }
@@ -21,6 +25,8 @@ export type ProjectType = {
   teamMembersCount: number;
   newProject: boolean;
   projectType: ProjectTypeEnum;
+  roleType: RoleTypeEnum;
+  completed: boolean;
 };
 
 export type KeyResultType = {
@@ -35,13 +41,22 @@ export type TeamMemberType = {
 };
 export type ProjectDetailType = Pick<
   ProjectType,
-  'endDate' | 'startDate' | 'objective' | 'projectToken' | 'teamMembersCount'
+  | 'endDate'
+  | 'startDate'
+  | 'objective'
+  | 'projectToken'
+  | 'teamMembersCount'
+  | 'completed'
+  | 'roleType'
+  | 'projectType'
 > & {
   keyResults: KeyResultType[];
-  projectType: ProjectTypeEnum;
 };
 
-export type ProjectIniType = {
+export type ProjectIniType = Pick<
+  KeyResultType,
+  'keyResultName' | 'keyResultToken'
+> & {
   initiativeToken: string;
   initiativeName: string;
   initiativeDetail: string;
@@ -51,6 +66,7 @@ export type ProjectIniType = {
   startDate: string;
   email: string;
   myInitiative: boolean;
+  roleType: RoleTypeEnum;
 };
 
 export type AddProjectKRReqType = Pick<ProjectDetailType, 'projectToken'> &
@@ -64,8 +80,17 @@ export type AddProjectIniReqType = {
   detail: string;
 };
 
+export type EditProjectIniReqType = {
+  name: string;
+  endDate: string;
+  startDate: string;
+  detail: string;
+  initiativeToken: string;
+};
+
 export type GetProjectListResType = {
   content: ProjectType[];
+  last: boolean;
 };
 
 export type CreateNewProjectReqType = NewProjectType;
@@ -111,14 +136,18 @@ const createNewProject = (body: CreateNewProjectReqType) =>
 const getProjectList = ({
   sort,
   includeFinished,
+  page,
+  projectType,
 }: {
   sort: SortTypeEnum;
   includeFinished: boolean;
+  page: number;
+  projectType: ProjectTypeEnum;
 }) =>
   instance.get<GetProjectListResType>(
     `v1/project?sortType=${sort}&includeFinishedProjectYN=${
       includeFinished ? 'Y' : 'N'
-    }&page=0&size=10&projectType=ALL`,
+    }&page=${page}&size=10&projectType=${projectType}`,
   );
 
 const getProjectDetail = ({projectToken}: GetProjectDetailReqType) =>
@@ -137,6 +166,9 @@ const getProjectIni = (iniToken: string) =>
 
 const addProjectIni = (body: AddProjectIniReqType) =>
   instance.post<string>(`v1/initiative`, body);
+
+const editProjectIni = ({initiativeToken, ...rest}: EditProjectIniReqType) =>
+  instance.put(`v1/initiative/${initiativeToken}/update`, rest);
 
 const completeProjectIni = (initiativeToken: string) =>
   instance.put(`v1/initiative/${initiativeToken}/done`);
@@ -161,6 +193,17 @@ const inviteMemberEmailValidate = (email: string, projectToken: string) =>
 const getIniDatesByMonth = (yyyymm: string) =>
   instance.get<string[]>(`v1/initiative/yearmonth/${yyyymm}`);
 
+const completeProject = (projectToken: string) =>
+  instance.put(`v1/project/${projectToken}/done`);
+const deleteProject = (projectToken: string) =>
+  instance.delete(`v1/project/${projectToken}`);
+
+const deleteKeyResult = (keyResultToken: string) =>
+  instance.delete(`v1/keyresult/${keyResultToken}`);
+
+const deleteIni = (initiativeToken: string) =>
+  instance.delete(`v1/initiative/${initiativeToken}`);
+
 export default {
   createNewProject,
   getProjectList,
@@ -176,4 +219,9 @@ export default {
   getProjectIni,
   updateProjectIni,
   addKR,
+  editProjectIni,
+  completeProject,
+  deleteProject,
+  deleteKeyResult,
+  deleteIni,
 };

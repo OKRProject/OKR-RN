@@ -16,9 +16,10 @@ type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 type Props = {
   project: ProjectType;
+  onLongPressCard: () => void;
 };
 
-const Card = ({project, ...rest}: Props) => {
+const Card = ({project, onLongPressCard, ...rest}: Props) => {
   const navigation = useNavigation<NavigationProps>();
   const {
     projectToken,
@@ -28,6 +29,7 @@ const Card = ({project, ...rest}: Props) => {
     startDate: sdt,
     endDate: edt,
     newProject,
+    completed,
   } = useMemo(() => project, [project]);
   const percent = useMemo(() => Math.floor(progress), [progress]);
 
@@ -49,7 +51,9 @@ const Card = ({project, ...rest}: Props) => {
     });
 
   return (
-    <TouchableOpacity onPress={handleClickProject}>
+    <TouchableOpacity
+      onPress={handleClickProject}
+      onLongPress={onLongPressCard}>
       <RoundCard style={container} {...rest}>
         <View style={titleWrap}>
           <View
@@ -57,15 +61,40 @@ const Card = ({project, ...rest}: Props) => {
               flex-direction: row;
               align-items: center;
             `}>
-            <Text style={projectTitle}>{objective}</Text>
+            <Text
+              style={[
+                projectTitle,
+                completed &&
+                  css`
+                    color: #616166;
+                  `,
+              ]}>
+              {objective}
+            </Text>
             {newProject && <Text style={newHighlight}>NEW</Text>}
+            {completed && (
+              <Text
+                style={[
+                  newHighlight,
+                  css`
+                    color: #1f92f2;
+                  `,
+                ]}>
+                완료됨
+              </Text>
+            )}
           </View>
           <View style={people}>
             <Icons.People />
             <Text style={peopleText}>{teamMembersCount}</Text>
           </View>
         </View>
-        <Progress percent={percent} style={progressWrap} figure={false} />
+        <Progress
+          percent={percent}
+          style={progressWrap}
+          figure={false}
+          isCompleted={completed}
+        />
         <View style={bottom}>
           <Text style={period}>
             {startDate} - {endDate}

@@ -4,6 +4,7 @@ export type UserProfileType = {
   email: string;
   name: string;
   jobFieldDetail: string;
+  fieldCategory: string;
   profileImage: string;
 };
 

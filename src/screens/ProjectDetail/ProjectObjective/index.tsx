@@ -41,7 +41,7 @@ const ProjectObjective = ({
 };
 
 const _container = css`
-  padding: 42px 24px;
+  padding: 24px 24px 30px;
 `;
 
 const _tag = css`
@@ -56,6 +56,7 @@ const _title = css`
   font-size: 26px;
   line-height: 31px;
   margin-bottom: 13px;
+  margin-top: 7px;
 `;
 
 const _text = css`

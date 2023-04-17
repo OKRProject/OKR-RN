@@ -1,22 +1,24 @@
 import {TouchableOpacity, View, TouchableWithoutFeedback} from 'react-native';
-import React, {Fragment, useMemo, useState} from 'react';
+import React, {Fragment, useRef, useState} from 'react';
 import {css} from '@emotion/native';
-
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 import {DefaultText as Text, Icons, InfoToolTip} from '../../../components';
 import {KeyResultType} from '../../../api/project';
 import IniList from './IniList';
 import {ScrollView} from 'react-native-gesture-handler';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../navigation/main';
+import Delete from './Delete';
 
 type Props = {
   KRList: KeyResultType[];
   projectToken: string;
+  isProjectCompleted: boolean;
 };
-const KRList = ({KRList, projectToken}: Props) => {
+const KRList = ({KRList, projectToken, isProjectCompleted}: Props) => {
   const [selectedKRToken, setSelected] = useState<string | null>(null);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
+  const swipeableRef = useRef<Swipeable>(null);
   return (
     <>
       <ScrollView style={container}>
@@ -37,15 +39,18 @@ const KRList = ({KRList, projectToken}: Props) => {
               </View>
             </InfoToolTip>
           </View>
-          <TouchableOpacity
-            style={_addButton}
-            onPress={() =>
-              KRList.length < 3 && navigation.navigate('AddKR', {projectToken})
-            }>
-            <Icons.Plus />
-          </TouchableOpacity>
+          {!isProjectCompleted && (
+            <TouchableOpacity
+              style={_addButton}
+              onPress={() =>
+                KRList.length < 3 &&
+                navigation.navigate('AddKR', {projectToken})
+              }>
+              <Icons.Plus />
+            </TouchableOpacity>
+          )}
         </View>
-        {KRList.length === 0 ? (
+        {KRList.length === 0 && !isProjectCompleted ? (
           <View style={[_item, _empty]}>
             <Text style={_emptyText}>
               + 버튼을 눌러 핵심 결과를 추가해 보세요!
@@ -57,33 +62,41 @@ const KRList = ({KRList, projectToken}: Props) => {
               const opened = kr.keyResultToken === selectedKRToken;
               return (
                 <Fragment key={`key_result_${kr.keyResultToken}_${idx}`}>
-                  <View
-                    style={[_item, _krItem]}
-                    key={`key_result_${kr.keyResultToken}_${idx}`}>
-                    <Text style={_index}>{idx + 1}</Text>
-                    <Text style={_krName}>{kr.keyResultName}</Text>
-                    <TouchableWithoutFeedback
-                      onPress={() =>
-                        setSelected(opened ? null : kr.keyResultToken)
-                      }>
-                      <View
-                        style={[
-                          _arrow,
-                          opened &&
-                            css`
-                              transform: rotate(90deg);
-                            `,
-                        ]}>
-                        <Icons.Back />
-                      </View>
-                    </TouchableWithoutFeedback>
-                  </View>
+                  <Swipeable
+                    ref={swipeableRef}
+                    renderRightActions={() => (
+                      <Delete
+                        keyResultToken={kr.keyResultToken}
+                        onClose={() => swipeableRef.current?.close()}
+                      />
+                    )}>
+                    <View style={[_item, _krItem]}>
+                      <Text style={_index}>{idx + 1}</Text>
+                      <Text style={_krName}>{kr.keyResultName}</Text>
+                      <TouchableWithoutFeedback
+                        onPress={() =>
+                          setSelected(opened ? null : kr.keyResultToken)
+                        }>
+                        <View
+                          style={[
+                            _arrow,
+                            opened &&
+                              css`
+                                transform: rotate(90deg);
+                              `,
+                          ]}>
+                          <Icons.Back />
+                        </View>
+                      </TouchableWithoutFeedback>
+                    </View>
+                  </Swipeable>
+
                   {opened && (
                     <IniList
-                      key={`key_result_${kr.keyResultToken}_${idx}`}
                       KRTitle={kr.keyResultName}
                       KRToken={kr.keyResultToken}
                       projectToken={projectToken}
+                      isProjectCompleted={isProjectCompleted}
                     />
                   )}
                 </Fragment>

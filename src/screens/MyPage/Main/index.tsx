@@ -14,6 +14,7 @@ import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../navigation/main';
 import {UserProfileType} from '../../../api/user';
 import query from '../../../query';
+import {useSignOut} from '../../../hooks';
 
 type Props = UserProfileType;
 const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
@@ -22,19 +23,25 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
     undefined | 'logout' | 'withdrawal'
   >();
   const {mutateAsync: deleteUser} = query.user.useDeleteUser();
+  const {signOutUser} = useSignOut();
   const [check, setCheck] = useState<{0: boolean; 1: boolean; 2: boolean}>({
     0: false,
     1: false,
     2: false,
   });
-  // console.log(field, name, profileImage, email);
 
   const handleClickPolicy = () => navigation.navigate('Policy');
   const handleClickTerms = () => navigation.navigate('Terms');
-  const handleClickLogout = async () => {
+  const handleClickLogout = () => {
     setOpenModal(undefined);
-    await deleteUser();
+    setTimeout(signOutUser, 100);
   };
+
+  const handleClickWithdrawalConfirm = () => {
+    setOpenModal(undefined);
+    setTimeout(deleteUser, 100);
+  };
+
   const handleClickWithdrawal = () => setOpenModal('withdrawal');
   const handleClickProfileDetail = () =>
     navigation.navigate('MyPage', {
@@ -43,7 +50,12 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
 
   return (
     <Background>
-      <Header title="My" />
+      <Header
+        title="My"
+        titleStyle={css`
+          font-size: 28px;
+        `}
+      />
       <View style={container}>
         <TouchableOpacity style={profile} onPress={handleClickProfileDetail}>
           <View style={img}>
@@ -96,7 +108,15 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
         <Modal isVisible={true} onClose={() => setOpenModal(undefined)}>
           <View>
             <Text style={modalTitle}>로그아웃</Text>
-            <Text style={modalSubtitle}>로그아웃 하시겠어요?</Text>
+            <Text
+              style={[
+                modalSubtitle,
+                css`
+                  margin: 32px 0 40px;
+                `,
+              ]}>
+              로그아웃 하시겠어요?
+            </Text>
             <View style={[rowFlex]}>
               <RoundSquareButton
                 type="dark"
@@ -194,7 +214,7 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
                 type="primary"
                 size="m"
                 style={[smallButton]}
-                onPress={handleClickLogout}>
+                onPress={handleClickWithdrawalConfirm}>
                 탈퇴
               </RoundSquareButton>
             </View>
@@ -254,7 +274,6 @@ const rowFlex = css`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 8px;
 `;
 
 const smallButton = css`

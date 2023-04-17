@@ -6,13 +6,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {
-  Background,
-  DefaultInput,
-  Header,
-  Icons,
-  RoundSquareButton,
-} from '../../components';
+
 import {css} from '@emotion/native';
 import {RootStackParamList} from '../../navigation/main';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -21,13 +15,15 @@ import {AddProjectIniReqType} from '../../api/project';
 import {getDate} from '../../utils/calendar';
 import Step2 from './step2';
 import query from '../../query';
+import useGetIniInfo from '../../query/project/useGetIniInfo';
 
 const today = new Date().toDateString();
 interface Props extends NativeStackScreenProps<RootStackParamList, 'AddIni'> {}
 
 const AddIni = ({navigation, route}: Props) => {
-  const {keyResultName, keyResultToken, projectToken} = route.params;
+  const {keyResultToken, initiativeToken} = route.params;
   const [step, setStep] = useState<1 | 2>(1);
+  const [iniToken, setIniToken] = useState<string>();
   const [ini, setIni] = useState<AddProjectIniReqType>({
     startDate: getDate(today, 0),
     endDate: getDate(today, 0),
@@ -36,10 +32,23 @@ const AddIni = ({navigation, route}: Props) => {
     keyResultToken,
   });
 
-  const {mutateAsync} = query.project.useAddIni({keyResultToken});
-  const handleAddKR = async () => {
+  const {data: iniInfo} = useGetIniInfo({initiativeToken});
+  const {mutateAsync: addIni} = query.project.useAddIni({keyResultToken});
+
+  const {mutateAsync: asyncEdit} = query.project.useEditIni({
+    keyResultToken,
+    initiativeToken,
+  });
+  const handleEditIni = async () => {
+    if (initiativeToken)
+      try {
+        await asyncEdit({...ini, initiativeToken});
+        navigation.navigate('Ini', {initiativeToken});
+      } catch (e) {}
+  };
+  const handleAddIni = async () => {
     try {
-      await mutateAsync(ini);
+      await addIni(ini);
       navigation.goBack();
     } catch (e) {}
   };
@@ -47,6 +56,26 @@ const AddIni = ({navigation, route}: Props) => {
   const handleSelectDates = ({start, end}: {start: string; end: string}) => {
     setIni(prev => ({...prev, startDate: start, endDate: end}));
   };
+
+  useEffect(() => {
+    if (!iniToken && iniInfo) {
+      const {
+        initiativeDetail,
+        initiativeName,
+        initiativeToken,
+        startDate,
+        endDate,
+      } = iniInfo.data;
+      setIni(prev => ({
+        ...prev,
+        detail: initiativeDetail,
+        endDate,
+        startDate,
+        name: initiativeName,
+      }));
+      setIniToken(initiativeToken);
+    }
+  }, [iniToken, iniInfo]);
 
   return (
     <>
@@ -66,7 +95,8 @@ const AddIni = ({navigation, route}: Props) => {
           endDate={ini.endDate}
           onSelectDates={handleSelectDates}
           onPrev={() => setStep(1)}
-          onComplete={handleAddKR}
+          onComplete={iniToken ? handleEditIni : handleAddIni}
+          isEdit={!!initiativeToken}
         />
       )}
     </>

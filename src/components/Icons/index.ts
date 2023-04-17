@@ -15,6 +15,8 @@ import Menu from './Menu';
 import Check from './Check';
 import AddPerson from './AddPerson';
 import Edit from './Edit';
+import CompleteCheck from './CompleteCheck';
+import Trash from './Trash';
 
 export default {
   Project,
@@ -34,4 +36,6 @@ export default {
   Check,
   AddPerson,
   Edit,
+  CompleteCheck,
+  Trash,
 };

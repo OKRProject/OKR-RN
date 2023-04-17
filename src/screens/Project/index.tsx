@@ -1,4 +1,4 @@
-import {View, TouchableOpacity, Image} from 'react-native';
+import {View, TouchableOpacity, Image, FlatList} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
   Icons,
@@ -6,21 +6,26 @@ import {
   RoundAddButton,
   Background,
   SortingModal,
+  ProjectModal,
 } from '../../components';
 import {css} from '@emotion/native';
-import {ScrollView} from 'react-native-gesture-handler';
 import userStore from '../../store/userStore';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import Card from './Card';
 import {RootStackParamList} from '../../navigation/main';
 import api from '../../api';
-import {ProjectType, ProjectTypeEnum, SortTypeEnum} from '../../api/project';
+import {
+  ProjectType,
+  ProjectTypeEnum,
+  RoleTypeEnum,
+  SortTypeEnum,
+} from '../../api/project';
 import EmptyCard from './EmptyCard';
 import {SortStatus} from '../../components/SortingModal';
 import query from '../../query';
 
 const tabList: {[key in ProjectTypeEnum]: string} = {
-  WHOLE: '전체',
+  ALL: '전체',
   SINGLE: '개인',
   TEAM: '팀',
 };
@@ -28,6 +33,8 @@ const tabList: {[key in ProjectTypeEnum]: string} = {
 interface Props extends NativeStackScreenProps<RootStackParamList, 'Project'> {}
 
 const Main = ({navigation}: Props) => {
+  const [page, setPage] = useState<number>(0);
+
   const {name} = userStore(({user}) => ({name: user?.name}));
   const [sort, setSort] = useState<SortStatus>({
     includeFinished: true,
@@ -35,15 +42,15 @@ const Main = ({navigation}: Props) => {
   });
   const [openSortModal, setOpenSortModal] = useState<boolean>(false);
   const [originProjectList, setOriginProjectList] = useState<ProjectType[]>([]);
-  const [filteredProjectList, setFilteredProjectList] = useState<ProjectType[]>(
-    [],
+  const [selectedTab, setSelectedTab] = useState<ProjectTypeEnum>(
+    ProjectTypeEnum.all,
   );
-  const [selectedTab, setSelectedTab] = useState<keyof typeof tabList>(
-    ProjectTypeEnum.whole,
-  );
+  const [selectedProject, setSelectedProject] = useState<ProjectType>();
   const [newNoti, setNewNoti] = useState<boolean>(false);
+
   const {data: projectList} = query.project.useGetProjectList({
-    projectType: 'ALL',
+    projectType: selectedTab,
+    page,
   });
 
   useEffect(() => {
@@ -54,22 +61,15 @@ const Main = ({navigation}: Props) => {
     projectList && setOriginProjectList(projectList?.data.content);
   }, [projectList]);
 
-  useEffect(() => {
-    setFilteredProjectList(
-      selectedTab === ProjectTypeEnum.whole
-        ? originProjectList
-        : originProjectList.filter(
-            project => project.projectType === selectedTab,
-          ),
-    );
-  }, [selectedTab, originProjectList]);
-
+  const handleLoadMore = () => {
+    if (projectList?.data.last === false) setPage(page + 1);
+  };
   const getNotiList = async () => {
     const {data} = await api.user.getNotificationList();
     if (data?.some(item => item.status === 'NEW')) setNewNoti(true);
   };
 
-  const handleClickTab = (tab: keyof typeof tabList) => setSelectedTab(tab);
+  const handleClickTab = (tab: ProjectTypeEnum) => setSelectedTab(tab);
 
   const handleClickAddProject = () => {
     navigation.navigate('ProjectNew');
@@ -83,7 +83,7 @@ const Main = ({navigation}: Props) => {
         <Image
           style={{height: 26, width: 84}}
           resizeMode="contain"
-          source={require('../../img/icn-logo-row.png')}
+          source={require('../../img/icn-logo-gray.png')}
         />
         <TouchableOpacity onPress={handleClickNotification}>
           <Icons.Alarm color={newNoti ? '#fff' : '#616166'} />
@@ -112,18 +112,35 @@ const Main = ({navigation}: Props) => {
               <Icons.Filter />
             </TouchableOpacity> */}
           </View>
-          <ScrollView style={projectWrapper}>
-            {filteredProjectList.length > 0 ? (
-              filteredProjectList.map(project => (
+          {originProjectList.length > 0 ? (
+            <FlatList
+              style={projectWrapper}
+              data={originProjectList}
+              renderItem={({item}) => (
                 <Card
-                  key={`project_card_${project.projectToken}`}
-                  project={project}
+                  project={item}
+                  key={`project_card_${item.projectToken}`}
+                  onLongPressCard={() => {
+                    setSelectedProject(item);
+                  }}
                 />
-              ))
-            ) : (
-              <EmptyCard />
-            )}
-          </ScrollView>
+              )}
+              keyExtractor={(item, index) => item.projectToken}
+              onEndReached={handleLoadMore}
+              onEndReachedThreshold={1}>
+              {originProjectList.map(project => (
+                <Card
+                  project={project}
+                  key={`project_card_${project.projectToken}`}
+                  onLongPressCard={() => {
+                    setSelectedProject(project);
+                  }}
+                />
+              ))}
+            </FlatList>
+          ) : (
+            <EmptyCard />
+          )}
         </View>
       </View>
       <RoundAddButton
@@ -139,6 +156,13 @@ const Main = ({navigation}: Props) => {
         onIncludeSwitch={() =>
           setSort(prev => ({...prev, includeFinished: !prev.includeFinished}))
         }
+      />
+      <ProjectModal
+        onClose={() => setSelectedProject(undefined)}
+        isVisible={
+          !!selectedProject && selectedProject.roleType === RoleTypeEnum.leader
+        }
+        projectToken={selectedProject?.projectToken!}
       />
     </Background>
   );
@@ -158,14 +182,13 @@ const floatingAddButton = css`
 const header = css`
   width: 100%;
   padding: 0 24px;
-  height: 52px;
   flex-direction: row;
   justify-content: space-between;
 `;
 
 const bodyContainer = css`
   flex: 1;
-  padding: 39px 24px 0 24px;
+  padding: 32px 24px 0 24px;
 `;
 
 const wrapper = css`

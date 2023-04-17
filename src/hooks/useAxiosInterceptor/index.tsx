@@ -7,7 +7,7 @@ import instance from '../../api/instance';
 import {TokenType} from '../../api/user';
 import userStore from '../../store/userStore';
 import useSignOut, {clearUserSession} from '../useSignOut';
-
+import Toast from 'react-native-toast-message';
 const refreshURI = `${Config.API_URL}v1/user/refresh`;
 
 type SessionType = {access: string; refresh: string};
@@ -54,12 +54,15 @@ const useAxiosInterceptor = () => {
     if (session) {
       try {
         const {data} = await api.user.getUserProfile();
+        setIsInitReq(true);
+
         setUserProfile(data);
       } catch (e) {
+        setIsInitReq(true);
+
         console.log(e, 'login failed');
       }
-    }
-    setIsInitReq(true);
+    } else setIsInitReq(true);
   }, []);
 
   useEffect(() => {
@@ -81,10 +84,21 @@ const useAxiosInterceptor = () => {
 
   useEffect(() => {
     initReq();
+  }, []);
+
+  useEffect(() => {
     instance.interceptors.response.use(
       response => response,
       async error => {
-        console.log(error.config.url, 'url');
+        console.log(error.config.url);
+        if (error?.response.status === 400)
+          Toast.show({
+            type: 'defaultToast',
+            text1: error.response.data,
+            autoHide: true,
+            position: 'top',
+            topOffset: 40,
+          });
         if (error?.response?.status === 401) {
           if (
             error?.config?.url.includes('user/refresh') ||

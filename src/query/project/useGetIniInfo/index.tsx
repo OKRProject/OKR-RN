@@ -7,9 +7,11 @@ import keys from '../../keys';
 
 const useGetIniInfo = ({
   initiativeToken,
-}: Pick<ProjectIniType, 'initiativeToken'>) => {
-  return useQuery([keys.GET_PROJECT_DETAIL, initiativeToken], () =>
-    api.project.getProjectIni(initiativeToken),
+}: Partial<Pick<ProjectIniType, 'initiativeToken'>>) => {
+  return useQuery(
+    [keys.GET_INI_INFO, initiativeToken],
+    () => api.project.getProjectIni(initiativeToken ?? ''),
+    {enabled: !!initiativeToken},
   );
 };
 

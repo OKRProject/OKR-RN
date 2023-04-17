@@ -35,12 +35,13 @@ const Detail = ({route, navigation}: Props) => {
         <>
           <Header
             onClickBack={handleGoBack}
-            onClickMenu={handleClickModalOpen}
+            onClickMenu={project.completed ? undefined : handleClickModalOpen}
           />
           <ProjectObjective {...project} />
           <KRList
             KRList={project.keyResults}
             projectToken={project.projectToken}
+            isProjectCompleted={project.completed}
           />
           {openModal === 'menu' && (
             <TeamModal

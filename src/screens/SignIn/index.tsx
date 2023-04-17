@@ -81,14 +81,10 @@ const container = css`
 
 const logoDesc = css`
   font-size: 32px;
-  line-height: 42px;
+  line-height: 44px;
+  margin-bottom: 8px;
 `;
 
-const logoWrap = css`
-  display: flex;
-  flex-direction: row;
-  gap: 2px;
-`;
 const bottom = css`
   width: 100%;
   justify-content: center;
@@ -99,7 +95,8 @@ const bottom = css`
 const logoHighlight = css`
   color: #1f92f2;
   font-size: 18px;
-  margin-bottom: 16px;
+  line-height: 22px;
+  margin-bottom: 12px;
 `;
 
 const button = css`
