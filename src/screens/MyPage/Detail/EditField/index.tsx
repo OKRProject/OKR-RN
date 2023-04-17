@@ -17,10 +17,11 @@ import userStore from '../../../../store/userStore';
 
 type Props = {
   _field: string;
+  _category: string;
   onClose: () => void;
   isVisible: boolean;
 };
-const EditField = ({_field, onClose, ...rest}: Props) => {
+const EditField = ({_field, _category, onClose, ...rest}: Props) => {
   const [open, setOpen] = useState<'category' | 'field' | undefined>();
   const [categoryList, setCategoryList] = useState<{[key in string]: string}>();
   const [fieldList, setFieldList] = useState<{[key in string]: string}>();
@@ -28,7 +29,7 @@ const EditField = ({_field, onClose, ...rest}: Props) => {
   const [{field, category}, setPersonalInfo] = useState<{
     field: string;
     category: string;
-  }>({field: _field, category: '프론트엔드 개발'});
+  }>({field: _field, category: _category});
 
   const getFields = async (category: string, _code?: string) => {
     const code = _code

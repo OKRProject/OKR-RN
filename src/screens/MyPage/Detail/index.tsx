@@ -14,7 +14,7 @@ import EditName from './EditName';
 import EditField from './EditField';
 
 type Props = UserProfileType;
-const Detail = ({profileImage, jobFieldDetail, name}: Props) => {
+const Detail = ({profileImage, jobFieldDetail, fieldCategory, name}: Props) => {
   const [openModal, setOpenModal] = useState<'name' | 'field' | undefined>();
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
@@ -62,6 +62,7 @@ const Detail = ({profileImage, jobFieldDetail, name}: Props) => {
       />
       <EditField
         _field={jobFieldDetail}
+        _category={fieldCategory}
         isVisible={openModal === 'field'}
         onClose={() => setOpenModal(undefined)}
       />
