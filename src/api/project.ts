@@ -5,7 +5,7 @@ export enum RoleTypeEnum {
   member = 'MEMBER',
 }
 export enum ProjectTypeEnum {
-  whole = 'WHOLE',
+  all = 'ALL',
   team = 'TEAM',
   single = 'SINGLE',
 }
@@ -90,6 +90,7 @@ export type EditProjectIniReqType = {
 
 export type GetProjectListResType = {
   content: ProjectType[];
+  last: boolean;
 };
 
 export type CreateNewProjectReqType = NewProjectType;
@@ -135,14 +136,18 @@ const createNewProject = (body: CreateNewProjectReqType) =>
 const getProjectList = ({
   sort,
   includeFinished,
+  page,
+  projectType,
 }: {
   sort: SortTypeEnum;
   includeFinished: boolean;
+  page: number;
+  projectType: ProjectTypeEnum;
 }) =>
   instance.get<GetProjectListResType>(
     `v1/project?sortType=${sort}&includeFinishedProjectYN=${
       includeFinished ? 'Y' : 'N'
-    }&page=0&size=10&projectType=ALL`,
+    }&page=${page}&size=10&projectType=${projectType}`,
   );
 
 const getProjectDetail = ({projectToken}: GetProjectDetailReqType) =>
