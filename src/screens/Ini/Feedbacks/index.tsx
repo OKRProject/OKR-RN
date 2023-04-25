@@ -1,9 +1,7 @@
 import {View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {DefaultText as Text, Feedback} from '../../../components';
-import {css} from '@emotion/native';
-import {FeedbackEnum, FeedbackType} from '../../../api/feedback';
-import api from '../../../api';
+import React from 'react';
+import {Feedback} from '../../../components';
+import {FeedbackType} from '../../../api/feedback';
 
 type Props = {
   initiativeToken: string;
@@ -21,12 +19,5 @@ const Feedbacks = ({initiativeToken, feedbackList}: Props) => {
     </>
   );
 };
-
-const container = css``;
-const title = css`
-  margin: 40px 16px 16px;
-  font-weight: 600;
-  font-size: 20px;
-`;
 
 export default Feedbacks;

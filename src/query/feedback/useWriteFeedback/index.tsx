@@ -10,8 +10,7 @@ const useWriteFeedback = ({
   const queryClient = useQueryClient();
   return useMutation(api.feedback.addFeedback, {
     onSuccess: () => {
-      queryClient.invalidateQueries([keys.GET_INI_INFO, initiativeToken]);
-      queryClient.invalidateQueries([keys.GET_REQUIRED_FEEDBACKS]);
+      queryClient.invalidateQueries([keys.GET_INI_FEEDBACKS, initiativeToken]);
     },
   });
 };

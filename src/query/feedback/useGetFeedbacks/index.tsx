@@ -8,7 +8,7 @@ import keys from '../../keys';
 const useGetFeedbacks = ({
   initiativeToken,
 }: Pick<ProjectIniType, 'initiativeToken'>) => {
-  return useQuery([keys.GET_FEEDBACKS, initiativeToken], () =>
+  return useQuery([keys.GET_INI_FEEDBACKS, initiativeToken], () =>
     api.feedback.getIniFeedbacks(initiativeToken),
   );
 };

@@ -74,6 +74,7 @@ const _container = css`
   padding: 16px 20px;
   align-items: flex-start;
   border-radius: 8px;
+  margin-bottom: 14px;
 `;
 
 const _header = css`
