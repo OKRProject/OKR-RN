@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -36,6 +36,7 @@ const Step1 = ({objective, onChangeTitle, onPrev, onNext}: Props) => {
               onBlur={() => setKeyboardFocused(false)}
               value={objective}
               onChangeText={onChangeTitle}
+              maxLength={20}
             />
             <RoundSquareButton
               disabled={objective.length === 0}

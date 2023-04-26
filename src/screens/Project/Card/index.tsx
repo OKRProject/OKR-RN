@@ -59,7 +59,7 @@ const Card = ({project, onLongPressCard, ...rest}: Props) => {
           <View
             style={css`
               flex-direction: row;
-              align-items: center;
+              flex: 1;
             `}>
             <Text
               style={[
@@ -114,19 +114,22 @@ const titleWrap = css`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  max-width: 100%;
 `;
 const projectTitle = css`
   color: #ffffff;
   font-size: 18px;
-  /* line-height: 1.2; */
   font-weight: 600;
+  flex: 1;
 `;
 const newHighlight = css`
   font-weight: 700;
   font-size: 12px;
+  line-height: 21px;
   color: #fdbd40;
   margin-left: 6px;
+  width: 32px;
 `;
 
 const progressWrap = css`

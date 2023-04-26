@@ -37,11 +37,13 @@ const New = ({}: Props) => {
     setProject(prev => ({...prev, startDate: start, endDate: end}));
   };
 
-  const {mutate} = query.project.useAddProject();
+  const {mutateAsync} = query.project.useAddProject();
 
-  const handleComplete = (members: string[]) => {
-    mutate({teamMembers: members, ...project});
-    handleNavigateProjectMain();
+  const handleComplete = async (members: string[]) => {
+    try {
+      await mutateAsync({teamMembers: members, ...project});
+      handleNavigateProjectMain();
+    } catch (e) {}
   };
   return (
     <SafeAreaView edges={['right', 'top', 'left']} style={_container}>
