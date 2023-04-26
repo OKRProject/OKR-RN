@@ -163,6 +163,7 @@ const _filter = css`
 const _contentWrap = css`
   flex: 1;
   width: 100%;
+  padding: 0px 24px;
 `;
 const _emptyWrap = css`
   width: 100%;

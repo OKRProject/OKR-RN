@@ -56,6 +56,7 @@ const _container = css`
   align-items: flex-start;
   border-radius: 8px;
   margin: 12px 18px;
+  max-width: 100%;
 `;
 
 const _header = css`

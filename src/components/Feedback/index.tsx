@@ -22,7 +22,8 @@ export const icons: {
 type Props = FeedbackType;
 
 const Feedback = ({...rest}: Props) => {
-  const {opinion, grade, profileImage, writerJob, writerName} = rest;
+  const {opinion, grade, profileImage, writerJob, writerName, initiativeName} =
+    rest;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   return (
     <>
@@ -33,31 +34,33 @@ const Feedback = ({...rest}: Props) => {
             {borderBottomWidth: 1, borderBottomColor: '#111'},
           ]}>
           <View style={_header}>
-            <View style={_writerWrap}>
-              <View style={_imgWrap}>
-                {profileImage && (
-                  <Image
-                    source={{uri: profileImage}}
-                    style={{width: '100%', height: '100%'}}
-                  />
-                )}
-              </View>
-              <Text style={_writer}>
-                {writerName} ({writerJob})
-              </Text>
-            </View>
-            <View style={_tag}>
+            <Text style={_title}>{initiativeName}</Text>
+
+            {/* <View style={_tag}>
               <Image
                 style={{height: 20, width: 20}}
                 resizeMode="contain"
                 source={icons[grade].img}
               />
-            </View>
+            </View> */}
           </View>
           <Text style={_opinionText}>
-            {opinion.slice(0, 82)}
+            ↳ {opinion.slice(0, 82)}
             {opinion.length > 82 && '...'}
           </Text>
+          <View style={_writerWrap}>
+            <View style={_imgWrap}>
+              {profileImage && (
+                <Image
+                  source={{uri: profileImage}}
+                  style={{width: '100%', height: '100%'}}
+                />
+              )}
+            </View>
+            <Text style={_writer}>
+              {writerName} ({writerJob})
+            </Text>
+          </View>
         </View>
       </TouchableOpacity>
       <FeedbackDetailModal
@@ -75,6 +78,7 @@ const _container = css`
   align-items: flex-start;
   border-radius: 8px;
   margin-bottom: 14px;
+  max-width: 100%;
 `;
 
 const _header = css`
@@ -83,7 +87,11 @@ const _header = css`
   justify-content: space-between;
   border: 0px solid #35353a;
   border-bottom-width: 1px;
-  padding-bottom: 6px;
+  padding-bottom: 8px;
+`;
+
+const _title = css`
+  color: #1f92f2;
 `;
 
 const _tag = css`
@@ -101,6 +109,7 @@ const _opinionText = css`
 const _writerWrap = css`
   flex-direction: row;
   align-items: center;
+  padding-left: 8px;
 `;
 const _imgWrap = css`
   border: 1px solid #57575a;

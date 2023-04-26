@@ -15,6 +15,7 @@ export type FeedbackType = {
   writerName: string;
   writerJob: string;
   profileImage: string;
+  initiativeName: string;
 };
 
 type AddFeedbackReqType = {
