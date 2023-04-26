@@ -32,7 +32,10 @@ const StepField: <P extends {[key: string]: string} | undefined>(
               <TouchableOpacity
                 key={`user_field_select_${code}`}
                 style={[fieldItem, selectedField === code && selectedItem]}
-                onPress={() => onSelect(code as keyof typeof fieldList)}>
+                onPress={() => {
+                  /* @ts-ignore */
+                  onSelect(code as keyof typeof fieldList);
+                }}>
                 <Text
                   style={[fieldText, selectedField === code && selectedText]}>
                   {fieldList[code]}

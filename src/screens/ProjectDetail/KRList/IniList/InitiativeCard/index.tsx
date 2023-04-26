@@ -20,9 +20,7 @@ const InitiativeCard = ({
 
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigation.navigate('Ini', {initiativeToken, keyResultToken})
-      }>
+      onPress={() => navigation.navigate('Ini', {initiativeToken})}>
       <View style={_container}>
         <Text style={_title}>{initiativeName}</Text>
         <View style={_contents}>

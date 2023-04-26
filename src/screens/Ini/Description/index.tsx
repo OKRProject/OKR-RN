@@ -18,7 +18,6 @@ const Description = (data: Props) => {
     myInitiative,
     done,
     initiativeToken,
-    projectToken,
     wroteFeedback,
     getIniInfo,
   } = useMemo(() => data, [data]);
@@ -26,7 +25,7 @@ const Description = (data: Props) => {
   const [isEditOpen, setEditOpen] = useState(false);
 
   const handleWriteFeedback = () => {
-    navigation.navigate('Ini', {type: 'feedback', data});
+    navigation.navigate('Ini', {initiativeToken});
   };
   const handleClickDone = async () => {
     try {
