@@ -120,7 +120,8 @@ const Ini = ({route, navigation}: Props) => {
           <View style={_desc}>
             <Text>{initiative.data.initiativeDetail}</Text>
           </View>
-          {initiative.data.myInitiative ? (
+          {initiative.data.myInitiative &&
+          initiative.data.roleType === RoleTypeEnum.leader ? (
             <RoundSquareButton
               size="xs"
               type={initiative.data.done ? 'disable' : 'primary'}
