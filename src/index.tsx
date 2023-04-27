@@ -1,9 +1,9 @@
 import React from 'react';
-import {StatusBar, Text, useColorScheme, View} from 'react-native';
+import {StatusBar, useColorScheme} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {config} from './config';
 import Navigation from './navigation';
-import CodePush from 'react-native-code-push';
+// import CodePush from 'react-native-code-push';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {Toast} from 'react-native-toast-message/lib/src/Toast';
 import {BaseToast, BaseToastProps} from 'react-native-toast-message';
@@ -50,16 +50,16 @@ const App = () => {
   );
 };
 
-const codePushOptions = {
-  checkFrequency: CodePush.CheckFrequency.ON_APP_START,
-  updateDialog: {
-    title: 'update by codepush for flag',
-    optionalUpdateMessage: 'codepush',
-    optionalInstallButtonLabel: 'update',
-    optionalIgnoreButtonLabel: 'ignore.',
-  },
-  installMode: CodePush.InstallMode.IMMEDIATE,
-};
+// const codePushOptions = {
+//   checkFrequency: CodePush.CheckFrequency.ON_APP_START,
+//   updateDialog: {
+//     title: 'update by codepush for flag',
+//     optionalUpdateMessage: 'codepush',
+//     optionalInstallButtonLabel: 'update',
+//     optionalIgnoreButtonLabel: 'ignore.',
+//   },
+//   installMode: CodePush.InstallMode.IMMEDIATE,
+// };
 
 export default App;
 // export default CodePush(codePushOptions)(App);

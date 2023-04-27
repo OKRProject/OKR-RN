@@ -89,6 +89,10 @@ const Main = () => {
       <Stack.Screen name="AddKR" component={Screens.AddKR} />
       <Stack.Screen name="AddIni" component={Screens.AddIni} />
       <Stack.Screen name="WriteFeedback" component={Screens.WriteFeedback} />
+      <Stack.Screen
+        name="RequireFeedback"
+        component={Screens.RequireFeedback}
+      />
     </Stack.Navigator>
   ) : (
     <Stack.Navigator

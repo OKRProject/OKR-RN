@@ -28,6 +28,8 @@ const RequireFeedback = ({navigation}: Props) => {
       <ScrollView
         style={css`
           flex: 1;
+          padding: 0 24px;
+          padding-top: 24px;
         `}>
         {requiredFeedbacks &&
           requiredFeedbacks.data?.map(ini => (
@@ -81,7 +83,7 @@ const _iniTitle = css`
 const _userInfo = css`
   flex-direction: row;
   align-items: center;
-  margin: 4px 0;
+  margin: 8px 0;
 `;
 const _imgWrap = css`
   width: 24px;
@@ -94,6 +96,8 @@ const _imgWrap = css`
 
 const _button = css`
   margin-left: auto;
-  width: 117px;
+  padding: 8px 0px;
+  width: 124px;
+  border-radius: 8px;
 `;
 export default RequireFeedback;
