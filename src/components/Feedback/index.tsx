@@ -35,14 +35,6 @@ const Feedback = ({...rest}: Props) => {
           ]}>
           <View style={_header}>
             <Text style={_title}>{initiativeName}</Text>
-
-            {/* <View style={_tag}>
-              <Image
-                style={{height: 20, width: 20}}
-                resizeMode="contain"
-                source={icons[grade].img}
-              />
-            </View> */}
           </View>
           <Text style={_opinionText}>
             ↳ {opinion.slice(0, 82)}
@@ -60,6 +52,13 @@ const Feedback = ({...rest}: Props) => {
             <Text style={_writer}>
               {writerName} ({writerJob})
             </Text>
+            <View style={_tag}>
+              <Image
+                style={{height: 20, width: 20}}
+                resizeMode="contain"
+                source={icons[grade].img}
+              />
+            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -100,6 +99,7 @@ const _tag = css`
   background: #27272a;
   border-radius: 99px;
   padding: 6px 10px;
+  margin-left: auto;
 `;
 
 const _opinionText = css`
@@ -110,6 +110,7 @@ const _writerWrap = css`
   flex-direction: row;
   align-items: center;
   padding-left: 8px;
+  width: 100%;
 `;
 const _imgWrap = css`
   border: 1px solid #57575a;
