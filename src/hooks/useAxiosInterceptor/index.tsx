@@ -91,6 +91,14 @@ const useAxiosInterceptor = () => {
       response => response,
       async error => {
         console.log(error.config.url);
+        if (error?.response.status === 500)
+          Toast.show({
+            type: 'defaultToast',
+            text1: '오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+            autoHide: true,
+            position: 'top',
+            topOffset: 40,
+          });
         if (error?.response.status === 400)
           Toast.show({
             type: 'defaultToast',
