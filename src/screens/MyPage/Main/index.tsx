@@ -1,5 +1,5 @@
 import {Image, Pressable, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {
   Background,
   Header,
@@ -30,6 +30,10 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
     2: false,
   });
 
+  const allChecked = useMemo(
+    () => Object.values(check).every(item => item),
+    [check],
+  );
   const handleClickPolicy = () => navigation.navigate('Policy');
   const handleClickTerms = () => navigation.navigate('Terms');
   const handleClickLogout = () => {
@@ -38,6 +42,8 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
   };
 
   const handleClickWithdrawalConfirm = () => {
+    if (!allChecked) return;
+
     setOpenModal(undefined);
     setTimeout(deleteUser, 100);
   };
@@ -148,8 +154,7 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
                 `,
               ]}
               onPress={() => {
-                const allTrue = Object.values(check).every(item => item);
-                if (allTrue) setCheck({0: false, 1: false, 2: false});
+                if (allChecked) setCheck({0: false, 1: false, 2: false});
                 else setCheck({0: true, 1: true, 2: true});
               }}>
               <View
@@ -211,9 +216,10 @@ const Main = ({name, jobFieldDetail, email, profileImage}: Props) => {
                 취소
               </RoundSquareButton>
               <RoundSquareButton
-                type="primary"
+                type={allChecked ? 'primary' : 'disable'}
                 size="m"
                 style={[smallButton]}
+                disabled={!allChecked}
                 onPress={handleClickWithdrawalConfirm}>
                 탈퇴
               </RoundSquareButton>
