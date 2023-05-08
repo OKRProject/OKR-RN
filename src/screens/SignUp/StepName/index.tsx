@@ -1,16 +1,11 @@
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import {Keyboard, TouchableWithoutFeedback, View} from 'react-native';
 import React, {useMemo} from 'react';
 import {Layout} from '../components';
 import {DefaultInput as Input, RoundSquareButton} from '../../../components';
 import {css} from '@emotion/native';
 import {StepType} from '..';
 
-const desc = `이름은 나중에 언제든지 바꿀 수 있어요.
+const desc = `닉네임은 나중에 언제든지 바꿀 수 있어요.
 공백없이 8자 이하 사용 가능합니다.`;
 
 type Props = {
@@ -29,7 +24,7 @@ const StepName = ({name, onChange, nextStep}: Props) => {
           flex: 1;
           width: 100%;
         `}>
-        <Layout title="이름을 입력해주세요" desc={desc}>
+        <Layout title="닉네임을 입력해주세요" desc={desc}>
           <View style={container}>
             <View
               onStartShouldSetResponder={event => true}
@@ -42,7 +37,7 @@ const StepName = ({name, onChange, nextStep}: Props) => {
                 maxLength={8}
                 value={name}
                 onChangeText={onChange}
-                placeholder="NAME"
+                placeholder="nickname"
                 hitSlop={{top: 20, left: 20, bottom: 20, right: 20}}
               />
             </View>
